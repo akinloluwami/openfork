@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.2.4",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "axios": "^0.27.2",
+    "framer-motion": "6",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
