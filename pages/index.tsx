@@ -1,10 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
-
+import Header from "../components/Header";
+import Hero from "../components/Hero";
 const Home: NextPage = () => {
   return (
     <Box>
-      <Text>Hello World</Text>
+      <Header />
+      <Hero />
     </Box>
   );
 };
