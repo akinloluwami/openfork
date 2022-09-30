@@ -5,9 +5,11 @@ import {
   Heading,
   Text,
   Button,
+  Image,
   Link,
   Input,
 } from "@chakra-ui/react";
+import ProjectCard from "./ProjectCard";
 
 const Hero: NextPage = () => {
   return (
@@ -51,6 +53,12 @@ const Hero: NextPage = () => {
           />
         </Flex>
       </Box>
+
+      {/*  project card lists*/}
+      <Flex m="40px 20px" justify="center" gap="20px">
+        <ProjectCard />
+        <ProjectCard />
+      </Flex>
     </Box>
   );
 };
