@@ -1,8 +1,20 @@
 * {
+
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Georama'
+
+}
+
+
+:root {
+
+  --primary-color:'#ff8c00';
+  --secondary-color: 'replace with secondary color ';
+  --primary-font: 'replace with primary font ';
+  --secondary-font: 'replace with secondary font ';
+
 }
 
 html,
