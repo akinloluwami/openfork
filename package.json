@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "onboardbase run -c 'next dev'",
+    "build": "onboardbase run -c 'next build'",
+    "start": "onboardbase run -c 'next start'",
     "lint": "next lint"
   },
   "dependencies": {
