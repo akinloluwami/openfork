@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Avatar from "../components/Avatar";
 import Button from "../components/Button";
+import Tag from "../components/Tag";
 import { Box, Flex, Heading, Text, Link } from "@chakra-ui/react";
 const Profile: NextPage = () => {
   return (
@@ -28,42 +29,10 @@ const Profile: NextPage = () => {
 
       <Box p="30px 0">
         <Flex gap="15px" m="15px 0">
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            About
-          </Text>
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            Activity
-          </Text>
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            Upvotes
-          </Text>
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            Bookmarks
-          </Text>
+          <Tag active={true}>About</Tag>
+          <Tag>Projects</Tag>
+          <Tag>Upvotes</Tag>
+          <Tag>Bookmarks</Tag>
         </Flex>
         <Box>
           <Heading fontSize="25px">About</Heading>
