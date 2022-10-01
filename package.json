@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "onboardbase run -c 'next dev'",
     "build": "onboardbase run -c 'next build'",
-    "start": "onboardbase run -c 'next start'",
+    "start": "onboardbase run --command=\"next start\"",
     "lint": "next lint"
   },
   "dependencies": {
