@@ -1,7 +1,6 @@
-import type { NextPage } from "next";
 import { Flex, Box, Image, Link, Button, Text } from "@chakra-ui/react";
 
-const Header: NextPage = () => {
+const Header = () => {
   return (
     <Box>
       <Flex align="center" p="20px 0" justify="space-around" w="100%">
