@@ -5,12 +5,11 @@ import {
   Heading,
   Text,
   Button,
-  Image,
   Link,
   Input,
 } from "@chakra-ui/react";
 import ProjectCard from "./ProjectCard";
-
+import { FaGithub, FaSearch } from "react-icons/fa";
 const Hero: NextPage = () => {
   return (
     <Box>
@@ -31,7 +30,7 @@ const Hero: NextPage = () => {
         </Text>
 
         <Button fontSize="13px" bg="darkorange">
-          {/**LOGO**/} <Text>Sign in with Github</Text>
+          <FaGithub /> <Text mx="5px"> Sign in with Github</Text>
         </Button>
       </Flex>
 
@@ -42,12 +41,18 @@ const Hero: NextPage = () => {
           <Link>Popular</Link>
           <Link>Latest</Link>
         </Flex>
-        <Flex m="10px auto" border="1px solid grey" borderRadius="15px">
-          {/* icon */}
+        <Flex
+          m="10px auto"
+          fontSize="25px"
+          border="1px solid grey"
+          align="center"
+          p="15px 20px"
+          borderRadius="15px"
+        >
+          <FaSearch />
           <Input
-            outline="none"
+            outline="none !important"
             border="none"
-            p="30px"
             type="search"
             placeholder="Type here to search"
           />

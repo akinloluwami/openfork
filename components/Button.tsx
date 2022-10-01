@@ -1,24 +1,15 @@
-// import type { NextPage } from "next";
-// import { Button as Btn } from "@chakra-ui/react";
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 
-// const Button: NextPage = () => {
-//   return <Btn></Btn>;
-// };
-
-// export default Button;
-interface Props {
-  children ?: any,
-  bg ?: string,
-  color ?: string
+interface Props extends ButtonProps {
+  loading?:boolean
 }
 
-const Buttons =({ children , bg, color }: Props) => {
+const Buttons =(props: Props) => {
   return (
     <>
 
-      <Button bg={bg} color={color}>
-          {children}
+      <Button {...props}>
+          {props.children}
       </Button>
     
     </>
