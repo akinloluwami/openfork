@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Tag from "./Tag";
 import { Flex, Box, Heading, Text, Image, Link } from "@chakra-ui/react";
 const ProjectCard: NextPage = () => {
   return (
@@ -21,29 +22,13 @@ const ProjectCard: NextPage = () => {
       <Flex gap="10px" align="center">
         <Text fontWeight="bold"> Level: </Text>
         <Flex>
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            Beginner
-          </Text>
+          <Tag>Beginner Friendly</Tag>
         </Flex>
       </Flex>
       <Flex gap="10px" m="10px 0" align="center">
         <Text fontWeight="bold"> Tech-Stack: </Text>
         <Flex>
-          <Text
-            border="1px solid grey"
-            p="6px 12px"
-            borderRadius="20px"
-            fontSize="12px"
-            display="block"
-          >
-            Typescript
-          </Text>
+          <Tag>Typescript</Tag>
         </Flex>
       </Flex>
     </Box>
