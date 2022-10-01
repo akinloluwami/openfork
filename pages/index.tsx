@@ -1,14 +1,12 @@
 import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import Head from "next/head";
-
-const Home: NextPage = ({ todos }: any) => {
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+const Home: NextPage = () => {
   return (
     <Box>
-      <Head>
-        <title>Find, contribute to and sponsor open-source projects</title>
-      </Head>
-      <Text>Hello World</Text>
+      <Header />
+      <Hero />
     </Box>
   );
 };
