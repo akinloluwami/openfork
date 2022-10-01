@@ -1,20 +1,26 @@
 * {
-
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Georama'
-
+  font-family: "Georama";
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 24px;
+}
 
 :root {
-
-  --primary-color:'#ff8c00';
-  --secondary-color: 'replace with secondary color ';
-  --primary-font: 'replace with primary font ';
-  --secondary-font: 'replace with secondary font ';
-
+  --primary-color: "#ff8c00";
+  --secondary-color: "replace with secondary color ";
+  --primary-font: "replace with primary font ";
+  --secondary-font: "replace with secondary font ";
 }
 
 html,
