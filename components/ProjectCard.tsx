@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
-import Tag from "./Tag";
 import { Flex, Box, Heading, Text, Link, Avatar } from "@chakra-ui/react";
+import StackTag from "./Tag";
+import { SiReact } from "react-icons/si";
 const ProjectCard: NextPage = () => {
   return (
     <Box p="30px" w="500px" bg="#111" cursor="pointer" borderRadius={"md"}>
@@ -20,10 +21,7 @@ const ProjectCard: NextPage = () => {
       </Text>
       {/*  */}
       <Flex gap="10px" m="10px 0" align="center">
-        <Text fontWeight="bold"> Tech-Stack: </Text>
-        <Flex>
-          <Tag>Typescript</Tag>
-        </Flex>
+        <StackTag stackName={"React"} icon={SiReact} />
       </Flex>
     </Box>
   );
