@@ -1,6 +1,7 @@
 import { Flex, Box, Image, Link, Button, Text } from "@chakra-ui/react";
 import Avatar from "./Avatar";
 import { FaGithub, FaAngleDown, FaBell } from "react-icons/fa";
+import { gradient } from "../styles/gradient";
 const Header = () => {
   return (
     <Box>
@@ -8,21 +9,7 @@ const Header = () => {
         <Image src="/vercel.svg" w="150px" />
 
         {/* when logged in */}
-        <Flex align="center" gap="10px">
-          <Box fontSize="20px" position="relative">
-            <FaBell />
-            <Box
-              bg="red"
-              w="10px"
-              h="10px"
-              position="absolute"
-              top="-2px"
-              right="-2px"
-              borderRadius="10px"
-            >
-              {" "}
-            </Box>
-          </Box>
+        {/* <Flex align="center" gap="10px">
           <Box>
             <Flex
               bg="#222"
@@ -37,14 +24,19 @@ const Header = () => {
               <FaAngleDown />
             </Flex>
           </Box>
-        </Flex>
-        {/* when loged out */}
-        {/* <Flex align="center" gap="10px">
-          <Link fontSize="14px">Contribute</Link>
-          <Button fontSize="13px" bg="darkorange">
-           <FaGithub /> <Text mx="5px"> Sign in with Github</Text>
-          </Button>
         </Flex> */}
+        {/* when loged out */}
+        <Flex align="center" gap="10px">
+          <Link fontSize="14px">Contribute</Link>
+          <Button
+            leftIcon={<FaGithub />}
+            bgGradient={gradient}
+            variant="solid"
+            size="sm"
+          >
+            Sign In
+          </Button>
+        </Flex>
       </Flex>
     </Box>
   );
