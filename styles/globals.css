@@ -16,15 +16,9 @@
   border-radius: 24px;
 }
 
-:root {
-  --primary-color: "#ff8c00";
-  --secondary-color: "replace with secondary color ";
-  --primary-font: "replace with primary font ";
-  --secondary-font: "replace with secondary font ";
-}
-
 html,
 body {
   background: #000000 !important;
   color: #fff !important;
+  font-family: "Poppins";
 }
