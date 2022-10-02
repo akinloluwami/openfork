@@ -19,17 +19,18 @@ const Hero: NextPage = () => {
       justifyContent={"flex-start"}
       height={"80vh"}
       direction={"column"}
-      mt={20}
+      mt={10}
     >
       <Box>
         <Heading fontSize="50px" maxW="600px" m="auto" textAlign={"center"}>
           Open-source projects you can{" "}
           <span
-            style={{
-              WebkitBackgroundClip: "text",
-              background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
-              WebkitTextFillColor: "transparent",
-            }}
+          // style={{
+          //   backgroundClip: "text",
+          //   WebkitBackgroundClip: "text",
+          //   background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
+          //   WebkitTextFillColor: "transparent",
+          // }}
           >
             actually
           </span>{" "}
