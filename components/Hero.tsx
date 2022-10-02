@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import ProjectCard from "./ProjectCard";
 import { FaGithub, FaSearch } from "react-icons/fa";
+import { gradient } from "../styles/gradient";
 const Hero: NextPage = () => {
   return (
     <Box>
@@ -29,7 +30,7 @@ const Hero: NextPage = () => {
           architecto dolor iur
         </Text>
 
-        <Button fontSize="13px" bg="darkorange">
+        <Button fontSize="13px" bgGradient={gradient}>
           <FaGithub /> <Text mx="5px"> Sign in with Github</Text>
         </Button>
       </Flex>
@@ -44,14 +45,21 @@ const Hero: NextPage = () => {
         <Flex
           m="10px auto"
           fontSize="25px"
+          px={2}
           border="1px solid grey"
           align="center"
-          p="15px 20px"
-          borderRadius="15px"
+          borderRadius={"15px"}
         >
-          <FaSearch />
+          <FaSearch
+            style={{
+              fontSize: "15px",
+            }}
+          />
           <Input
-            outline="none !important"
+            outline={"none !important"}
+            css={{
+              outline: "none",
+            }}
             border="none"
             type="search"
             placeholder="Type here to search"
