@@ -1,32 +1,23 @@
-import { Flex, Box, Image, Link, Button, Text } from "@chakra-ui/react";
-import Avatar from "./Avatar";
-import { FaGithub, FaAngleDown, FaBell } from "react-icons/fa";
+import { Flex, Box, Image, Link, Button, Text, Avatar } from "@chakra-ui/react";
 import { gradient } from "../styles/gradient";
+import Notifications from "./Notifications";
+import ProfileOptions from "./ProfileOptions";
 const Header = () => {
   return (
-    <Box>
-      <Flex align="center" py={5} justify="space-around" w="100%">
-        <Image src="/openfork.svg" w="150px" />
+    <Flex align="center" py={5} justify="space-around">
+      <Image src="/openfork.svg" w="150px" />
 
-        {/* when logged in */}
-        <Flex align="center" gap="10px">
-          <Box>
-            <Flex
-              bg="#222"
-              p="6px"
-              borderRadius="20px"
-              w="70px"
-              gap="10px"
-              justify="space-around"
-              align="center"
-            >
-              <Avatar src="/user.png" size={30} />
-              <FaAngleDown />
-            </Flex>
-          </Box>
-        </Flex>
-        {/* when loged out */}
-        {/* <Flex align="center" gap="10px">
+      {/* when logged in */}
+      <Flex align="center" gap="10px">
+        <Box>
+          <Flex gap="20px" justify="space-around" align="center">
+            <Notifications />
+            <ProfileOptions />
+          </Flex>
+        </Box>
+      </Flex>
+      {/* when loged out */}
+      {/* <Flex align="center" gap="10px">
           <Link fontSize="14px">Contribute</Link>
           <Button
             leftIcon={<FaGithub />}
@@ -37,8 +28,7 @@ const Header = () => {
             Sign In
           </Button>
         </Flex> */}
-      </Flex>
-    </Box>
+    </Flex>
   );
 };
 
