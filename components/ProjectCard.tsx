@@ -19,12 +19,6 @@ const ProjectCard: NextPage = () => {
         assumenda quisquam qui repellat eaque illo architecto dolor iur
       </Text>
       {/*  */}
-      <Flex gap="10px" align="center">
-        <Text fontWeight="bold"> Level: </Text>
-        <Flex>
-          <Tag>Beginner Friendly</Tag>
-        </Flex>
-      </Flex>
       <Flex gap="10px" m="10px 0" align="center">
         <Text fontWeight="bold"> Tech-Stack: </Text>
         <Flex>
