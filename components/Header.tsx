@@ -5,11 +5,11 @@ import { gradient } from "../styles/gradient";
 const Header = () => {
   return (
     <Box>
-      <Flex align="center" p="20px 0" justify="space-around" w="100%">
-        <Image src="/vercel.svg" w="150px" />
+      <Flex align="center" py={5} justify="space-around" w="100%">
+        <Image src="/openfork.svg" w="150px" />
 
         {/* when logged in */}
-        {/* <Flex align="center" gap="10px">
+        <Flex align="center" gap="10px">
           <Box>
             <Flex
               bg="#222"
@@ -24,9 +24,9 @@ const Header = () => {
               <FaAngleDown />
             </Flex>
           </Box>
-        </Flex> */}
+        </Flex>
         {/* when loged out */}
-        <Flex align="center" gap="10px">
+        {/* <Flex align="center" gap="10px">
           <Link fontSize="14px">Contribute</Link>
           <Button
             leftIcon={<FaGithub />}
@@ -36,7 +36,7 @@ const Header = () => {
           >
             Sign In
           </Button>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Box>
   );
