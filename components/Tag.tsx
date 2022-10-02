@@ -1,25 +1,19 @@
-import { Text, TextProps } from "@chakra-ui/react";
+import { NextPage } from "next";
+import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";
 
-interface TagProps extends TextProps {
-  active?: boolean;
+interface TagProps {
+  stackName: string;
+  icon?: any;
 }
 
-const Tag = (props: TagProps) => {
+const StackTag: NextPage<TagProps> = (props) => {
+  const { stackName, icon } = props;
   return (
-    <Text
-      border="1px solid #222"
-      p="6px 12px"
-      borderRadius="20px"
-      fontSize="12px"
-      cursor="pointer"
-      userSelect="none"
-      bg={`${props.active && "darkorange !important"}`}
-      display="block"
-      {...props}
-    >
-      {props.children}
-    </Text>
+    <Tag size={"md"} variant="outline">
+      <TagLeftIcon boxSize="12px" as={icon} />
+      <TagLabel>{stackName}</TagLabel>
+    </Tag>
   );
 };
 
-export default Tag;
+export default StackTag;
