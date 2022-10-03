@@ -10,8 +10,8 @@ const StackTag: NextPage<TagProps> = (props) => {
   const { stackName, icon } = props;
   return (
     <Tag size={"md"} variant="outline">
-      <TagLeftIcon boxSize="12px" as={icon} />
-      <TagLabel>{stackName}</TagLabel>
+      {icon && <TagLeftIcon boxSize="12px" as={icon} />}
+      <TagLabel fontSize="10px">{stackName}</TagLabel>
     </Tag>
   );
 };
