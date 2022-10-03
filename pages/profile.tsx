@@ -22,7 +22,10 @@ const Profile: NextPage = () => {
           </Box>
         </Flex>
 
-        <Button bg="darkorange" fontSize="13px">
+        <Button
+          bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+          fontSize="13px"
+        >
           Edit my profile
         </Button>
       </Flex>
@@ -39,7 +42,7 @@ const Profile: NextPage = () => {
           <Box p="20px 0">
             <Text opacity=".5" fontSize="12px">
               Bio helps fellow contributors get a better ideal of you.{" "}
-              <Link color="darkorange" opacity=".5" fontSize="12px">
+              <Link color="#d53f8c" opacity=".5" fontSize="12px">
                 Click to Edit
               </Link>
             </Text>
