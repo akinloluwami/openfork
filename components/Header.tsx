@@ -5,7 +5,7 @@ import ProfileOptions from "./ProfileOptions";
 const Header = () => {
   return (
     <Flex align="center" py={5} justify="space-around">
-      <Image src="/openfork.svg" w="150px" />
+      <Image src="/openfork.svg" w="150px" alt="" />
 
       {/* when logged in */}
       <Flex align="center" gap="10px">

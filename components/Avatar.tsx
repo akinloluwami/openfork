@@ -13,6 +13,7 @@ const Avatar = ({ src, size = 150 }: AvatarProps) => {
         width={size + "px"}
         height={size + "px"}
         borderRadius="50%"
+        alt=""
       />
     </Box>
   );

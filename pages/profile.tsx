@@ -55,7 +55,7 @@ const Profile: NextPage = () => {
             <Heading fontSize="25px">Badges</Heading>
             <Box p="20px 0">
               <Text opacity=".5" fontSize="12px">
-                You don't have badges yet
+                You do not have badges yet
               </Text>
             </Box>
           </Box>
