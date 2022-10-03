@@ -6,7 +6,7 @@ import { Box, Flex, Heading, Text, Link } from "@chakra-ui/react";
 const Profile: NextPage = () => {
   return (
     <Box p="5%">
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between" gap="30px" align="center" wrap="wrap">
         <Flex align="center" gap="10px">
           <Avatar src="/user.png" />
           <Box>
