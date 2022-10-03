@@ -1,16 +1,7 @@
 import type { NextPage } from "next";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Link,
-  Input,
-  Center,
-} from "@chakra-ui/react";
-import ProjectCard from "./ProjectCard";
-import { FaGithub, FaSearch } from "react-icons/fa";
+import { Flex, Box, Heading, Text, Button, Center } from "@chakra-ui/react";
+// import ProjectCard from "./ProjectCard";
+import { FaGithub } from "react-icons/fa";
 import { gradient } from "../styles/gradient";
 const Hero: NextPage = () => {
   return (
