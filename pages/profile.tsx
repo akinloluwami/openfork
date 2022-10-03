@@ -29,10 +29,10 @@ const Profile: NextPage = () => {
 
       <Box p="30px 0">
         <Flex gap="15px" m="15px 0">
-          <Tag active={true}>About</Tag>
-          <Tag>Projects</Tag>
-          <Tag>Upvotes</Tag>
-          <Tag>Bookmarks</Tag>
+          <Tag stackName="About" />
+          <Tag stackName="Projects" />
+          <Tag stackName="Upvotes" />
+          <Tag stackName="Bookmarks" />
         </Flex>
         <Box>
           <Heading fontSize="25px">About</Heading>
