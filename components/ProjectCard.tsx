@@ -8,34 +8,48 @@ import {
   SiSupabase,
   SiTypescript,
 } from "react-icons/si";
-const ProjectCard: NextPage = () => {
+
+interface Props {
+  name ?: string ,
+  owner ?: string ,
+  description ?: string ,
+  imgSrc ?: any
+
+};
+
+const ProjectCard: NextPage = ({ name , owner , description, imgSrc}: Props) => {
   return (
-    <Flex
-      alignItems={"center"}
-      justifyContent={"center"}
-      p={0.5}
-      w="500px"
-      bg={"transparent"}
-      cursor="pointer"
-      borderRadius={"md"}
-      _hover={{
-        background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
-      }}
+   
+    <>
+
+      
+      <Flex
+        alignItems={"center"}
+        justifyContent={"center"}
+        p={0.5}
+        w=""
+        bg={"transparent"}
+        cursor="pointer"
+        borderRadius={"md"}
+        _hover={{
+          background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
+        }}
     >
-      <Box p={6} w="500px" bg="#111" borderRadius={"md"}>
+      <Box p={6} w="" bg="#111" borderRadius={"md"}>
         <Flex align="center" gap="10px">
-          <Avatar size={"lg"} />
+          <Avatar size={['md']} src={imgSrc}/>
           <Heading as="h3" fontSize="30px">
-            <Link textDecoration="underline"> Open-Fork</Link>
-            <Text fontSize="12px" fontWeight="thin" py={2}>
-              @bossoncode
+            
+            <Text fontSize={'0.7em'}>{name}</Text>
+
+            <Text fontSize="14px" fontWeight="thin" py={2}>
+              {owner}
             </Text>
           </Heading>
         </Flex>
-        <Text m="15px 0" fontSize="13px">
+        <Text m="15px 0" fontSize="15px">
           {" "}
-          Find Open-Source You can contribute to. dolorem inventore alias
-          assumenda quisquam qui repellat eaque illo architecto dolor iur
+          {description}
         </Text>
         {/*  */}
         <Flex gap="10px" m="10px 0" align="center">
@@ -46,6 +60,10 @@ const ProjectCard: NextPage = () => {
         </Flex>
       </Box>
     </Flex>
+      
+    
+    </>
+
   );
 };
 
