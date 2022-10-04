@@ -1,8 +1,8 @@
 import { Container } from "@chakra-ui/react";
 
 interface Props {
-    children: string ,
-    width?: string 
+    children?: any ,
+    width?: [] 
 }
 
 const ContainerLayout =({children , width} : Props) => {

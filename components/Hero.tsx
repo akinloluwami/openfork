@@ -3,35 +3,45 @@ import { Flex, Box, Heading, Text, Button, Center } from "@chakra-ui/react";
 // import ProjectCard from "./ProjectCard";
 import { FaGithub } from "react-icons/fa";
 import { gradient } from "../styles/gradient";
+import ContainerLayout from "../Layout/ContainerLayout";
 const Hero: NextPage = () => {
   return (
-    <Flex
+
+    <ContainerLayout>
+     <Flex
       alignItems={"center"}
       justifyContent={"flex-start"}
-      height={"80vh"}
+      height={"70vh"}
       direction={"column"}
-      mt={10}
-    >
+      pt={'6em'}
+    
+      >
       <Box>
-        <Heading fontSize="50px" maxW="600px" m="auto" textAlign={"center"}>
+        <Heading fontSize={['4xl', '50px']}
+             maxW="600px" m="auto" textAlign={"center"}
+             fontFamily={'var(--satoshi)'}>
           Open-source projects you can{" "}
           <span
-          // style={{
-          //   backgroundClip: "text",
-          //   WebkitBackgroundClip: "text",
-          //   background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
-          //   WebkitTextFillColor: "transparent",
-          // }}
+          style={{
+            // backgroundClip: "text",
+            // WebkitBackgroundClip: "text",
+            // background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
+            // WebkitTextFillColor: "transparent",
+           }}
           >
             actually
           </span>{" "}
           contribute to.
         </Heading>
-        <Text maxW="600px" m="20px auto" fontSize="20px" textAlign={"center"}>
+
+        <Text maxW="600px" m="20px auto"
+         fontSize={['lg', '20px']} textAlign={"center"}
+         fontFamily={'var(--satoshi)'}>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
           dolorem inventore alias assumenda quisquam qui repellat eaque illo
           architecto dolor iur
         </Text>
+        
         <Center>
           <Button
             mt={5}
@@ -44,7 +54,14 @@ const Hero: NextPage = () => {
           </Button>
         </Center>
       </Box>
-    </Flex>
+      </Flex> 
+
+
+      
+      
+    </ContainerLayout>
+
+
   );
 };
 

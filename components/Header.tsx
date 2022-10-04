@@ -1,11 +1,14 @@
 import { Flex, Box, Image, Link, Button, Text, Avatar } from "@chakra-ui/react";
+import ContainerLayout from "../Layout/ContainerLayout";
 import { gradient } from "../styles/gradient";
 import Notifications from "./Notifications";
 import ProfileOptions from "./ProfileOptions";
 const Header = () => {
   return (
-    <Flex align="center" py={5} justify="space-around">
-      <Image src="/openfork.svg" w="150px" alt="" />
+   
+    <ContainerLayout>
+     <Flex align="center" py={5} justify="space-around">
+      <Image src="/openfork.svg" w={['120px','150px']} alt="" />
 
       {/* when logged in */}
       <Flex align="center" gap="10px">
@@ -29,6 +32,8 @@ const Header = () => {
           </Button>
         </Flex> */}
     </Flex>
+    </ContainerLayout>
+
   );
 };
 
