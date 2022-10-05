@@ -34,26 +34,26 @@ const Projects = () => {
 
   return (
     <ContainerLayout>
-      <Flex alignItems={"center"} flexDir={['column','row']} justifyContent={"center"} gap={5} py={10}>
-      
-        {
-          demo.map((items, index ) => (
-            
-            <>
-              
-              <ProjectCard 
-              //  @ts-ignore 
-               name={items.name}
-               owner={items.owner} 
-               description={items.description}/>
-
-            </>
-          ))
-        }
-      
-       </Flex>
+      <Flex
+        alignItems={"center"}
+        w="100%"
+        wrap="wrap"
+        justifyContent={"center"}
+        gap={5}
+        py={10}
+      >
+        {demo.map((items, index) => (
+          <>
+            <ProjectCard
+              //  @ts-ignore
+              name={items.name}
+              owner={items.owner}
+              description={items.description}
+            />
+          </>
+        ))}
+      </Flex>
     </ContainerLayout>
-
   );
 };
 

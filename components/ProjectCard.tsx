@@ -19,51 +19,44 @@ interface Props {
 
 const ProjectCard: NextPage = ({ name , owner , description, imgSrc}: Props) => {
   return (
-   
     <>
-
-      
       <Flex
         alignItems={"center"}
         justifyContent={"center"}
         p={0.5}
-        w=""
+        maxW={["90vw", "400px"]}
         bg={"transparent"}
         cursor="pointer"
         borderRadius={"md"}
         _hover={{
           background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
         }}
-    >
-      <Box p={6} w="" bg="#111" borderRadius={"md"}>
-        <Flex align="center" gap="10px">
-          <Avatar size={['md']} src={imgSrc}/>
-          <Heading as="h3" fontSize="30px">
-            
-            <Text fontSize={'0.7em'}>{name}</Text>
+      >
+        <Box p={6} w="" bg="#111" borderRadius={"md"}>
+          <Flex align="center" gap="10px">
+            <Avatar size={["md"]} src={imgSrc} />
+            <Heading as="h3" fontSize="30px">
+              <Text fontSize={"0.7em"}>{name}</Text>
 
-            <Text fontSize="14px" fontWeight="thin" py={2}>
-              {owner}
-            </Text>
-          </Heading>
-        </Flex>
-        <Text m="15px 0" fontSize="15px">
-          {" "}
-          {description}
-        </Text>
-        {/*  */}
-        <Flex gap="10px" m="10px 0" align="center">
-          <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
-          <StackTag stackName={"Supabase"} icon={SiSupabase} />
-          <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-          <StackTag stackName={"TypeScript"} icon={SiTypescript} />
-        </Flex>
-      </Box>
-    </Flex>
-      
-    
+              <Text fontSize="14px" fontWeight="thin" py={2}>
+                {owner}
+              </Text>
+            </Heading>
+          </Flex>
+          <Text m="15px 0" fontSize="15px">
+            {" "}
+            {description}
+          </Text>
+          {/*  */}
+          <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
+            <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
+            <StackTag stackName={"Supabase"} icon={SiSupabase} />
+            <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
+            <StackTag stackName={"TypeScript"} icon={SiTypescript} />
+          </Flex>
+        </Box>
+      </Flex>
     </>
-
   );
 };
 
