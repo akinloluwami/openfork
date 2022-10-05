@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import {  Grid } from "@chakra-ui/react";
 import React from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
@@ -34,10 +34,10 @@ const Projects = () => {
 
   return (
     <ContainerLayout>
-      <Flex
+      <Grid
         alignItems={"center"}
         w="100%"
-        wrap="wrap"
+        templateColumns={'repeat(auto-fit, minmax(350px, 1fr))'}
         justifyContent={"center"}
         gap={5}
         py={10}
@@ -52,7 +52,7 @@ const Projects = () => {
             />
           </>
         ))}
-      </Flex>
+      </Grid>
     </ContainerLayout>
   );
 };
