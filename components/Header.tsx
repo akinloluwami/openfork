@@ -9,8 +9,8 @@ const Header = () => {
       <Flex
         align="center"
         py={5}
-        justify={["space-between", "space-around"]}
-        px={["20px", "0"]}
+        justify="space-between"
+        px="20px"
       >
         <Image src="/openfork.svg" w={["120px", "150px"]} alt="" />
 
