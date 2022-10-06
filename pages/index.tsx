@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import type { NextPage } from "next";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
+import GradientBlur from "../components/GradientBlur";
 import Projects from "../components/Projects";
 const Home: NextPage = () => {
   useEffect(() => {
@@ -11,8 +12,8 @@ const Home: NextPage = () => {
   return (
     <Box>
       <Header />
+      <GradientBlur />
       <Hero />
-
 
       <Projects />
     </Box>

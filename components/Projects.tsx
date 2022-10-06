@@ -35,9 +35,10 @@ const Projects = () => {
   return (
     <ContainerLayout>
       <Grid
+        mt={20}
         alignItems={"center"}
         w="100%"
-        templateColumns={'repeat(auto-fit, minmax(350px, 1fr))'}
+        templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
         justifyContent={"center"}
         gap={5}
         py={10}

@@ -10,13 +10,13 @@ const Hero: NextPage = () => {
       <Flex
         alignItems={"center"}
         // justifyContent={"flex-start"}
-        minH={"70vh"}
+        // minH={"70vh"}
         direction={"column"}
-        pt={"6em"}
+        pt={"6rem"}
       >
         <Box>
           <Heading
-            fontSize={["4xl", "50px"]}
+            fontSize={["4xl", "55px"]}
             maxW="600px"
             m="auto"
             textAlign={"center"}
@@ -41,7 +41,7 @@ const Hero: NextPage = () => {
           <Text
             maxW="600px"
             m="20px auto"
-            fontSize={["sm", "20px"]}
+            fontSize={["md", "16px"]}
             textAlign={"center"}
             fontFamily={"var(--satoshi)"}
           >
@@ -57,6 +57,7 @@ const Hero: NextPage = () => {
               bgGradient={gradient}
               variant="solid"
               size="lg"
+              fontSize="13px"
             >
               Sign In With GitHub
             </Button>
