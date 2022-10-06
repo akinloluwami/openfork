@@ -13,6 +13,7 @@ const GradientBlur = ({
       w="250px"
       top={top}
       left={left}
+      zIndex={-1}
       borderRadius="50%"
       filter="blur(50px)"
       position={"absolute"}
