@@ -7,9 +7,10 @@ import { gradient } from "../styles/gradient";
 import { signInWithGithub } from "../utils/supabase/auth";
 import Notifications from "./Notifications";
 import ProfileOptions from "./ProfileOptions";
+import { useRouter } from "next/router";
 const Header = () => {
   const [user, setUser] = useState({});
-
+  const router = useRouter();
   useEffect(() => {
     setUser(userInfo());
   }, []);
