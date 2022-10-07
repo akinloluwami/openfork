@@ -12,6 +12,8 @@ const Home: NextPage = () => {
     <Box>
       <Header />
       <Hero />
+
+
       <Projects />
     </Box>
   );
