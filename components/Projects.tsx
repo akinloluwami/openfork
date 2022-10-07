@@ -4,7 +4,24 @@ import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   return (
-    <Flex alignItems={"center"} justifyContent={"center"} gap={5} py={10}>
+    <Flex
+      alignItems={"center"}
+      justifyContent={"center"}
+      gap={5}
+      py={10}
+      flexWrap={"wrap"}
+    >
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
+      <ProjectCard />
       <ProjectCard />
       <ProjectCard />
     </Flex>

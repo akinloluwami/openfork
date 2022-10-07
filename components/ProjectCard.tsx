@@ -22,7 +22,7 @@ const ProjectCard: NextPage = () => {
         background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
       }}
     >
-      <Box p={6} w="500px" bg="#111" borderRadius={"md"}>
+      <Box p={6} w="500px" bg="#111" borderRadius={"md"} minW={"300px"}>
         <Flex align="center" gap="10px">
           <Avatar size={"lg"} />
           <Heading as="h3" fontSize="30px">
