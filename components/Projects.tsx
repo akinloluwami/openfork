@@ -42,14 +42,13 @@ const Projects = () => {
         py={10}
       >
         {demo.map((items, index) => (
-          <>
-            <ProjectCard
-              //  @ts-ignore
-              name={items.name}
-              owner={items.owner}
-              description={items.description}
-            />
-          </>
+          <ProjectCard
+            //  @ts-ignore
+            name={items.name}
+            owner={items.owner}
+            description={items.description}
+            key={index}
+          />
         ))}
       </Grid>
     </ContainerLayout>
