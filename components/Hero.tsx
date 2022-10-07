@@ -11,9 +11,9 @@ const Hero: NextPage = () => {
       <Flex
         alignItems={"center"}
         // justifyContent={"flex-start"}
-        minH={"70vh"}
+        minH={"80vh"}
         direction={"column"}
-        pt={"6em"}
+        pt={"3em"}
       >
         <Box>
           <Heading
@@ -21,7 +21,6 @@ const Hero: NextPage = () => {
             maxW="600px"
             m="auto"
             textAlign={"center"}
-            fontFamily={"var(--satoshi)"}
           >
             Open-source projects you can{" "}
             <span
