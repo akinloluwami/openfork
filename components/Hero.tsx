@@ -4,6 +4,7 @@ import { Flex, Box, Heading, Text, Button, Center } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 import { gradient } from "../styles/gradient";
 import ContainerLayout from "../Layout/ContainerLayout";
+import { useContext, useEffect } from "react";
 const Hero: NextPage = () => {
   return (
     <ContainerLayout>
