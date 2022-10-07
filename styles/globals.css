@@ -14,6 +14,14 @@
   --genSans: "General Sans", sans-serif;
 }
 
+:root {
+  /* fonts  */
+  --satoshi: 'Satoshi', sans-serif;
+  --redHat:  'Red Hat Display', sans-serif;
+  --genSans: 'General Sans', sans-serif;
+
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -30,4 +38,5 @@ body {
   background: #000000 !important;
   color: #fff !important;
   font-family: var(--satoshi) !important;
+
 }

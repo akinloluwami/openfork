@@ -16,7 +16,11 @@ const ProfileOptions = () => {
   return (
     <Menu isLazy>
       <MenuButton>
+
         <Avatar size={["md"]} src={userInfo()?.avatar_url} />
+
+        <Avatar size={["md"]} />
+
       </MenuButton>
       <MenuList>
         <MenuItem>Profile</MenuItem>

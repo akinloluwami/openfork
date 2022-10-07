@@ -20,6 +20,10 @@ const Hero: NextPage = () => {
         minH={"80vh"}
         direction={"column"}
         pt={"3em"}
+
+        minH={"70vh"}
+        direction={"column"}
+        pt={"6em"}
       >
         <Box>
           <Heading
@@ -27,6 +31,8 @@ const Hero: NextPage = () => {
             maxW="600px"
             m="auto"
             textAlign={"center"}
+
+            fontFamily={"var(--satoshi)"}
           >
             Open-source projects you can{" "}
             <span
@@ -55,7 +61,6 @@ const Hero: NextPage = () => {
             dolorem inventore alias assumenda quisquam qui repellat eaque illo
             architecto dolor iur
           </Text>
-
           {!user && (
             <Center>
               <Button
@@ -70,6 +75,17 @@ const Hero: NextPage = () => {
               </Button>
             </Center>
           )}
+          <Center>
+            <Button
+              mt={5}
+              leftIcon={<FaGithub />}
+              bgGradient={gradient}
+              variant="solid"
+              size="lg"
+            >
+              Sign In With GitHub
+            </Button>
+          </Center>
         </Box>
       </Flex>
     </ContainerLayout>
