@@ -4,8 +4,14 @@ import { Flex, Box, Heading, Text, Button, Center } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 import { gradient } from "../styles/gradient";
 import ContainerLayout from "../Layout/ContainerLayout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { signInWithGithub } from "../utils/supabase/auth";
+import userInfo from "../utils/userInfo";
 const Hero: NextPage = () => {
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    setUser(userInfo());
+  }, []);
   return (
     <ContainerLayout>
       <Flex
@@ -50,17 +56,20 @@ const Hero: NextPage = () => {
             architecto dolor iur
           </Text>
 
-          <Center>
-            <Button
-              mt={5}
-              leftIcon={<FaGithub />}
-              bgGradient={gradient}
-              variant="solid"
-              size="lg"
-            >
-              Sign In With GitHub
-            </Button>
-          </Center>
+          {!user && (
+            <Center>
+              <Button
+                mt={5}
+                leftIcon={<FaGithub />}
+                bgGradient={gradient}
+                variant="solid"
+                size="lg"
+                onClick={signInWithGithub}
+              >
+                Sign In With GitHub
+              </Button>
+            </Center>
+          )}
         </Box>
       </Flex>
     </ContainerLayout>
