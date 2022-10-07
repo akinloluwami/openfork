@@ -70,17 +70,6 @@ const Hero: NextPage = () => {
               </Button>
             </Center>
           )}
-          <Center>
-            <Button
-              mt={5}
-              leftIcon={<FaGithub />}
-              bgGradient={gradient}
-              variant="solid"
-              size="lg"
-            >
-              Sign In With GitHub
-            </Button>
-          </Center>
         </Box>
       </Flex>
     </ContainerLayout>
