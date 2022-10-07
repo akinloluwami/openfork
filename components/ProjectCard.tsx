@@ -10,14 +10,13 @@ import {
 } from "react-icons/si";
 
 interface Props {
-  name ?: string ,
-  owner ?: string ,
-  description ?: string ,
-  imgSrc ?: any
+  name?: string;
+  owner?: string;
+  description?: string;
+  imgSrc?: any;
+}
 
-};
-
-const ProjectCard: NextPage = ({ name , owner , description, imgSrc}: Props) => {
+const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
   return (
     <>
       <Flex

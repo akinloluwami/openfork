@@ -18,13 +18,14 @@ const Notifications = () => {
   const btnRef = useRef();
   return (
     <Box>
-      <FaBell
-        ref={btnRef}
-        onClick={onOpen}
-        style={{
-          fontSize: "25px",
-        }}
-      />
+      <Box ref={btnRef}>
+        <FaBell
+          onClick={onOpen}
+          style={{
+            fontSize: "25px",
+          }}
+        />
+      </Box>
 
       <Drawer
         isOpen={isOpen}
