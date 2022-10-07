@@ -6,4 +6,8 @@ const signInWithGithub = async () => {
   });
 };
 
-export { signInWithGithub };
+const signout = async () => {
+  localStorage.removeItem("sb-tebioleiibrvzamyqsia-auth-token");
+};
+
+export { signInWithGithub, signout };
