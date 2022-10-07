@@ -20,10 +20,6 @@ const Hero: NextPage = () => {
         minH={"80vh"}
         direction={"column"}
         pt={"3em"}
-
-        minH={"70vh"}
-        direction={"column"}
-        pt={"6em"}
       >
         <Box>
           <Heading
@@ -31,7 +27,6 @@ const Hero: NextPage = () => {
             maxW="600px"
             m="auto"
             textAlign={"center"}
-
             fontFamily={"var(--satoshi)"}
           >
             Open-source projects you can{" "}

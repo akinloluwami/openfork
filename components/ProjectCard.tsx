@@ -17,14 +17,6 @@ interface Props {
 }
 
 const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
-  name ?: string ,
-  owner ?: string ,
-  description ?: string ,
-  imgSrc ?: any
-
-};
-
-const ProjectCard: NextPage = ({ name , owner , description, imgSrc}: Props) => {
   return (
     <>
       <Flex
