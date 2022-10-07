@@ -19,7 +19,6 @@ const ProfileOptions = () => {
         <Avatar size={["md"]} src={userInfo()?.avatar_url} />
       </MenuButton>
       <MenuList>
-        {/* MenuItems are not rendered unless Menu is open */}
         <MenuItem>Profile</MenuItem>
         <MenuItem>My Projects</MenuItem>
         <MenuItem>Settings</MenuItem>
