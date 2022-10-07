@@ -7,12 +7,13 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import React from "react";
+import userInfo from "../utils/userInfo";
 
 const ProfileOptions = () => {
   return (
     <Menu isLazy>
       <MenuButton>
-        <Avatar size={["md"]} />
+        <Avatar size={["md"]} src={userInfo()?.avatar_url} />
       </MenuButton>
       <MenuList>
         {/* MenuItems are not rendered unless Menu is open */}
