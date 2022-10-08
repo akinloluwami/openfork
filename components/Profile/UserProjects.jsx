@@ -2,6 +2,7 @@ import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import AddNewProject from "./AddNewProject";
+import Project from "./Project";
 
 const UserProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -32,9 +33,7 @@ const UserProjects = () => {
           <Text textAlign={"center"}>You don't have any project.</Text>
         ) : (
           projects.map((project) => (
-            <Box key={project.id}>
-              <Text>{project.name}</Text>
-            </Box>
+            <Project key={project.id} name={project.name} />
           ))
         )}
       </Flex>
