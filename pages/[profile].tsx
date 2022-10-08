@@ -7,8 +7,14 @@ import { Box, Flex, Heading, Text, Link } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import userInfo from "../utils/userInfo";
 import Head from "next/head";
+
+interface UserData {
+  name: string;
+  user_name: string;
+  avatar_url: any;
+}
 const Profile: NextPage = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<UserData>();
   useEffect(() => {
     setUser(userInfo());
   }, []);
