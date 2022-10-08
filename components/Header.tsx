@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 const Header = () => {
   const [user, setUser] = useState({});
-  const router = useRouter();
   useEffect(() => {
     setUser(userInfo());
   }, []);
