@@ -16,6 +16,7 @@
     "incremental": true
   },
   "include": [
+    "pages/[profile].tsx",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
