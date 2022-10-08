@@ -34,10 +34,6 @@ const Profile: NextPage = () => {
     <>
       <Head>
         <title>{user?.name}'s profile on OpenFork | OpenFork</title>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0,  width=device-width"
-        />
       </Head>
       <Header />
       <Box p="25px 10%">
