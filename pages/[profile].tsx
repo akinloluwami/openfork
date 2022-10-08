@@ -3,6 +3,7 @@ import Avatar from "../components/Avatar";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Tag from "../components/Tag";
+import UserProjects from "../components/Profile/UserProjects";
 import {
   Box,
   Flex,
@@ -14,11 +15,14 @@ import {
   TabList,
   Center,
   Icon,
+  TabPanels,
+  TabPanel,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import userInfo from "../utils/userInfo";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
+import Projects from "../components/Projects";
 
 interface UserData {
   name: string;
@@ -45,17 +49,18 @@ const Profile: NextPage = () => {
               </Box>
               <Box>
                 <Heading>{user?.name}</Heading>
-                <Flex align={"center"}>
+                <Flex align={"center"} my={1.5}>
                   <Text fontSize="15px" fontWeight="light">
                     @{user?.user_name}
                   </Text>
                   <Icon as={GoVerified} ml={1} />
                 </Flex>
 
-                <Text fontSize="16px">Trying OpenSource</Text>
+                <Text fontSize="16px">Software Engineer</Text>
                 <Flex fontSize="13px" gap="10px" m="10px 0">
-                  <Text>Contributions: 13</Text>
-                  <Text>upvotes: 230</Text>
+                  <Text>Following: 69</Text>
+                  <Text>Followers: 69k</Text>
+                  <Text>Upvotes: 690k</Text>
                 </Flex>
               </Box>
             </Flex>
@@ -90,6 +95,14 @@ const Profile: NextPage = () => {
                 <Tab>Badges</Tab>
                 <Tab>Upvotes</Tab>
               </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <Text>About</Text>
+                </TabPanel>
+                <TabPanel>
+                  <UserProjects />
+                </TabPanel>
+              </TabPanels>
             </Tabs>
           </Center>
         </Box>
