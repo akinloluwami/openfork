@@ -13,10 +13,12 @@ import {
   Tab,
   TabList,
   Center,
+  Icon,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import userInfo from "../utils/userInfo";
 import Head from "next/head";
+import { GoVerified } from "react-icons/go";
 
 interface UserData {
   name: string;
@@ -47,9 +49,13 @@ const Profile: NextPage = () => {
               </Box>
               <Box>
                 <Heading>{user?.name}</Heading>
-                <Text fontSize="12px" fontWeight="thin">
-                  @{user?.user_name}
-                </Text>
+                <Flex align={"center"}>
+                  <Text fontSize="15px" fontWeight="light">
+                    @{user?.user_name}
+                  </Text>
+                  <Icon as={GoVerified} ml={1} />
+                </Flex>
+
                 <Text fontSize="16px">Trying OpenSource</Text>
                 <Flex fontSize="13px" gap="10px" m="10px 0">
                   <Text>Contributions: 13</Text>
