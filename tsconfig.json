@@ -15,6 +15,13 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "pages/[profile].tsx",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "utils/supabase/auth.js",
+    "utils/Storage.js"
+  ],
   "exclude": ["node_modules"]
 }
