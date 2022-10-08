@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
+  "include": [, "pages/[username].js"
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
