@@ -126,13 +126,14 @@ const AddNewProject = () => {
                     .filter((r: RepoData) =>
                       r.name.toLowerCase().includes(query.toLowerCase())
                     )
-                    .map((repo: RepoData) => (
+                    .map((repo: RepoData, i) => (
                       <Button
                         bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                         fontSize="13px"
                         p={0.5}
                         m={3}
                         w={350}
+                        key={i}
                       >
                         <Flex
                           align={"center"}
