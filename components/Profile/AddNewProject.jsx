@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   Spinner,
   Text,
+  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -19,6 +20,9 @@ const AddNewProject = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [projectName, setProjectName] = useState("");
   const [githubURL, setGithubURL] = useState("");
+  const [websiteURL, setWebsiteURL] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState(["react", "typescript"]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -33,6 +37,9 @@ const AddNewProject = () => {
         ).user.id,
         name: projectName,
         github_url: githubURL,
+        website_url: websiteURL,
+        description,
+        tags,
       },
     ]);
     setIsLoading(false);
@@ -82,12 +89,26 @@ const AddNewProject = () => {
                 setGithubURL(e.target.value);
               }}
             />
+            <Input
+              placeholder={"Website URL"}
+              my={2}
+              onChange={(e) => {
+                setWebsiteURL(e.target.value);
+              }}
+            />
+            <Textarea
+              placeholder={"Project description"}
+              my={2}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            ></Textarea>
           </ModalBody>
 
           <ModalFooter>
             <Button
               onClick={addNewProject}
-              disabled={!projectName || !githubURL || isLoading}
+              disabled={!projectName || !githubURL || isLoading || !description}
             >
               {isLoading ? <Spinner size="sm" /> : "Add"}
             </Button>
