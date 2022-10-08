@@ -22,6 +22,7 @@ const AddNewProject = () => {
   const [githubURL, setGithubURL] = useState("");
   const [websiteURL, setWebsiteURL] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState(["react", "typescript"]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -38,6 +39,7 @@ const AddNewProject = () => {
         github_url: githubURL,
         website_url: websiteURL,
         description,
+        tags,
       },
     ]);
     setIsLoading(false);
