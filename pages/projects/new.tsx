@@ -173,10 +173,26 @@ const AddNewProject = () => {
                   placeholder={"Project name"}
                   my={2}
                   value={projectName}
+                  onChange={(e) => {
+                    setProjectName(e.target.value);
+                  }}
                 />
-                <Input placeholder={"Project description"} my={2} />
-                <Input placeholder={"Website"} my={2} />
-                <Button>Continue</Button>
+                <Input
+                  placeholder={"Project description"}
+                  my={2}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <Input
+                  placeholder={"Website"}
+                  my={2}
+                  onChange={(e) => setWebsiteURL(e.target.value)}
+                />
+                <Button
+                  disabled={!projectName || !description}
+                  onClick={() => handleTabsChange(2)}
+                >
+                  Continue
+                </Button>
               </TabPanel>
             </TabPanels>
           </Tabs>
