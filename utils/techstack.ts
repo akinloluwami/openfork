@@ -421,3 +421,5 @@ export const ts = [
     logo: SiFastapi,
   },
 ];
+
+export default ts;
