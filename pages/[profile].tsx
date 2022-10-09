@@ -17,12 +17,14 @@ import {
   Icon,
   TabPanels,
   TabPanel,
+  useDisclosure 
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import userInfo from "../utils/userInfo";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import Projects from "../components/Projects";
+import ModalContainer from "../components/Major/ModalContainer";
 
 interface UserData {
   name: string;
@@ -33,7 +35,11 @@ const Profile: NextPage = () => {
   const [user, setUser] = useState<UserData>();
   useEffect(() => {
     setUser(userInfo());
+    
   }, []);
+
+  const {isOpen , onOpen , onClose } = useDisclosure();
+ 
   return (
     <>
       <Head>
@@ -85,6 +91,9 @@ const Profile: NextPage = () => {
             </Flex>
           </Button>
         </Flex>
+
+
+        
 
         <Box p="30px 0">
           <Center>
