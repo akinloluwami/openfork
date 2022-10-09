@@ -23,9 +23,17 @@ import userInfo from "../../utils/userInfo";
 interface RepoData {
   name: string;
   svn_url: string;
+  full_name: string;
 }
 
 const AddNewProject = () => {
+  const regex =
+    /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
+
+  const testUrl = (url: string) => {
+    return regex.test(url);
+  };
+
   const [tabIndex, setTabIndex] = useState(0);
   const [repos, setRepos] = useState([]);
   const [query, setQuery] = useState("");
@@ -34,16 +42,19 @@ const AddNewProject = () => {
   const [websiteURL, setWebsiteURL] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState(["react", "typescript"]);
+  const [repoFullname, setRepoFullname] = useState("");
+  const [validurl, setValidURL] = useState(false);
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
   };
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${userInfo().user_name}/repos`)
+    fetch(`https://api.github.com/users/${userInfo()?.user_name}/repos`)
       .then((res) => res.json())
       .then((data) => {
         setRepos(data);
+        console.log(data);
       });
   }, []);
   return (
@@ -61,10 +72,34 @@ const AddNewProject = () => {
           <Box mt={5}>
             <Text fontSize={"xl"}>Todos</Text>
             <UnorderedList>
-              <ListItem my={2}>Select repository</ListItem>
-              <ListItem my={2}>Set project name</ListItem>
-              <ListItem my={2}>Set project description</ListItem>
-              <ListItem my={2}>Link to website (optional)</ListItem>
+              <ListItem
+                my={2}
+                textDecoration={githubURL && "line-through"}
+                color={githubURL && "gray.400"}
+              >
+                Select repository
+              </ListItem>
+              <ListItem
+                my={2}
+                textDecoration={projectName && "line-through"}
+                color={projectName && "gray.400"}
+              >
+                Set project name
+              </ListItem>
+              <ListItem
+                my={2}
+                textDecoration={description && "line-through"}
+                color={description && "gray.400"}
+              >
+                Set project description
+              </ListItem>
+              <ListItem
+                my={2}
+                textDecoration={validurl ? "line-through" : ""}
+                color={validurl ? "gray.400" : ""}
+              >
+                Link to website (optional)
+              </ListItem>
               <ListItem my={2}>Select tech stack</ListItem>
             </UnorderedList>
           </Box>
@@ -74,7 +109,9 @@ const AddNewProject = () => {
             <TabList>
               <Tab>Repository</Tab>
               <Tab isDisabled={!githubURL}>Details</Tab>
-              <Tab>Tech stack</Tab>
+              <Tab isDisabled={!projectName || !description || !githubURL}>
+                Tech stack
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -106,13 +143,14 @@ const AddNewProject = () => {
                       borderRadius={"5px"}
                     >
                       <Icon as={SiGithub} h={5} w={5} mr={2} />
-                      <Text color={"grey.100"}>bossoncode/</Text>
-                      <Text>{projectName}</Text>
+                      <Text>{repoFullname}</Text>
                     </Flex>
                     <CloseButton
                       onClick={() => {
                         setGithubURL("");
                         setProjectName("");
+                        setDescription("");
+                        setValidURL(false);
                       }}
                     />
                   </Button>
@@ -148,6 +186,7 @@ const AddNewProject = () => {
                             setGithubURL(repo.svn_url);
                             setProjectName(repo.name);
                             setQuery("");
+                            setRepoFullname(repo.full_name);
                           }}
                         >
                           <Icon as={SiGithub} h={5} w={5} mr={2} />
@@ -173,10 +212,29 @@ const AddNewProject = () => {
                   placeholder={"Project name"}
                   my={2}
                   value={projectName}
+                  onChange={(e) => {
+                    setProjectName(e.target.value);
+                  }}
                 />
-                <Input placeholder={"Project description"} my={2} />
-                <Input placeholder={"Website"} my={2} />
-                <Button>Continue</Button>
+                <Input
+                  placeholder={"Project description"}
+                  my={2}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <Input
+                  placeholder={"Website"}
+                  my={2}
+                  onChange={(e) => {
+                    setWebsiteURL(e.target.value);
+                    setValidURL(testUrl(e.target.value));
+                  }}
+                />
+                <Button
+                  disabled={!projectName || !description}
+                  onClick={() => handleTabsChange(2)}
+                >
+                  Continue
+                </Button>
               </TabPanel>
             </TabPanels>
           </Tabs>
