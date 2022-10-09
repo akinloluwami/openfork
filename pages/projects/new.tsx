@@ -12,6 +12,9 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Tag,
+  TagCloseButton,
+  TagLeftIcon,
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
@@ -19,11 +22,23 @@ import { useEffect, useState } from "react";
 import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
+import ts from "../../utils/techstack";
 
 interface RepoData {
   name: string;
   svn_url: string;
   full_name: string;
+}
+
+interface TagData {
+  name: string;
+  logo: any;
+}
+interface SelectedTagsData {
+  [index: number]: {
+    name: string;
+    logo: any;
+  };
 }
 
 const AddNewProject = () => {
@@ -44,6 +59,8 @@ const AddNewProject = () => {
   const [tags, setTags] = useState(["react", "typescript"]);
   const [repoFullname, setRepoFullname] = useState("");
   const [validurl, setValidURL] = useState(false);
+  const [stackQuery, setStackQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -100,7 +117,13 @@ const AddNewProject = () => {
               >
                 Link to website (optional)
               </ListItem>
-              <ListItem my={2}>Select tech stack</ListItem>
+              <ListItem
+                my={2}
+                textDecoration={selectedTags?.length > 0 ? "line-through" : ""}
+                color={selectedTags?.length > 0 ? "gray.400" : ""}
+              >
+                Select tech stack
+              </ListItem>
             </UnorderedList>
           </Box>
         </Flex>
@@ -235,6 +258,60 @@ const AddNewProject = () => {
                 >
                   Continue
                 </Button>
+              </TabPanel>
+              <TabPanel>
+                <Flex direction={"column"}>
+                  <Flex my={2} gap={2}>
+                    {selectedTags.map((tag: TagData) => (
+                      <Tag>
+                        <TagLeftIcon>{tag.logo}</TagLeftIcon>
+                        {tag.name}
+                        <TagCloseButton
+                          onClick={() => {
+                            setSelectedTags(
+                              selectedTags.filter((t) => t !== tag)
+                            );
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </Flex>
+                  <Input
+                    placeholder={"Search"}
+                    my={4}
+                    onChange={(e) => {
+                      let timer;
+                      if (timer) {
+                        clearInterval(timer);
+                      }
+                      timer = setTimeout(() => {
+                        setStackQuery(e.target.value);
+                      }, 800);
+                    }}
+                  />
+                  <Flex direction={"column"}>
+                    {stackQuery !== "" &&
+                      ts
+                        .filter(
+                          (t) =>
+                            t.name.toLocaleLowerCase().includes(stackQuery) &&
+                            !selectedTags.includes(t)
+                        )
+                        .map((tag) => (
+                          <Tag
+                            my={2}
+                            onClick={() => {
+                              setSelectedTags([...selectedTags, tag]);
+                            }}
+                          >
+                            <Text>{tag.name}</Text>
+                          </Tag>
+                        ))}
+                  </Flex>
+                  <Button disabled={selectedTags.length < 1}>
+                    Publish project
+                  </Button>
+                </Flex>
               </TabPanel>
             </TabPanels>
           </Tabs>
