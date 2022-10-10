@@ -39,7 +39,7 @@ const Notifications = () => {
           <DrawerHeader>Notifications</DrawerHeader>
 
           <DrawerBody>
-            <Text>No new notifications</Text>
+            <Text>No notifications...we're currently working on this</Text>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
