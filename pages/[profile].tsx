@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Avatar from "../components/Avatar";
 import Header from "../components/Header";
-import Button from "../components/Button";
+import Button from "../components/GradientButton";
 import Tag from "../components/Tag";
 import UserProjects from "../components/Profile/UserProjects";
 import {
@@ -9,7 +9,6 @@ import {
   Flex,
   Heading,
   Text,
-  Link,
   Tabs,
   Tab,
   TabList,
@@ -25,6 +24,7 @@ import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import Projects from "../components/Projects";
 import ModalContainer from "../components/Major/ModalContainer";
+import GradientButton from "../components/GradientButton";
 
 interface UserData {
   name: string;
@@ -70,25 +70,7 @@ const Profile: NextPage = () => {
               </Box>
             </Flex>
           </Flex>
-          <Button
-            ml={20}
-            bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-            fontSize="13px"
-            p={0.5}
-            w={150}
-          >
-            <Flex
-              align={"center"}
-              justify={"center"}
-              bg={"#000"}
-              w={"100%"}
-              h={"100%"}
-              p={0.5}
-              borderRadius={"5px"}
-            >
-              <Text>Edit my profile</Text>
-            </Flex>
-          </Button>
+          <GradientButton text={"Edit my profile"} />
         </Flex>
 
         <Box p="30px 0">
@@ -106,6 +88,17 @@ const Profile: NextPage = () => {
                 </TabPanel>
                 <TabPanel>
                   <UserProjects />
+                </TabPanel>
+                <TabPanel>
+                  <Flex>
+                    <Text>You have not earn any badge yet.</Text>
+                  </Flex>
+                </TabPanel>
+                <TabPanel>
+                  <Flex direction={"column"} gap={2}>
+                    <Text>You have upvoted any project.</Text>
+                    <GradientButton text={"Explore projects"} outlined />
+                  </Flex>
                 </TabPanel>
               </TabPanels>
             </Tabs>
