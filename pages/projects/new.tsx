@@ -268,8 +268,8 @@ const AddNewProject = () => {
               <TabPanel>
                 <Flex direction={"column"}>
                   <Flex my={2} gap={2}>
-                    {selectedTags.map((tag: TagData) => (
-                      <Tag>
+                    {selectedTags.map((tag: TagData, i) => (
+                      <Tag key={i}>
                         <TagLeftIcon>{tag.logo}</TagLeftIcon>
                         {tag.name}
                         <TagCloseButton
@@ -304,8 +304,9 @@ const AddNewProject = () => {
                             t.name.toLocaleLowerCase().includes(stackQuery) &&
                             !selectedTags.includes(t)
                         )
-                        .map((tag) => (
+                        .map((tag, i) => (
                           <Tag
+                            key={i}
                             my={2}
                             onClick={() => {
                               setSelectedTags([...selectedTags, tag]);
