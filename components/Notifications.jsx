@@ -18,7 +18,7 @@ const Notifications = () => {
   const btnRef = useRef();
   return (
     <Box>
-      <Box ref={btnRef}>
+      <Box ref={btnRef} cursor={"pointer"}>
         <FaBell
           onClick={onOpen}
           style={{
