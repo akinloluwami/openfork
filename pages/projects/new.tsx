@@ -34,12 +34,6 @@ interface TagData {
   name: string;
   logo: any;
 }
-interface SelectedTagsData {
-  [index: number]: {
-    name: string;
-    logo: any;
-  };
-}
 
 const AddNewProject = () => {
   const regex =
@@ -56,13 +50,13 @@ const AddNewProject = () => {
   const [githubURL, setGithubURL] = useState("");
   const [websiteURL, setWebsiteURL] = useState("");
   const [description, setDescription] = useState("");
-  const [tags, setTags] = useState(["react", "typescript"]);
   const [repoFullname, setRepoFullname] = useState("");
   const [validurl, setValidURL] = useState(false);
   const [stackQuery, setStackQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
 
-  const stackQueryRef = useRef();
+  const stackQueryRef: any = useRef();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -121,8 +115,8 @@ const AddNewProject = () => {
               </ListItem>
               <ListItem
                 my={2}
-                textDecoration={selectedTags?.length > 0 ? "line-through" : ""}
-                color={selectedTags?.length > 0 ? "gray.400" : ""}
+                textDecoration={selectedTags.length > 0 ? "line-through" : ""}
+                color={selectedTags.length > 0 ? "gray.400" : ""}
               >
                 Select tech stack
               </ListItem>
@@ -268,7 +262,7 @@ const AddNewProject = () => {
               <TabPanel>
                 <Flex direction={"column"}>
                   <Flex my={2} gap={2}>
-                    {selectedTags.map((tag: TagData, i) => (
+                    {selectedTags.map((tag, i) => (
                       <Tag key={i}>
                         <TagLeftIcon>{tag.logo}</TagLeftIcon>
                         {tag.name}
@@ -301,7 +295,7 @@ const AddNewProject = () => {
                       ts
                         .filter(
                           (t) =>
-                            t.name.toLocaleLowerCase().includes(stackQuery) &&
+                            t.name.toLowerCase().includes(stackQuery) &&
                             !selectedTags.includes(t)
                         )
                         .map((tag, i) => (
@@ -310,6 +304,7 @@ const AddNewProject = () => {
                             my={2}
                             onClick={() => {
                               setSelectedTags([...selectedTags, tag]);
+                              setTags([...tags, tag.name]);
                               setStackQuery("");
                               stackQueryRef.current.value = "";
                             }}

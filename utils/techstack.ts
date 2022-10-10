@@ -78,12 +78,12 @@ import {
   SiYarn,
 } from "react-icons/si";
 
-// interface techStack {
-//   name: string;
-//   logo: any;
-// }
+interface techStack {
+  name: string;
+  logo: any;
+}
 
-export const ts = [
+const ts: techStack[] = [
   {
     name: "JavaScript",
     logo: SiJavascript,
