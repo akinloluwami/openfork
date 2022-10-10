@@ -18,7 +18,7 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
@@ -61,6 +61,8 @@ const AddNewProject = () => {
   const [validurl, setValidURL] = useState(false);
   const [stackQuery, setStackQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+
+  const stackQueryRef = useRef();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -253,7 +255,11 @@ const AddNewProject = () => {
                   }}
                 />
                 <Button
-                  disabled={!projectName || !description}
+                  disabled={
+                    !projectName ||
+                    !description ||
+                    (websiteURL !== "" && !validurl)
+                  }
                   onClick={() => handleTabsChange(2)}
                 >
                   Continue
@@ -279,6 +285,7 @@ const AddNewProject = () => {
                   <Input
                     placeholder={"Search"}
                     my={4}
+                    ref={stackQueryRef}
                     onChange={(e) => {
                       let timer;
                       if (timer) {
@@ -302,6 +309,8 @@ const AddNewProject = () => {
                             my={2}
                             onClick={() => {
                               setSelectedTags([...selectedTags, tag]);
+                              setStackQuery("");
+                              stackQueryRef.current.value = "";
                             }}
                           >
                             <Text>{tag.name}</Text>
