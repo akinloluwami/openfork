@@ -23,7 +23,7 @@ const Hero: NextPage = () => {
       >
         <Box>
           <Heading
-            fontSize={["4xl", "50px"]}
+            fontSize={["4xl", "55px"]}
             maxW="600px"
             m="auto"
             textAlign={"center"}
@@ -48,7 +48,7 @@ const Hero: NextPage = () => {
           <Text
             maxW="600px"
             m="20px auto"
-            fontSize={["sm", "20px"]}
+            fontSize={["md", "16px"]}
             textAlign={"center"}
             fontFamily={"var(--satoshi)"}
           >

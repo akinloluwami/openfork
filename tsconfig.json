@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,7 +16,7 @@
     "incremental": true
   },
   "include": [
-    "pages/[profile].tsx",
+    "pages/[...profile].tsx",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

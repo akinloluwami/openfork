@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 import Avatar from "../components/Avatar";
 import Header from "../components/Header";
-import Button from "../components/GradientButton";
+import GradientButton from "../components/GradientButton";
 import Tag from "../components/Tag";
 import UserProjects from "../components/Profile/UserProjects";
 import {
@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   Text,
+  Link,
   Tabs,
   Tab,
   TabList,
@@ -24,26 +25,26 @@ import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import Projects from "../components/Projects";
 import ModalContainer from "../components/Major/ModalContainer";
-import GradientButton from "../components/GradientButton";
+import { supabase } from "../utils/supabaseClient";
 
 interface UserData {
   name: string;
   user_name: string;
   avatar_url: any;
 }
-const Profile: NextPage = () => {
-  const [user, setUser] = useState<UserData>();
-  useEffect(() => {
-    setUser(userInfo());
-  }, []);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const ProfileLayout = ({
+  user,
+  router,
+  children,
+}: {
+  user: any;
+  router: string[];
+  children: any;
+}) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Head>
-        <title>{user?.name}'s profile on OpenFork | OpenFork</title>
-      </Head>
       <Header />
       <Box p="25px 10%">
         <Flex justify="center" gap="30px" align="center" wrap="wrap">
@@ -70,38 +71,45 @@ const Profile: NextPage = () => {
               </Box>
             </Flex>
           </Flex>
-          <GradientButton text={"Edit my profile"} />
+          {(router && router[0]) == user?.user_name && (
+            <GradientButton text="Edit my Profile" />
+          )}
         </Flex>
 
         <Box p="30px 0">
           <Center>
             <Tabs variant={"soft-rounded"} colorScheme={"purple"} size={"sm"}>
               <TabList>
-                <Tab>About</Tab>
-                <Tab>Projects</Tab>
-                <Tab>Badges</Tab>
-                <Tab>Upvotes</Tab>
+                <Link href="about">
+                  <Tab>About</Tab>
+                </Link>
+                <Link href="project">
+                  <Tab>Projects</Tab>
+                </Link>
+                <Link href="badges">
+                  <Tab>Badges</Tab>
+                </Link>
+                <Link href="upvotes">
+                  <Tab>Upvotes</Tab>
+                </Link>
               </TabList>
-              <TabPanels>
-                <TabPanel>
+              <TabPanels></TabPanels>
+            </Tabs>
+            {/* <TabPanel>
                   <Text>About</Text>
-                </TabPanel>
-                <TabPanel>
+                  </TabPanel>
+                  <TabPanel>
                   <UserProjects />
                 </TabPanel>
                 <TabPanel>
-                  <Flex>
-                    <Text>You have not earn any badge yet.</Text>
-                  </Flex>
+                  <Text>Badges</Text>
                 </TabPanel>
                 <TabPanel>
-                  <Flex direction={"column"} gap={2}>
-                    <Text>You have upvoted any project.</Text>
-                    <GradientButton text={"Explore projects"} outlined />
-                  </Flex>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+                  <Text>Upvotes</Text>
+                </TabPanel> */}
+          </Center>
+          <Center>
+            <Box> {children}</Box>
           </Center>
         </Box>
       </Box>
@@ -109,4 +117,4 @@ const Profile: NextPage = () => {
   );
 };
 
-export default Profile;
+export default ProfileLayout;
