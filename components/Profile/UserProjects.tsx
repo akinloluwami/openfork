@@ -1,15 +1,16 @@
 import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import Project from "./Project";
 
+interface ProjectInterface {
+  id: string;
+  name?: string;
+}
+
 const UserProjects = () => {
-  interface ProjectInterface{
-    id:string;
-    name?:string;
-  }
-  const [projects, setProjects] = useState<Array<ProjectInterface>>([]);
+  const [projects, setProjects] = useState<any>();
 
   useEffect(() => {
     async function fetchData() {
@@ -19,7 +20,11 @@ const UserProjects = () => {
           .select("*")
           .eq(
             "user",
-            JSON.parse( localStorage.getItem("sb-tebioleiibrvzamyqsia-auth-token") as string ).user.id
+            JSON.parse(
+              localStorage.getItem(
+                "sb-tebioleiibrvzamyqsia-auth-token"
+              ) as string
+            ).user.id
           );
         setProjects(Projects);
         console.log(Projects);
@@ -50,7 +55,7 @@ const UserProjects = () => {
         {projects.length < 1 ? (
           <Text textAlign={"center"}>You don't have any project.</Text>
         ) : (
-          projects.map((project) => (
+          projects.map((project: any) => (
             <Project key={project.id} name={project.name} />
           ))
         )}
