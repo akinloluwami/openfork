@@ -15,7 +15,7 @@ import { FaGithub, FaAngleDown, FaBell } from "react-icons/fa";
 
 const Notifications = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const btnRef: any = useRef();
   return (
     <Box>
       <Box ref={btnRef} cursor={"pointer"}>

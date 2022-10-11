@@ -20,8 +20,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "utils/supabase/auth.js",
-    "utils/Storage.js"
+    "utils/supabase/auth.ts"
   ],
   "exclude": ["node_modules"]
 }

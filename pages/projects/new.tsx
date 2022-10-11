@@ -23,6 +23,7 @@ import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
 import ts from "../../utils/techstack";
+import { octokit } from "../../utils/octokitClient";
 
 interface RepoData {
   name: string;
@@ -63,11 +64,14 @@ const AddNewProject = () => {
   };
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${userInfo()?.user_name}/repos`)
-      .then((res) => res.json())
-      .then((data) => {
-        setRepos(data);
-        console.log(data);
+    octokit
+      .request("GET /users/{username}/repos", {
+        username: userInfo()?.user_name,
+        per_page: 100,
+      })
+      .then((data: any) => {
+        console.log(data.data);
+        setRepos(data.data);
       });
   }, []);
   return (

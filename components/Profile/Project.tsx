@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-// import { NextPage } from "next"; 
+// import { NextPage } from "next";
 import React from "react";
 
 interface Props {

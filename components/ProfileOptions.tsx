@@ -12,8 +12,13 @@ import React, { useEffect, useState } from "react";
 import { signout } from "../utils/supabase/auth";
 import userInfo from "../utils/userInfo";
 
+interface userProps {
+  avatar_url: string;
+  user_name: string;
+}
+
 const ProfileOptions = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<userProps>();
   const router = useRouter();
   useEffect(() => {
     setUser(userInfo());
@@ -33,7 +38,7 @@ const ProfileOptions = () => {
         <MenuItem
           onClick={() => {
             signout();
-            router.reload(window.location.pathname);
+            router.reload();
           }}
         >
           Logout
