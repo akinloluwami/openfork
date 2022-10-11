@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { NextPage } from "next";
+// import { NextPage } from "next"; 
 import React from "react";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   website?: any;
 }
 
-const Project: NextPage = ({ name, github, description, website }: Props) => {
+const Project = ({ name, github, description, website }: Props) => {
   return <Box>{name}</Box>;
 };
 

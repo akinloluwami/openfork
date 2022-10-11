@@ -5,20 +5,28 @@ import { supabase } from "../../utils/supabaseClient";
 import Project from "./Project";
 
 const UserProjects = () => {
-  const [projects, setProjects] = useState([]);
+  interface ProjectInterface{
+    id:string;
+    name?:string;
+  }
+  const [projects, setProjects] = useState<Array<ProjectInterface>>([]);
 
   useEffect(() => {
     async function fetchData() {
-      let { data: Projects, error } = await supabase
-        .from("Projects")
-        .select("*")
-        .eq(
-          "user",
-          JSON.parse(localStorage.getItem("sb-tebioleiibrvzamyqsia-auth-token"))
-            .user.id
-        );
-      setProjects(Projects);
-      console.log(Projects);
+      try {
+        let { data: Projects, error } = await supabase
+          .from("Projects")
+          .select("*")
+          .eq(
+            "user",
+            JSON.parse( localStorage.getItem("sb-tebioleiibrvzamyqsia-auth-token") as string ).user.id
+          );
+        setProjects(Projects);
+        console.log(Projects);
+      } catch (err) {
+        console.log(err);
+        setProjects([]);
+      }
     }
     fetchData();
   }, []);
@@ -50,5 +58,4 @@ const UserProjects = () => {
     </Flex>
   );
 };
-
 export default UserProjects;
