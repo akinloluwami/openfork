@@ -19,8 +19,6 @@ import {
   TabPanel,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import userInfo from "../utils/userInfo";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import Projects from "../components/Projects";
