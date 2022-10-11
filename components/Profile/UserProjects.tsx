@@ -15,7 +15,7 @@ const UserProjects = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        let { data: Projects, error } = await supabase
+        let { data: Projects } = await supabase
           .from("Projects")
           .select("*")
           .eq(
