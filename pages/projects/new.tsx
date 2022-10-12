@@ -24,6 +24,7 @@ import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
 import ts from "../../utils/techstack";
 import { octokit } from "../../utils/octokitClient";
+import { supabase } from "../../utils/supabaseClient";
 
 interface RepoData {
   name: string;
@@ -64,15 +65,19 @@ const AddNewProject = () => {
   };
 
   useEffect(() => {
-    octokit
-      .request("GET /users/{username}/repos", {
-        username: userInfo()?.user_name,
-        per_page: 100,
-      })
-      .then((data: any) => {
-        console.log(data.data);
-        setRepos(data.data);
-      });
+    async function getRepos() {
+      const user = (await supabase.auth.getUser()).data.user;
+      octokit
+        .request("GET /users/{username}/repos", {
+          username: user?.user_metadata?.user_name,
+          per_page: 100,
+        })
+        .then((data: any) => {
+          console.log(data.data);
+          setRepos(data.data);
+        });
+    }
+    getRepos();
   }, []);
   return (
     <Box w={"80%"} m={"auto"}>

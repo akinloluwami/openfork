@@ -10,26 +10,22 @@ interface ProjectInterface {
 }
 
 const UserProjects = () => {
-  const [projects, setProjects] = useState<any>();
+  const [projects, setProjects] = useState<any>([]);
 
   useEffect(() => {
+    const user = supabase.auth.getUser();
+    user.then((data) => {
+      console.log(data);
+    });
+
     async function fetchData() {
       try {
         let { data: Projects } = await supabase
           .from("Projects")
           .select("*")
-          .eq(
-            "user",
-            JSON.parse(
-              localStorage.getItem(
-                "sb-tebioleiibrvzamyqsia-auth-token"
-              ) as string
-            ).user.id
-          );
+          .eq("user", (await supabase.auth.getUser()).data.user?.id);
         setProjects(Projects);
-        console.log(Projects);
       } catch (err) {
-        console.log(err);
         setProjects([]);
       }
     }

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { signout } from "../utils/supabase/auth";
+import { supabase } from "../utils/supabaseClient";
 import userInfo from "../utils/userInfo";
 
 interface userProps {
@@ -18,10 +19,15 @@ interface userProps {
 }
 
 const ProfileOptions = () => {
-  const [user, setUser] = useState<userProps>();
+  const [user, setUser] = useState<any>();
   const router = useRouter();
   useEffect(() => {
-    setUser(userInfo());
+    async function getUser() {
+      await supabase.auth.getUser().then((data) => {
+        setUser(data.data.user?.user_metadata);
+      });
+    }
+    getUser();
   }, []);
   return (
     <Menu isLazy>

@@ -23,9 +23,7 @@ import userInfo from "../utils/userInfo";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import ProfileLayout from "../Layout/ProfileLayout";
-// import { GoVerified } from "react-icons/go";
-// import Projects from "../components/Projects";
-// import ModalContainer from "../components/Major/ModalContainer";
+import { supabase } from "../utils/supabaseClient";
 
 interface UserData {
   name: string;
@@ -36,13 +34,15 @@ const Profile: NextPage = () => {
   const router = useRouter();
   const { profile } = router.query;
   const profileRoute = profile as unknown as string[];
-  console.log(profileRoute);
   const [user, setUser] = useState<UserData>();
-  useEffect(() => {
-    setUser(userInfo());
-  }, []);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  useEffect(() => {
+    async function fetchUser() {
+      const user: any = await supabase.auth.getUser();
+      setUser(user.data.user?.user_metadata);
+    }
+    fetchUser();
+  }, []);
 
   return (
     <>

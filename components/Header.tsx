@@ -9,10 +9,17 @@ import Notifications from "./Notifications";
 import ProfileOptions from "./ProfileOptions";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { supabase } from "../utils/supabaseClient";
 const Header = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<any>({});
+
   useEffect(() => {
-    setUser(userInfo());
+    async function getUser() {
+      await supabase.auth.getUser().then((data) => {
+        setUser(data.data.user?.user_metadata);
+      });
+    }
+    getUser();
   }, []);
   return (
     <ContainerLayout>
