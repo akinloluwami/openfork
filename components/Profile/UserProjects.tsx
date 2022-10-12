@@ -24,8 +24,7 @@ const UserProjects = () => {
           .from("Projects")
           .select("*")
           .eq("user", (await supabase.auth.getUser()).data.user?.id);
-        // setProjects(Projects);
-        console.log(Projects);
+        setProjects(Projects);
       } catch (err) {
         setProjects([]);
       }

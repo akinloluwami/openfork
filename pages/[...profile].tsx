@@ -38,13 +38,11 @@ const Profile: NextPage = () => {
 
   useEffect(() => {
     async function fetchUser() {
-      const user = await supabase.auth.getUser();
+      const user: any = await supabase.auth.getUser();
       setUser(user.data.user?.user_metadata);
     }
     fetchUser();
   }, []);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
