@@ -10,7 +10,7 @@ interface ProjectInterface {
 }
 
 const UserProjects = () => {
-  const [projects, setProjects] = useState<[]>([]);
+  const [projects, setProjects] = useState<ProjectInterface[]>([]);
 
   useEffect(() => {
     const user = supabase.auth.getUser();
@@ -24,9 +24,9 @@ const UserProjects = () => {
           .from("Projects")
           .select("*")
           .eq("user", (await supabase.auth.getUser()).data.user?.id);
-        setProjects(Projects);
+        // setProjects(Projects);
+        console.log(Projects);
       } catch (err) {
-        console.log(err);
         setProjects([]);
       }
     }
