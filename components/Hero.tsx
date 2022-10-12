@@ -7,10 +7,17 @@ import ContainerLayout from "../Layout/ContainerLayout";
 import { useContext, useEffect, useState } from "react";
 import { signInWithGithub } from "../utils/supabase/auth";
 import userInfo from "../utils/userInfo";
+import { supabase } from "../utils/supabaseClient";
 const Hero: NextPage = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<any>({});
+
   useEffect(() => {
-    setUser(userInfo());
+    async function getUser() {
+      await supabase.auth.getUser().then((data) => {
+        setUser(data.data.user?.user_metadata);
+      });
+    }
+    getUser();
   }, []);
   return (
     <ContainerLayout>
