@@ -58,10 +58,6 @@ const Profile: NextPage = ({ data }) => {
   const profileRoute = profile as unknown as string[];
   const user = data;
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   async function updateProfile() {
     try {
       const user = (await supabase.auth.getUser()).data.user;
