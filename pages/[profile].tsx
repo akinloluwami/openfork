@@ -92,7 +92,6 @@ const Profile: NextPage = ({ data }) => {
           (profileRoute && profileRoute[1] == undefined)) && (
           <Text>About User Here</Text>
         )}
-        {/* <Button onClick={updateProfile}>Update</Button> */}
 
         {profileRoute && profileRoute[1] == "projects" && <UserProjects />}
 
