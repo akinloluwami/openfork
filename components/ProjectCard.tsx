@@ -8,15 +8,23 @@ import {
   SiSupabase,
   SiTypescript,
 } from "react-icons/si";
+import Head from "next/head";
 
 interface Props {
   name?: string;
   owner?: string;
   description?: string;
   imgSrc?: any;
+  onOpen?: any;
 }
 
-const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
+const ProjectCard: NextPage = ({
+  name,
+  owner,
+  description,
+  imgSrc,
+  onOpen,
+}: Props) => {
   return (
     <>
       <Flex
@@ -30,6 +38,7 @@ const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
         _hover={{
           background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
         }}
+        onClick={onOpen}
       >
         <Box p={6} w="" bg="#111" borderRadius={"md"}>
           <Flex align="center" gap="10px">
