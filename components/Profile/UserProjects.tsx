@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import Project from "./Project";
+import UserProjectCard from "./UserProjectCard";
 
 interface ProjectInterface {
   id: string;
@@ -52,7 +53,7 @@ const UserProjects = () => {
           <Text textAlign={"center"}>You don't have any project.</Text>
         ) : (
           projects.map((project: any) => (
-            <Project key={project.id} name={project.name} />
+            <UserProjectCard key={project.id} name={project.name} />
           ))
         )}
       </Flex>
