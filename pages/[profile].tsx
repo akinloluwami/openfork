@@ -58,28 +58,28 @@ const Profile: NextPage = ({ data }) => {
   const profileRoute = profile as unknown as string[];
   const user = data;
 
-  async function updateProfile() {
-    try {
-      const user = (await supabase.auth.getUser()).data.user;
-      const updates = {
-        id: user?.id,
-        username: user?.user_metadata?.user_name,
-        updated_at: new Date(),
-        avatar_url: user?.user_metadata?.avatar_url,
-        display_name: user?.user_metadata.full_name,
-      };
+  // async function updateProfile() {
+  //   try {
+  //     const user = (await supabase.auth.getUser()).data.user;
+  //     const updates = {
+  //       id: user?.id,
+  //       username: user?.user_metadata?.user_name,
+  //       updated_at: new Date(),
+  //       avatar_url: user?.user_metadata?.avatar_url,
+  //       display_name: user?.user_metadata.full_name,
+  //     };
 
-      let { data, error } = await supabase.from("profiles").upsert(updates);
-      if (data) {
-        console.log(data);
-      }
-      if (error) {
-        throw error;
-      }
-    } catch (error: any) {
-      alert(error.message);
-    }
-  }
+  //     let { data, error } = await supabase.from("profiles").upsert(updates);
+  //     if (data) {
+  //       console.log(data);
+  //     }
+  //     if (error) {
+  //       throw error;
+  //     }
+  //   } catch (error: any) {
+  //     alert(error.message);
+  //   }
+  // }
 
   return (
     <>
