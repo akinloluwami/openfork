@@ -51,7 +51,6 @@ const Profile: NextPage = () => {
       }
 
       if (data) {
-        // setUsername(data.username);
         setUser(data);
       }
     } catch (error) {
