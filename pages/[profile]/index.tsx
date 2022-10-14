@@ -117,8 +117,8 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
         <Box p="30px 0">
           <Center>
             <Flex>
-              {pages.map((page) => (
-                <Text mx={5}>
+              {pages.map((page, i) => (
+                <Text mx={5} key={i}>
                   <Link href={`/${user.username}${page.href}`}>
                     {page.title}
                   </Link>
