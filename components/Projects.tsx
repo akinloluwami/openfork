@@ -16,34 +16,14 @@ import Router from "next/router";
 import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
 
+interface ProjectProps {
+  name: string;
+  description: string;
+}
+
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const demo = [
-    {
-      name: "Open Fork",
-      owner: "@bossoncode",
-      description: `Find Open-Source You can contribute to. 
-      dolorem inventore alias assumenda quisquam qui repellat eaque illo architecto dolor iur
+  const [projects, setProjects] = useState<any>([]);
 
-      `,
-    },
-    {
-      name: "Fork",
-      owner: "@bossoncode",
-      description: `Find Open-Source You can contribute to. 
-      dolorem inventore alias assumenda quisquam qui repellat eaque illo architecto dolor iur
-
-      `,
-    },
-    {
-      name: "Open",
-      owner: "@bossoncode",
-      description: `Find Open-Source You can contribute to. 
-      dolorem inventore alias assumenda quisquam qui repellat eaque illo architecto dolor iur
-
-      `,
-    },
-  ];
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = Router;
   const initPageTitle =
@@ -52,11 +32,8 @@ const Projects = () => {
 
   useEffect(() => {
     async function fetchProjects() {
-      let { data: Projects, error } = await supabase
-        .from("Projects")
-        .select("*");
+      let { data: Projects } = await supabase.from("Projects").select("*");
       setProjects(Projects);
-      console.log(Projects);
     }
 
     fetchProjects();
@@ -120,7 +97,7 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects.map((items, index) => (
+          {projects.map((items: any, index: number) => (
             // <Link
             //   key={index}
             //   href={`?${items.name.toLowerCase()}=${index}`}
