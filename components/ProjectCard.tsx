@@ -8,7 +8,6 @@ import {
   SiSupabase,
   SiTypescript,
 } from "react-icons/si";
-import Head from "next/head";
 import Link from "next/link";
 
 interface Props {
@@ -19,13 +18,7 @@ interface Props {
   onOpen?: any;
 }
 
-const ProjectCard: NextPage = ({
-  name,
-  owner,
-  description,
-  imgSrc,
-  onOpen,
-}: Props) => {
+const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
   return (
     <Link href={"?projects/pppp"} as={`/projects/${name?.toLowerCase()}`}>
       <Flex
