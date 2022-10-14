@@ -1,13 +1,31 @@
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 import Avatar from "../../components/Avatar";
 import Header from "../../components/Header";
+import GradientButton from "../../components/GradientButton";
 import Tag from "../../components/Tag";
 import UserProjects from "../../components/Profile/UserProjects";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Link,
+  Tabs,
+  Tab,
+  TabList,
+  Center,
+  Icon,
+  TabPanels,
+  TabPanel,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import ProfileLayout from "../../Layout/ProfileLayout";
+import { GoVerified } from "react-icons/go";
+import Projects from "../../components/Projects";
+import ModalContainer from "../../components/Major/ModalContainer";
 import { supabase } from "../../utils/supabaseClient";
-import { Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { NextPage } from "next";
 
 interface UserData {
   name: string;
@@ -21,7 +39,6 @@ export async function getStaticProps(content: any) {
     .select("*")
     .eq("username", content.params.profile)
     .single();
-  console.log(data);
   return {
     props: {
       data,
@@ -40,56 +57,51 @@ export async function getStaticPaths() {
   };
 }
 
-const Profile: NextPage = ({ data }) => {
-  const router = useRouter();
-  const { profile } = router.query;
-  const profileRoute = profile as unknown as string[];
+const Profile = ({ data, children }) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const user = data;
-  //jjjjj
-  // async function updateProfile() {
-  //   try {
-  //     const user = (await supabase.auth.getUser()).data.user;
-  //     const updates = {
-  //       id: user?.id,
-  //       username: user?.user_metadata?.user_name,
-  //       updated_at: new Date(),
-  //       avatar_url: user?.user_metadata?.avatar_url,
-  //       display_name: user?.user_metadata.full_name,
-  //     };
-
-  //     let { data, error } = await supabase.from("profiles").upsert(updates);
-  //     if (data) {
-  //       console.log(data);
-  //     }
-  //     if (error) {
-  //       throw error;
-  //     }
-  //   } catch (error: any) {
-  //     alert(error.message);
-  //   }
-  // }
-
+  useEffect(() => {
+    console.log(data);
+  }, []);
   return (
     <>
-      <Head>
-        <title>{user.display_name}'s profile on OpenFork | OpenFork</title>
-      </Head>
+      <Header />
+      <Box p="25px 10%">
+        <Flex justify="center" gap="30px" align="center" wrap="wrap">
+          <Flex align="center">
+            <Flex>
+              <Box mr={10}>
+                <Avatar src={user?.avatar_url} />
+              </Box>
+              <Box>
+                <Heading>{user?.display_name}</Heading>
+                <Flex align={"center"} my={1.5}>
+                  <Text fontSize="15px" fontWeight="light">
+                    @{user?.username}
+                  </Text>
+                  {user?.is_verified && <Icon as={GoVerified} ml={1} />}
+                </Flex>
 
-      <ProfileLayout router={profileRoute} user={user}>
-        {((profileRoute && profileRoute[1] == "about") ||
-          (profileRoute && profileRoute[1] == undefined)) && (
-          <Text>About User Here</Text>
-        )}
+                <Text fontSize="16px">Software Engineer</Text>
+                <Flex fontSize="13px" gap="10px" m="10px 0">
+                  <Text>Following: 69</Text>
+                  <Text>Followers: 69k</Text>
+                  <Text>Upvotes: 690k</Text>
+                </Flex>
+              </Box>
+            </Flex>
+          </Flex>
+          {/* {(router && router[0]) == user?.user_name && (
+            <GradientButton text="Edit my Profile" />
+          )} */}
+        </Flex>
 
-        {/* <Button onClick={updateProfile}>Update Profile</Button> */}
-
-        {profileRoute && profileRoute[1] == "projects" && <UserProjects />}
-
-        {profileRoute && profileRoute[1] == "badges" && <Text>Badges</Text>}
-        {profileRoute && profileRoute[1] == "upvotes" && <Text>Upvotes</Text>}
-      </ProfileLayout>
-
-      {/* <Header /> */}
+        <Box p="30px 0">
+          <Center>
+            <Box> {children}</Box>
+          </Center>
+        </Box>
+      </Box>
     </>
   );
 };
