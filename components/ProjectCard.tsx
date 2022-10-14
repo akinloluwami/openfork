@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Flex, Box, Heading, Text, Link, Avatar } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Avatar } from "@chakra-ui/react";
 import StackTag from "./Tag";
 import {
   SiChakraui,
@@ -8,17 +8,26 @@ import {
   SiSupabase,
   SiTypescript,
 } from "react-icons/si";
+import Head from "next/head";
+import Link from "next/link";
 
 interface Props {
   name?: string;
   owner?: string;
   description?: string;
   imgSrc?: any;
+  onOpen?: any;
 }
 
-const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
+const ProjectCard: NextPage = ({
+  name,
+  owner,
+  description,
+  imgSrc,
+  onOpen,
+}: Props) => {
   return (
-    <>
+    <Link href={"?projects/pppp"} as={`/projects/${name?.toLowerCase()}`}>
       <Flex
         alignItems={"center"}
         justifyContent={"center"}
@@ -30,6 +39,7 @@ const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
         _hover={{
           background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
         }}
+        onClick={onOpen}
       >
         <Box p={6} w="" bg="#111" borderRadius={"md"}>
           <Flex align="center" gap="10px">
@@ -55,7 +65,7 @@ const ProjectCard: NextPage = ({ name, owner, description, imgSrc }: Props) => {
           </Flex>
         </Box>
       </Flex>
-    </>
+    </Link>
   );
 };
 

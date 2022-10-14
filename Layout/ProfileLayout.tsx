@@ -52,12 +52,12 @@ const ProfileLayout = ({
                 <Avatar src={user?.avatar_url} />
               </Box>
               <Box>
-                <Heading>{user?.name}</Heading>
+                <Heading>{user?.display_name}</Heading>
                 <Flex align={"center"} my={1.5}>
                   <Text fontSize="15px" fontWeight="light">
-                    @{user?.user_name}
+                    @{user?.username}
                   </Text>
-                  <Icon as={GoVerified} ml={1} />
+                  {user?.is_verified && <Icon as={GoVerified} ml={1} />}
                 </Flex>
 
                 <Text fontSize="16px">Software Engineer</Text>

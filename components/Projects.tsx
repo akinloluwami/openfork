@@ -1,9 +1,23 @@
-import { Grid } from "@chakra-ui/react";
-import React from "react";
+import { Button, Grid, Text, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import Head from "next/head";
+import Router from "next/router";
+import Link from "next/link";
+import { supabase } from "../utils/supabaseClient";
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
   const demo = [
     {
       name: "Open Fork",
@@ -14,7 +28,7 @@ const Projects = () => {
       `,
     },
     {
-      name: "Open Fork",
+      name: "Fork",
       owner: "@bossoncode",
       description: `Find Open-Source You can contribute to. 
       dolorem inventore alias assumenda quisquam qui repellat eaque illo architecto dolor iur
@@ -22,7 +36,7 @@ const Projects = () => {
       `,
     },
     {
-      name: "Open Fork",
+      name: "Open",
       owner: "@bossoncode",
       description: `Find Open-Source You can contribute to. 
       dolorem inventore alias assumenda quisquam qui repellat eaque illo architecto dolor iur
@@ -30,28 +44,102 @@ const Projects = () => {
       `,
     },
   ];
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = Router;
+  const initPageTitle =
+    "Openfork - Open-source projects you can actually contribute to.";
+  const [pageTitle, setPageTitle] = useState(initPageTitle);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      let { data: Projects, error } = await supabase
+        .from("Projects")
+        .select("*");
+      setProjects(Projects);
+      console.log(Projects);
+    }
+
+    fetchProjects();
+  }, []);
+
+  const cardCLick = (title: string) => {
+    onOpen();
+    setPageTitle(`${title} - Openfork`);
+    router.push(`/?projects/${title.toLowerCase()}`, undefined, {
+      shallow: true,
+    });
+  };
+  const cardClose = () => {
+    setPageTitle(initPageTitle);
+    onClose();
+    router.push("/");
+  };
 
   return (
     <ContainerLayout>
-      <Grid
-        mt={20}
-        alignItems={"center"}
-        w="100%"
-        templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
-        justifyContent={"center"}
-        gap={5}
-        py={10}
-      >
-        {demo.map((items, index) => (
-          <ProjectCard
-            //  @ts-ignore
-            name={items.name}
-            owner={items.owner}
-            description={items.description}
-            key={index}
-          />
-        ))}
-      </Grid>
+      <>
+        <Head>
+          <title>{pageTitle}</title>
+        </Head>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla
+                vitae tenetur laudantium pariatur asperiores distinctio, magni
+                est numquam tempore ullam nisi error, cupiditate autem dolore?
+                Tenetur commodi enim veritatis odio, doloribus soluta
+                reprehenderit optio repellendus inventore cum omnis eius
+                recusandae.
+              </Text>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  cardClose();
+                }}
+              >
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        <Grid
+          mt={20}
+          alignItems={"center"}
+          w="100%"
+          templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
+          justifyContent={"center"}
+          gap={5}
+          py={10}
+        >
+          {projects.map((items, index) => (
+            // <Link
+            //   key={index}
+            //   href={`?${items.name.toLowerCase()}=${index}`}
+            //   as={`${index}`}
+            // >
+            <ProjectCard
+              //  @ts-ignore
+              key={items.id}
+              name={items.name}
+              owner={"@bossoncode"}
+              description={items.description}
+              onOpen={() => {
+                cardCLick(items.name);
+              }}
+            />
+            // </Link>
+          ))}
+        </Grid>
+      </>
     </ContainerLayout>
   );
 };
