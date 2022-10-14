@@ -57,7 +57,7 @@ const Profile: NextPage = ({ data: any }) => {
   const { profile } = router.query;
   const profileRoute = profile as unknown as string[];
   const user = data;
-
+  //jjjjj
   // async function updateProfile() {
   //   try {
   //     const user = (await supabase.auth.getUser()).data.user;
