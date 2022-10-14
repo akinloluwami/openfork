@@ -93,6 +93,8 @@ const Profile: NextPage = ({ data }) => {
           <Text>About User Here</Text>
         )}
 
+        {/* <Button onClick={updateProfile}>Update Profile</Button> */}
+
         {profileRoute && profileRoute[1] == "projects" && <UserProjects />}
 
         {profileRoute && profileRoute[1] == "badges" && <Text>Badges</Text>}
