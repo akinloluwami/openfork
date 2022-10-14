@@ -24,23 +24,45 @@ import { GoVerified } from "react-icons/go";
 import Projects from "../components/Projects";
 import ModalContainer from "../components/Major/ModalContainer";
 import { supabase } from "../utils/supabaseClient";
+import { useEffect } from "react";
+import { NextPage } from "next";
 
 interface UserData {
   name: string;
   user_name: string;
   avatar_url: any;
 }
-const ProfileLayout = ({
-  user,
-  router,
-  children,
-}: {
-  user: any;
-  router: string[];
-  children: any;
-}) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
 
+export async function getStaticProps(content: any) {
+  let { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("username", content.params.profile)
+    .single();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  let { data: profiles } = await supabase.from("profiles").select("*");
+  const pathsWithParams = profiles.map((profile) => ({
+    params: { profile: profile.username },
+  }));
+  return {
+    paths: pathsWithParams,
+    fallback: false,
+  };
+}
+
+const ProfileLayout = ({ data }) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = data;
+  useEffect(() => {
+    console.log(data);
+  }, []);
   return (
     <>
       <Header />
@@ -69,15 +91,13 @@ const ProfileLayout = ({
               </Box>
             </Flex>
           </Flex>
-          {(router && router[0]) == user?.user_name && (
+          {/* {(router && router[0]) == user?.user_name && (
             <GradientButton text="Edit my Profile" />
-          )}
+          )} */}
         </Flex>
 
         <Box p="30px 0">
-          <Center>
-            <Box> {children}</Box>
-          </Center>
+          <Center>{/* <Box> {children}</Box> */}</Center>
         </Box>
       </Box>
     </>
