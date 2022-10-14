@@ -1,8 +1,38 @@
+import { Text } from "@chakra-ui/react";
 import React from "react";
-import ProfileLayout from "../../Layout/ProfileLayout";
+import { supabase } from "../../utils/supabaseClient";
+import Profile from "../[profile]/index";
 
-const projects = () => {
-  return <ProfileLayout></ProfileLayout>;
+export async function getStaticProps(content: any) {
+  let { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("username", content.params.profile)
+    .single();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  let { data: profiles } = await supabase.from("profiles").select("*");
+  const pathsWithParams = profiles.map((profile) => ({
+    params: { profile: profile.username },
+  }));
+  return {
+    paths: pathsWithParams,
+    fallback: false,
+  };
+}
+
+const Projects = ({ data }) => {
+  return (
+    <Profile data={data}>
+      <Text>Projects</Text>
+    </Profile>
+  );
 };
 
-export default projects;
+export default Projects;
