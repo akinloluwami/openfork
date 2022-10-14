@@ -27,12 +27,12 @@ export async function getStaticPaths() {
   };
 }
 
-const Projects = ({ data }: { data: any }) => {
+const Upvotes = ({ data }: { data: any }) => {
   return (
     <Profile data={data}>
-      <Text>Projects</Text>
+      <Text>Upvotes</Text>
     </Profile>
   );
 };
 
-export default Projects;
+export default Upvotes;

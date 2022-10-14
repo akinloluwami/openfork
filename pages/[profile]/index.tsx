@@ -47,7 +47,7 @@ export async function getStaticProps(content: any) {
 
 export async function getStaticPaths() {
   let { data: profiles } = await supabase.from("profiles").select("*");
-  const pathsWithParams = profiles.map((profile) => ({
+  const pathsWithParams = profiles!.map((profile) => ({
     params: { profile: profile.username },
   }));
   return {
@@ -56,7 +56,7 @@ export async function getStaticPaths() {
   };
 }
 
-const Profile = ({ data, children }) => {
+const Profile = ({ data, children }: { data: any; children: any }) => {
   const user = data;
   useEffect(() => {
     console.log(data);
@@ -77,7 +77,7 @@ const Profile = ({ data, children }) => {
     },
     {
       title: "Upvotes",
-      href: "/",
+      href: "/upvotes",
     },
   ];
 
