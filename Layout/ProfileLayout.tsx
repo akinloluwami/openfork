@@ -76,37 +76,6 @@ const ProfileLayout = ({
 
         <Box p="30px 0">
           <Center>
-            <Tabs variant={"soft-rounded"} colorScheme={"purple"} size={"sm"}>
-              <TabList>
-                <Link href="about">
-                  <Tab>About</Tab>
-                </Link>
-                <Link href="project">
-                  <Tab>Projects</Tab>
-                </Link>
-                <Link href="badges">
-                  <Tab>Badges</Tab>
-                </Link>
-                <Link href="upvotes">
-                  <Tab>Upvotes</Tab>
-                </Link>
-              </TabList>
-              <TabPanels></TabPanels>
-            </Tabs>
-            {/* <TabPanel>
-                  <Text>About</Text>
-                  </TabPanel>
-                  <TabPanel>
-                  <UserProjects />
-                </TabPanel>
-                <TabPanel>
-                  <Text>Badges</Text>
-                </TabPanel>
-                <TabPanel>
-                  <Text>Upvotes</Text>
-                </TabPanel> */}
-          </Center>
-          <Center>
             <Box> {children}</Box>
           </Center>
         </Box>
