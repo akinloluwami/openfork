@@ -17,6 +17,7 @@ import {
   TabPanels,
   TabPanel,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import userInfo from "../utils/userInfo";
@@ -36,12 +37,57 @@ const Profile: NextPage = () => {
   const profileRoute = profile as unknown as string[];
   const [user, setUser] = useState<UserData>();
 
-  useEffect(() => {
-    async function fetchUser() {
-      const user: any = await supabase.auth.getUser();
-      setUser(user.data.user?.user_metadata);
+  async function getProfile() {
+    try {
+      const user: any = (await supabase.auth.getUser()).data.user;
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user?.id)
+        .single();
+
+      if (error) {
+        console.log(error);
+      }
+
+      if (data) {
+        // setUsername(data.username);
+        setUser(data);
+      }
+    } catch (error) {
+      console.log("help");
     }
-    fetchUser();
+  }
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  async function updateProfile() {
+    try {
+      const user = (await supabase.auth.getUser()).data.user;
+      const updates = {
+        id: user?.id,
+        username: user?.user_metadata?.user_name,
+        updated_at: new Date(),
+        avatar_url: user?.user_metadata?.avatar_url,
+        display_name: user?.user_metadata.full_name,
+      };
+
+      let { data, error } = await supabase.from("profiles").upsert(updates);
+      if (data) {
+        console.log(data);
+      }
+      if (error) {
+        throw error;
+      }
+    } catch (error: any) {
+      alert(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getProfile();
   }, []);
 
   return (
@@ -51,7 +97,7 @@ const Profile: NextPage = () => {
           {profileRoute && profileRoute[0]}'s profile on OpenFork | OpenFork
         </title>
       </Head>
-      {(profileRoute && profileRoute[0]) != user?.user_name ? (
+      {(profileRoute && profileRoute[0]) != user?.username ? (
         <Text>User not found</Text>
       ) : (
         <ProfileLayout router={profileRoute} user={user}>
@@ -59,6 +105,7 @@ const Profile: NextPage = () => {
             (profileRoute && profileRoute[1] == undefined)) && (
             <Text>About User Here</Text>
           )}
+          <Button onClick={updateProfile}>Update</Button>
 
           {profileRoute && profileRoute[1] == "projects" && <UserProjects />}
 
