@@ -52,7 +52,7 @@ export async function getStaticPaths() {
   };
 }
 
-const Profile: NextPage = ({ data: any }) => {
+const Profile: NextPage = ({ data }) => {
   const router = useRouter();
   const { profile } = router.query;
   const profileRoute = profile as unknown as string[];
