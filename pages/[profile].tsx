@@ -3,23 +3,6 @@ import Avatar from "../components/Avatar";
 import Header from "../components/Header";
 import Tag from "../components/Tag";
 import UserProjects from "../components/Profile/UserProjects";
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Link,
-  Tabs,
-  Tab,
-  TabList,
-  Center,
-  Icon,
-  TabPanels,
-  TabPanel,
-  useDisclosure,
-  Button,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import ProfileLayout from "../Layout/ProfileLayout";
