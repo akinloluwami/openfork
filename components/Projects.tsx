@@ -1,5 +1,5 @@
 import { Button, Grid, Text, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
 import {
@@ -12,8 +12,12 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import Head from "next/head";
+import Router from "next/router";
+import Link from "next/link";
+import { supabase } from "../utils/supabaseClient";
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
   const demo = [
     {
       name: "Open Fork",
@@ -41,17 +45,34 @@ const Projects = () => {
     },
   ];
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const router = Router;
   const initPageTitle =
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
 
+  useEffect(() => {
+    async function fetchProjects() {
+      let { data: Projects, error } = await supabase
+        .from("Projects")
+        .select("*");
+      setProjects(Projects);
+      console.log(Projects);
+    }
+
+    fetchProjects();
+  }, []);
+
   const cardCLick = (title: string) => {
     onOpen();
     setPageTitle(`${title} - Openfork`);
+    router.push(`/?projects/${title.toLowerCase()}`, undefined, {
+      shallow: true,
+    });
   };
   const cardClose = () => {
     setPageTitle(initPageTitle);
+    onClose();
+    router.push("/");
   };
 
   return (
@@ -81,7 +102,6 @@ const Projects = () => {
                 colorScheme="blue"
                 mr={3}
                 onClick={() => {
-                  onClose();
                   cardClose();
                 }}
               >
@@ -100,17 +120,23 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {demo.map((items, index) => (
+          {projects.map((items, index) => (
+            // <Link
+            //   key={index}
+            //   href={`?${items.name.toLowerCase()}=${index}`}
+            //   as={`${index}`}
+            // >
             <ProjectCard
               //  @ts-ignore
+              key={items.id}
               name={items.name}
-              owner={items.owner}
+              owner={"@bossoncode"}
               description={items.description}
-              key={index}
               onOpen={() => {
                 cardCLick(items.name);
               }}
             />
+            // </Link>
           ))}
         </Grid>
       </>
