@@ -46,8 +46,12 @@ export async function getStaticProps(content: any) {
 }
 
 export async function getStaticPaths() {
+  let { data: profiles } = await supabase.from("profiles").select("*");
+  const pathsWithParams = profiles.map((profile) => ({
+    params: { profile: profile.username },
+  }));
   return {
-    paths: [{ params: { profile: "bossoncode" } }],
+    paths: pathsWithParams,
     fallback: false,
   };
 }
