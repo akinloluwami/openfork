@@ -9,7 +9,6 @@ import {
   Flex,
   Heading,
   Text,
-  Link,
   Tabs,
   Tab,
   TabList,
@@ -25,7 +24,7 @@ import Projects from "../../components/Projects";
 import ModalContainer from "../../components/Major/ModalContainer";
 import { supabase } from "../../utils/supabaseClient";
 import { useEffect } from "react";
-import { NextPage } from "next";
+import Link from "next/link";
 
 interface UserData {
   name: string;
@@ -58,11 +57,30 @@ export async function getStaticPaths() {
 }
 
 const Profile = ({ data, children }) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   const user = data;
   useEffect(() => {
     console.log(data);
   }, []);
+
+  const pages = [
+    {
+      title: "About",
+      href: "/",
+    },
+    {
+      title: "Projects",
+      href: "/projects",
+    },
+    {
+      title: "Badges",
+      href: "/badges",
+    },
+    {
+      title: "Upvotes",
+      href: "/",
+    },
+  ];
+
   return (
     <>
       <Header />
@@ -97,6 +115,17 @@ const Profile = ({ data, children }) => {
         </Flex>
 
         <Box p="30px 0">
+          <Center>
+            <Flex>
+              {pages.map((page) => (
+                <Text mx={5}>
+                  <Link href={`/${user.username}${page.href}`}>
+                    {page.title}
+                  </Link>
+                </Text>
+              ))}
+            </Flex>
+          </Center>
           <Center>
             <Box> {children}</Box>
           </Center>
