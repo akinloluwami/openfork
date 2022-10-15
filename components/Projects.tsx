@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Router from "next/router";
-import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
 
 interface ProjectProps {
@@ -97,14 +96,8 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects.map((items: any, index: number) => (
-            // <Link
-            //   key={index}
-            //   href={`?${items.name.toLowerCase()}=${index}`}
-            //   as={`${index}`}
-            // >
+          {projects.map((items: any) => (
             <ProjectCard
-              //  @ts-ignore
               key={items.id}
               name={items.name}
               owner={"@bossoncode"}
@@ -113,7 +106,6 @@ const Projects = () => {
                 cardCLick(items.name);
               }}
             />
-            // </Link>
           ))}
         </Grid>
       </>
