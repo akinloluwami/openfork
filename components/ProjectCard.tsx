@@ -11,14 +11,19 @@ import {
 import Link from "next/link";
 
 interface Props {
-  name?: string;
+  name: string;
   owner?: string;
-  description?: string;
+  description: string;
   imgSrc?: any;
   onOpen?: any;
 }
 
 const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
+  const truncate = (str: string) => {
+    const maxLength = 35;
+    return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
+  };
+
   return (
     <Link href={"?projects/pppp"} as={`/projects/${name?.toLowerCase()}`}>
       <Flex
@@ -47,7 +52,7 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
           </Flex>
           <Text m="15px 0" fontSize="15px">
             {" "}
-            {description}
+            {truncate(description)}
           </Text>
           {/*  */}
           <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
