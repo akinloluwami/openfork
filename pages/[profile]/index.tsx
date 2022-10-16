@@ -23,8 +23,9 @@ import { GoVerified } from "react-icons/go";
 import Projects from "../../components/Projects";
 import ModalContainer from "../../components/Major/ModalContainer";
 import { supabase } from "../../utils/supabaseClient";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface UserData {
   name: string;
@@ -58,8 +59,14 @@ export async function getStaticPaths() {
 
 const Profile = ({ data, children }: { data: any; children: any }) => {
   const user = data;
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<any>([]);
+
   useEffect(() => {
-    console.log(data);
+    async function getUser() {
+      setCurrentUser((await supabase.auth.getUser()).data.user?.user_metadata);
+    }
+    getUser();
   }, []);
 
   const pages = [
@@ -114,9 +121,13 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
               </Box>
             </Flex>
           </Flex>
-          {/* {(router && router[0]) == user?.user_name && (
-            <GradientButton text="Edit my Profile" />
-          )} */}
+          {currentUser?.user_name == user?.username ? (
+            <Link href={"/profile/edit"}>
+              <GradientButton text="Edit my Profile" />
+            </Link>
+          ) : (
+            <GradientButton text={"Follow"} />
+          )}
         </Flex>
 
         <Box p="30px 0">
