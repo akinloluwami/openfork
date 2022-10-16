@@ -1,37 +1,12 @@
-// import type { NextPage } from "next";
 import Avatar from "../../components/Avatar";
 import Header from "../../components/Header";
 import GradientButton from "../../components/GradientButton";
-import Tag from "../../components/Tag";
-import UserProjects from "../../components/Profile/UserProjects";
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Tabs,
-  Tab,
-  TabList,
-  Center,
-  Icon,
-  TabPanels,
-  TabPanel,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Center, Icon } from "@chakra-ui/react";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
-import Projects from "../../components/Projects";
-import ModalContainer from "../../components/Major/ModalContainer";
 import { supabase } from "../../utils/supabaseClient";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-
-interface UserData {
-  name: string;
-  user_name: string;
-  avatar_url: any;
-}
 
 export async function getStaticProps(content: any) {
   let { data } = await supabase
@@ -59,8 +34,7 @@ export async function getStaticPaths() {
 
 const Profile = ({ data, children }: { data: any; children: any }) => {
   const user = data;
-  const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<any>([]);
+  const [currentUser, setCurrentUser] = useState<any>({});
 
   useEffect(() => {
     async function getUser() {
