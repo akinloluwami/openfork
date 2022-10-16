@@ -83,6 +83,11 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
 
   return (
     <>
+      <Head>
+        <title>
+          {user?.display_name} {`(@${user.username})`} | Openfork
+        </title>
+      </Head>
       <Header />
       <Box p="25px 10%">
         <Flex justify="center" gap="30px" align="center" wrap="wrap">
