@@ -30,7 +30,7 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
         alignItems={"center"}
         justifyContent={"center"}
         p={0.5}
-        // maxW={["90vw", "400px"]}
+        maxW={["90vw", "400px"]}
         bg={"transparent"}
         cursor="pointer"
         borderRadius={"md"}
