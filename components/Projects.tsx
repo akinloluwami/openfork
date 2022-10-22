@@ -31,8 +31,8 @@ const Projects = () => {
 
   useEffect(() => {
     async function fetchProjects() {
-      let { data: Projects } = await supabase.from("Projects").select("*");
-      setProjects(Projects);
+      let { data: projects } = await supabase.from("projects").select("*");
+      setProjects(projects);
     }
 
     fetchProjects();
@@ -96,7 +96,7 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects.map((items: any) => (
+          {projects?.map((items: any) => (
             <ProjectCard
               key={items.id}
               name={items.name}
