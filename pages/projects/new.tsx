@@ -103,10 +103,17 @@ const AddNewProject = () => {
   };
 
   return (
-    <Box w={"80%"} m={"auto"}>
+    <>
       <Header />
-      <Flex align={"flex-start"} justify={"space-between"} gap={3} mt={5}>
-        <Flex direction={"column"} w={"50%"}>
+      <Flex
+        align={"flex-start"}
+        w={"90%"}
+        m={"auto"}
+        justify={"space-between"}
+        gap={3}
+        mt={5}
+      >
+        <Flex direction={"column"}>
           <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
           </Text>
@@ -155,7 +162,7 @@ const AddNewProject = () => {
             </UnorderedList>
           </Box>
         </Flex>
-        <Flex w={"50%"} justify={"center"}>
+        <Flex w={"50%"}>
           <Tabs index={tabIndex} onChange={handleTabsChange}>
             <TabList>
               <Tab>Repository</Tab>
@@ -357,7 +364,7 @@ const AddNewProject = () => {
           </Tabs>
         </Flex>
       </Flex>
-    </Box>
+    </>
   );
 };
 
