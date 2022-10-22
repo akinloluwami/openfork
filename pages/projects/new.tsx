@@ -7,6 +7,7 @@ import {
   Icon,
   Input,
   ListItem,
+  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -57,6 +58,7 @@ const AddNewProject = () => {
   const [stackQuery, setStackQuery] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
+  const [publishing, setPublishing] = useState(false);
 
   const stackQueryRef: any = useRef();
 
@@ -81,6 +83,7 @@ const AddNewProject = () => {
   }, []);
 
   const publishProject = async () => {
+    setPublishing(true);
     const project = {
       user: (await supabase.auth.getUser()).data.user?.id,
       name: projectName,
@@ -91,6 +94,7 @@ const AddNewProject = () => {
     };
 
     const { data, error } = await supabase.from("projects").insert(project);
+    setPublishing(false);
     if (data) {
       console.log(data);
     } else {
@@ -345,7 +349,7 @@ const AddNewProject = () => {
                     disabled={selectedTags.length < 1}
                     onClick={publishProject}
                   >
-                    Publish project
+                    {publishing ? <Spinner size={"lg"} /> : "Publish Project"}
                   </Button>
                 </Flex>
               </TabPanel>
