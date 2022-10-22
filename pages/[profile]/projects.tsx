@@ -1,5 +1,6 @@
-import { Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import ProjectCard from "../../components/ProjectCard";
 import { supabase } from "../../utils/supabaseClient";
 import Profile from "../[profile]/index";
 
