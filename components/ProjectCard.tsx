@@ -9,6 +9,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import Link from "next/link";
+import { supabase } from "../utils/supabaseClient";
 
 interface Props {
   name: string;
@@ -24,8 +25,15 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
   };
 
+  const getUsername = async (id: string) => {
+    let { data: profiles, error } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", id);
+    return error ? error : profiles[0]?.username;
+  };
   return (
-    <Link href={"?projects/pppp"} as={`/projects/${name?.toLowerCase()}`}>
+    <Link href={`?projects/${name}`} as={`/projects/${name?.toLowerCase()}`}>
       <Flex
         alignItems={"center"}
         justifyContent={"center"}
@@ -46,7 +54,7 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
               <Text fontSize={"0.7em"}>{name}</Text>
 
               <Text fontSize="14px" fontWeight="thin" py={2}>
-                {owner}
+                {getUsername(owner)}
               </Text>
             </Heading>
           </Flex>
