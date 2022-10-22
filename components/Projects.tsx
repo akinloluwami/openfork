@@ -100,7 +100,7 @@ const Projects = () => {
             <ProjectCard
               key={items.id}
               name={items.name}
-              owner={"@bossoncode"}
+              owner={items.user}
               description={items.description}
               onOpen={() => {
                 cardCLick(items.name);
