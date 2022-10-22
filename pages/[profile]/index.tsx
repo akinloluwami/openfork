@@ -1,7 +1,15 @@
 import Avatar from "../../components/Avatar";
 import Header from "../../components/Header";
 import GradientButton from "../../components/GradientButton";
-import { Box, Flex, Heading, Text, Center, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Center,
+  Icon,
+  Button,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import { supabase } from "../../utils/supabaseClient";
@@ -101,7 +109,7 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
           </Flex>
           {currentUser?.user_name == user?.username ? (
             <Link href={"/my/profile/edit"} passHref>
-              <GradientButton text="Edit my Profile" />
+              <Button>Edit my profile</Button>
             </Link>
           ) : (
             <GradientButton text={"Follow"} />
