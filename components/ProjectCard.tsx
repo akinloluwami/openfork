@@ -54,7 +54,7 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
               <Text fontSize={"0.7em"}>{name}</Text>
 
               <Text fontSize="14px" fontWeight="thin" py={2}>
-                {getUsername(owner)}
+                {"Timmi"}
               </Text>
             </Heading>
           </Flex>
