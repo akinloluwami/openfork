@@ -108,7 +108,7 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
             </Flex>
           </Flex>
           {currentUser?.user_name == user?.username ? (
-            <Link href={"/my/profile/edit"} passHref>
+            <Link href={"/profile/edit"} passHref>
               <Button>Edit my profile</Button>
             </Link>
           ) : (
