@@ -46,8 +46,6 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
   const [currentUser, setCurrentUser] = useState<any>({});
   const router = useRouter();
 
-  console.log(router.asPath.split("/")[2]);
-
   useEffect(() => {
     async function getUser() {
       setCurrentUser((await supabase.auth.getUser()).data.user?.user_metadata);
