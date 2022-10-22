@@ -57,12 +57,12 @@ const Projects = () => {
     const currentUserId = (await supabase.auth.getUser()).data.user?.id;
 
     const upvoted = upvotes.find(
-      (upvote: string) => upvote.userId === currentUserId
+      (upvote: any) => upvote.userId === currentUserId
     );
 
     if (upvoted) {
       const newUpvotes = upvotes.filter(
-        (upvote) => upvote.userId !== currentUserId
+        (upvote: any) => upvote.userId !== currentUserId
       );
       const { data, error } = await supabase
         .from("projects")
