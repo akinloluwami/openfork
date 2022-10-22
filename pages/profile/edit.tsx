@@ -30,7 +30,7 @@ const EditProfile = () => {
   const [links, setLinks] = useState<any>([]);
   const [userId, setUserId] = useState("");
   const [headline, setHeadline] = useState("");
-  const [updating, setUpdating] = useState(false);
+  const [updating, setUpdating] = useState(true);
   const toast = useToast();
   const [newProfileImage, setNewProfileImage] = useState({});
 
@@ -252,9 +252,7 @@ const EditProfile = () => {
             </Button>
           </Box>
           <Box my={10} onClick={updateProfile}>
-            <GradientButton
-              text={updating ? "Saving changes..." : "Save changes"}
-            />
+            <Button></Button>
           </Box>
         </Box>
         <Flex direction={"column"} align={"center"} gap={4}>
