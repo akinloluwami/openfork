@@ -79,6 +79,25 @@ const AddNewProject = () => {
     }
     getRepos();
   }, []);
+
+  const publishProject = async () => {
+    const project = {
+      user: (await supabase.auth.getUser()).data.user?.id,
+      name: projectName,
+      description,
+      github_url: githubURL,
+      website_url: websiteURL,
+      tags,
+    };
+
+    const { data, error } = await supabase.from("projects").insert(project);
+    if (data) {
+      console.log(data);
+    } else {
+      console.log(error);
+    }
+  };
+
   return (
     <Box w={"80%"} m={"auto"}>
       <Header />
@@ -322,7 +341,10 @@ const AddNewProject = () => {
                           </Tag>
                         ))}
                   </Flex>
-                  <Button disabled={selectedTags.length < 1}>
+                  <Button
+                    disabled={selectedTags.length < 1}
+                    onClick={publishProject}
+                  >
                     Publish project
                   </Button>
                 </Flex>
