@@ -114,8 +114,13 @@ const EditProfile = () => {
       .from("profiles")
       .update(updateInfo)
       .eq("id", userId);
-
     setUpdating(false);
+    toast({
+      title: "Profile updated successfully",
+      duration: 4000,
+      isClosable: true,
+      status: "success",
+    });
   };
 
   const updateProfile = () => {
