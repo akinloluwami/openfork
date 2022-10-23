@@ -252,7 +252,7 @@ const EditProfile = () => {
             </Button>
           </Box>
           <Box my={10} onClick={updateProfile}>
-            <Button>
+            <Button disabled={updating}>
               {updating ? (
                 <Flex gap={3}>
                   Saving changes... <Spinner size={"sm"} />{" "}
