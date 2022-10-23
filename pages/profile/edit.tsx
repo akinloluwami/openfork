@@ -30,7 +30,7 @@ const EditProfile = () => {
   const [links, setLinks] = useState<any>([]);
   const [userId, setUserId] = useState("");
   const [headline, setHeadline] = useState("");
-  const [updating, setUpdating] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const toast = useToast();
   const [newProfileImage, setNewProfileImage] = useState({});
 
@@ -108,14 +108,17 @@ const EditProfile = () => {
       headline,
       links,
     };
+    setUpdating(true);
+
     const { data, error } = await supabase
       .from("profiles")
       .update(updateInfo)
       .eq("id", userId);
+
+    setUpdating(false);
   };
 
   const updateProfile = () => {
-    setUpdating(true);
     const emptyLinksData = links.filter(
       (link: LinkProps) => !link.title || !link.url
     );
@@ -136,7 +139,6 @@ const EditProfile = () => {
     } else {
       runProfileUpdate();
     }
-    setUpdating(false);
   };
 
   // const updateDP = async () => {
