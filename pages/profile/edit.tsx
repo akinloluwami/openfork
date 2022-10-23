@@ -252,7 +252,15 @@ const EditProfile = () => {
             </Button>
           </Box>
           <Box my={10} onClick={updateProfile}>
-            <Button></Button>
+            <Button>
+              {updating ? (
+                <Flex gap={3}>
+                  Saving changes... <Spinner size={"sm"} />{" "}
+                </Flex>
+              ) : (
+                "Save changes"
+              )}
+            </Button>
           </Box>
         </Box>
         <Flex direction={"column"} align={"center"} gap={4}>
