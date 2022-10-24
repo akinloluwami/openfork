@@ -270,7 +270,7 @@ const EditProfile = () => {
             </Button>
           </Box>
         </Box>
-        <Flex direction={"column"} align={"center"} gap={4}>
+        {/* <Flex direction={"column"} align={"center"} gap={4}>
           <Avatar size={"xl"} />
           <Box>
             <GradientButton text="Change avatar" />
@@ -282,7 +282,7 @@ const EditProfile = () => {
               setNewProfileImage(avatarFile);
             }}
           />
-        </Flex>
+        </Flex> */}
       </Flex>
     </ContainerLayout>
   );
