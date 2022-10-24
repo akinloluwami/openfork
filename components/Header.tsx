@@ -25,7 +25,12 @@ const Header = () => {
     <ContainerLayout>
       <Flex align="center" py={5} justify="space-between" px="20px">
         <Link href={"/"}>
-          <Image src="/openfork.svg" w={["120px", "150px"]} alt="" />
+          <Image
+            src="/openfork.svg"
+            w={["120px", "150px"]}
+            alt=""
+            cursor={"pointer"}
+          />
         </Link>
         {user ? (
           <Flex align="center" gap="10px">
