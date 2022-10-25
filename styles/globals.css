@@ -40,3 +40,9 @@ body {
   font-family: var(--satoshi) !important;
 
 }
+
+@media screen and (max-width:950px){
+  .new-project-wrapper{
+    flex-wrap:wrap
+  }
+}

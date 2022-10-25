@@ -130,8 +130,8 @@ const AddNewProject = () => {
       <Flex
         align={"flex-start"}
         m={"auto"}
-        wrap={"wrap"}
-        p="0 10%"
+        className="new-project-wrapper"
+        p="0 7%"
         justify={"space-between"}
         gap={3}
         mt={5}
@@ -223,17 +223,18 @@ const AddNewProject = () => {
                     }}
                   />
                 )}
+
                 {githubURL !== "" && (
                   <Button
                     bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                     fontSize="13px"
                     p={0.5}
                     my={3}
-                    overflow="hidden"
                     maxW={350}
                     h="60px"
                   >
                     <Flex
+                      overflow="hidden"
                       align={"center"}
                       bg={"#000"}
                       my={3}
@@ -256,50 +257,53 @@ const AddNewProject = () => {
                     />
                   </Button>
                 )}
-                {!query ? (
-                  <></>
-                ) : githubURL !== "" ? (
-                  <></>
-                ) : (
-                  repos
-                    .filter((r: RepoData) =>
-                      r.name.toLowerCase().includes(query.toLowerCase())
-                    )
-                    .map((repo: RepoData, i) => (
-                      <Button
-                        bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-                        fontSize="13px"
-                        p={0.5}
-                        m={3}
-                        w="100%"
-                        position="relative"
-                        overflow="hidden"
-                        maxW={"350px"}
-                        key={i}
-                      >
-                        <Flex
-                          align={"center"}
-                          bg={"#000"}
-                          my={3}
-                          w={"100%"}
-                          h={"100%"}
+                <Flex direction="column" gap="15px">
+                  {!query ? (
+                    <></>
+                  ) : githubURL !== "" ? (
+                    <></>
+                  ) : (
+                    repos
+                      .filter((r: RepoData) =>
+                        r.name.toLowerCase().includes(query.toLowerCase())
+                      )
+                      .map((repo: RepoData, i) => (
+                        <Button
+                          bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+                          fontSize="13px"
                           p={0.5}
-                          cursor={"pointer"}
-                          borderRadius={"5px"}
-                          onClick={() => {
-                            setGithubURL(repo.svn_url);
-                            setProjectName(repo.name);
-                            setQuery("");
-                            setRepoFullname(repo.full_name);
-                          }}
+                          m={3}
+                          w="80vw"
+                          position="relative"
+                          maxW={"350px"}
+                          key={i}
                         >
-                          <Icon as={SiGithub} h={5} w={5} mr={2} />
-                          <Text color={"grey.100"}>{username}/</Text>
-                          <Text>{repo.name}</Text>
-                        </Flex>
-                      </Button>
-                    ))
-                )}
+                          <Flex
+                            align={"center"}
+                            overflow="hidden"
+                            bg={"#000"}
+                            my={3}
+                            w={"100%"}
+                            h={"100%"}
+                            p={0.5}
+                            cursor={"pointer"}
+                            borderRadius={"5px"}
+                            onClick={() => {
+                              setGithubURL(repo.svn_url);
+                              setProjectName(repo.name);
+                              setQuery("");
+                              setRepoFullname(repo.full_name);
+                            }}
+                          >
+                            <Icon as={SiGithub} h={5} w={5} mr={2} />
+                            <Text color={"grey.100"}>{username}/</Text>
+                            <Text>{repo.name}</Text>
+                          </Flex>
+                        </Button>
+                      ))
+                  )}
+                </Flex>
+
                 <Box>
                   <Button
                     disabled={!githubURL}
