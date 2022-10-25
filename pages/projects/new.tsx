@@ -18,6 +18,7 @@ import {
   TagLeftIcon,
   Text,
   UnorderedList,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
 import { FaCheck } from "react-icons/fa";
@@ -81,6 +82,7 @@ const AddNewProject = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const stackQueryRef: any = useRef();
   const { width, height } = useWindowSize();
+  const toast = useToast();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -119,10 +121,21 @@ const AddNewProject = () => {
     if (error) {
       console.log(error);
     } else {
+      toast({
+        title: "Your project has been publish",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
       }, 3000);
+      setDescription("");
+      setGithubURL("");
+      setProjectName("");
+      setSelectedTags([]);
+      setWebsiteURL("");
     }
   };
 
