@@ -57,6 +57,7 @@ const AddNewProject = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [repos, setRepos] = useState([]);
+  const [username, setUsername] = useState("");
   const [query, setQuery] = useState("");
   const [projectName, setProjectName] = useState("");
   const [githubURL, setGithubURL] = useState("");
@@ -78,6 +79,7 @@ const AddNewProject = () => {
   useEffect(() => {
     async function getRepos() {
       const user = (await supabase.auth.getUser()).data.user;
+      setUsername(user?.user_metadata?.user_name)
       octokit
         .request("GET /users/{username}/repos", {
           username: user?.user_metadata?.user_name,
@@ -116,9 +118,9 @@ const AddNewProject = () => {
       <Header />
       <Flex
         align={"flex-start"}
-        w={"90%"}
         m={"auto"}
         wrap={"wrap"}
+        p="0 10%"
         justify={"space-between"}
         gap={3}
         mt={5}
@@ -132,7 +134,7 @@ const AddNewProject = () => {
             quisquam.
           </Text>
           <Box mt={10} display={["none", "block"]}>
-            <Text fontSize={"xl"}><b>Progress</b></Text>
+            {/* <Text fontSize={"xl"}><b>Progress</b></Text> */}
             <UnorderedList display="flex" gap="20px">
               <ListItem
                 my={2}
@@ -189,7 +191,7 @@ const AddNewProject = () => {
             </UnorderedList>
           </Box>
         </Flex>
-        <Flex w={"50%"}>
+        <Flex>
           <Tabs index={tabIndex} onChange={handleTabsChange}>
             <TabList>
               <Tab>Repository</Tab>
@@ -282,7 +284,7 @@ const AddNewProject = () => {
                           }}
                         >
                           <Icon as={SiGithub} h={5} w={5} mr={2} />
-                          <Text color={"grey.100"}>bossoncode/</Text>
+                          <Text color={"grey.100"}>{username}/</Text>
                           <Text>{repo.name}</Text>
                         </Flex>
                       </Button>
