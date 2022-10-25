@@ -119,8 +119,8 @@ const AddNewProject = () => {
       <Flex
         align={"flex-start"}
         m={"auto"}
-        wrap={"wrap"}
-        p="0 10%"
+        className="new-project-wrapper"
+        p="0 7%"
         justify={"space-between"}
         gap={3}
         mt={5}
@@ -212,18 +212,19 @@ const AddNewProject = () => {
                     }}
                   />
                 )}
-                {githubURL !== "" && (
+           
+            {githubURL !== "" && (
                   <Button
                     bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                     fontSize="13px"
                     p={0.5}
                     my={3}
                     
-                    overflow="hidden"
                     maxW={350}
                     h="60px"
-                  >
+                    >
                     <Flex
+                    overflow="hidden"
                       align={"center"}
                       bg={"#000"}
                       my={3}
@@ -246,6 +247,7 @@ const AddNewProject = () => {
                     />
                   </Button>
                 )}
+             <Flex direction="column" gap="15px">
                 {!query ? (
                   <></>
                 ) : githubURL !== "" ? (
@@ -261,14 +263,14 @@ const AddNewProject = () => {
                         fontSize="13px"
                         p={0.5}
                         m={3}
-                        w="100%"
+                        w="80vw"
                         position="relative"
-                        overflow="hidden"
                         maxW={"350px"}
                         key={i}
-                      >
+                        >
                         <Flex
                           align={"center"}
+                        overflow="hidden"
                           bg={"#000"}
                           my={3}
                           w={"100%"}
@@ -290,6 +292,8 @@ const AddNewProject = () => {
                       </Button>
                     ))
                 )}
+            </Flex>
+
                 <Box>
                   <Button
                     disabled={!githubURL}
