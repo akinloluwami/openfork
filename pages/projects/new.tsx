@@ -20,13 +20,14 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
-import {FaCheck} from "react-icons/fa"
+import { FaCheck } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
 import ts from "../../utils/techstack";
 import { octokit } from "../../utils/octokitClient";
 import { supabase } from "../../utils/supabaseClient";
+import Head from "next/head";
 
 interface RepoData {
   name: string;
@@ -39,13 +40,20 @@ interface TagData {
   logo: any;
 }
 
-const Check = ({done=false})=>{
+const Check = ({ done = false }) => {
   return (
-    <Flex w="50px" h="50px" borderRadius="50px" align="center" justify="center" bg={done ? "gray.400" : "green.500"}>
-    <FaCheck />
-  </Flex>
-  )
-}
+    <Flex
+      w="50px"
+      h="50px"
+      borderRadius="50px"
+      align="center"
+      justify="center"
+      bg={done ? "gray.400" : "green.500"}
+    >
+      <FaCheck />
+    </Flex>
+  );
+};
 
 const AddNewProject = () => {
   const regex =
@@ -79,7 +87,7 @@ const AddNewProject = () => {
   useEffect(() => {
     async function getRepos() {
       const user = (await supabase.auth.getUser()).data.user;
-      setUsername(user?.user_metadata?.user_name)
+      setUsername(user?.user_metadata?.user_name);
       octokit
         .request("GET /users/{username}/repos", {
           username: user?.user_metadata?.user_name,
@@ -115,6 +123,9 @@ const AddNewProject = () => {
 
   return (
     <>
+      <Head>
+        <title>Publish a new project - Openfork</title>
+      </Head>
       <Header />
       <Flex
         align={"flex-start"}
@@ -125,8 +136,8 @@ const AddNewProject = () => {
         gap={3}
         mt={5}
       >
-        <Flex direction={"column"} >
-          <Text fontSize={"4xl"} fontWeight={"bold"} >
+        <Flex direction={"column"}>
+          <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
           </Text>
           <Text>
@@ -145,8 +156,8 @@ const AddNewProject = () => {
                 // textDecoration={githubURL && "line-through"}
                 // color={githubURL && "gray.400"}
               >
-               <Check done={!!!githubURL} />
-                 Repository
+                <Check done={!!!githubURL} />
+                Repository
               </ListItem>
               {/* <ListItem
                  my={2}
@@ -160,30 +171,30 @@ const AddNewProject = () => {
               </ListItem> */}
               <ListItem
                 my={2}
-                 display="flex"
-                 alignItems="center"
-                 flexDirection="column"
-                 gap="10px"
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
               >
-               <Check done={!!!description} />
+                <Check done={!!!description} />
                 Description
               </ListItem>
               <ListItem
-               my={2}
-               display="flex"
-               alignItems="center"
-               flexDirection="column"
-               gap="10px"
+                my={2}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
               >
                 <Check done={!!!validurl} />
                 Link (Optional)
               </ListItem>
               <ListItem
-                 my={2}
-                 display="flex"
-                 alignItems="center"
-                 flexDirection="column"
-                 gap="10px"
+                my={2}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
               >
                 <Check done={selectedTags.length < 1} />
                 Tech-stack
@@ -218,7 +229,6 @@ const AddNewProject = () => {
                     fontSize="13px"
                     p={0.5}
                     my={3}
-                    
                     overflow="hidden"
                     maxW={350}
                     h="60px"
