@@ -20,6 +20,7 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
+import {FaCheck} from "react-icons/fa"
 import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
@@ -38,6 +39,14 @@ interface TagData {
   logo: any;
 }
 
+const Check = ({done=false})=>{
+  return (
+    <Flex w="50px" h="50px" borderRadius="50px" align="center" justify="center" bg={done ? "gray.400" : "green.500"}>
+    <FaCheck />
+  </Flex>
+  )
+}
+
 const AddNewProject = () => {
   const regex =
     /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
@@ -48,6 +57,7 @@ const AddNewProject = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [repos, setRepos] = useState([]);
+  const [username, setUsername] = useState("");
   const [query, setQuery] = useState("");
   const [projectName, setProjectName] = useState("");
   const [githubURL, setGithubURL] = useState("");
@@ -69,6 +79,7 @@ const AddNewProject = () => {
   useEffect(() => {
     async function getRepos() {
       const user = (await supabase.auth.getUser()).data.user;
+      setUsername(user?.user_metadata?.user_name)
       octokit
         .request("GET /users/{username}/repos", {
           username: user?.user_metadata?.user_name,
@@ -107,62 +118,80 @@ const AddNewProject = () => {
       <Header />
       <Flex
         align={"flex-start"}
-        w={"90%"}
         m={"auto"}
+        wrap={"wrap"}
+        p="0 10%"
         justify={"space-between"}
         gap={3}
         mt={5}
       >
-        <Flex direction={"column"}>
-          <Text fontSize={"4xl"} fontWeight={"bold"}>
+        <Flex direction={"column"} >
+          <Text fontSize={"4xl"} fontWeight={"bold"} >
             Publish A New Project 🚀{" "}
           </Text>
           <Text>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
             quisquam.
           </Text>
-          <Box mt={5}>
-            <Text fontSize={"xl"}>Todos</Text>
-            <UnorderedList>
+          <Box mt={10} display={["none", "block"]}>
+            {/* <Text fontSize={"xl"}><b>Progress</b></Text> */}
+            <UnorderedList display="flex" gap="20px">
               <ListItem
                 my={2}
-                textDecoration={githubURL && "line-through"}
-                color={githubURL && "gray.400"}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
+                // textDecoration={githubURL && "line-through"}
+                // color={githubURL && "gray.400"}
               >
-                Select repository
+               <Check done={!!!githubURL} />
+                 Repository
+              </ListItem>
+              {/* <ListItem
+                 my={2}
+                 display="flex"
+                 alignItems="center"
+                 flexDirection="column"
+                 gap="10px"
+              >
+               <Check done={!!!projectName} />
+                Name
+              </ListItem> */}
+              <ListItem
+                my={2}
+                 display="flex"
+                 alignItems="center"
+                 flexDirection="column"
+                 gap="10px"
+              >
+               <Check done={!!!description} />
+                Description
               </ListItem>
               <ListItem
-                my={2}
-                textDecoration={projectName && "line-through"}
-                color={projectName && "gray.400"}
+               my={2}
+               display="flex"
+               alignItems="center"
+               flexDirection="column"
+               gap="10px"
               >
-                Set project name
+                <Check done={!!!validurl} />
+                Link (Optional)
               </ListItem>
               <ListItem
-                my={2}
-                textDecoration={description && "line-through"}
-                color={description && "gray.400"}
+                 my={2}
+                 display="flex"
+                 alignItems="center"
+                 flexDirection="column"
+                 gap="10px"
               >
-                Set project description
-              </ListItem>
-              <ListItem
-                my={2}
-                textDecoration={validurl ? "line-through" : ""}
-                color={validurl ? "gray.400" : ""}
-              >
-                Link to website (optional)
-              </ListItem>
-              <ListItem
-                my={2}
-                textDecoration={selectedTags.length > 0 ? "line-through" : ""}
-                color={selectedTags.length > 0 ? "gray.400" : ""}
-              >
-                Select tech stack
+                <Check done={selectedTags.length < 1} />
+                Tech-stack
               </ListItem>
             </UnorderedList>
           </Box>
         </Flex>
-        <Flex w={"50%"}>
+        <Flex>
           <Tabs index={tabIndex} onChange={handleTabsChange}>
             <TabList>
               <Tab>Repository</Tab>
@@ -177,6 +206,7 @@ const AddNewProject = () => {
                   <Input
                     placeholder={"Search repository"}
                     my={2}
+                    h="60px"
                     onChange={(e) => {
                       setQuery(e.target.value);
                     }}
@@ -188,7 +218,10 @@ const AddNewProject = () => {
                     fontSize="13px"
                     p={0.5}
                     my={3}
-                    w={350}
+                    
+                    overflow="hidden"
+                    maxW={350}
+                    h="60px"
                   >
                     <Flex
                       align={"center"}
@@ -196,7 +229,7 @@ const AddNewProject = () => {
                       my={3}
                       w={"100%"}
                       h={"100%"}
-                      p={0.5}
+                      p={"10px"}
                       cursor={"pointer"}
                       borderRadius={"5px"}
                     >
@@ -228,7 +261,10 @@ const AddNewProject = () => {
                         fontSize="13px"
                         p={0.5}
                         m={3}
-                        w={350}
+                        w="100%"
+                        position="relative"
+                        overflow="hidden"
+                        maxW={"350px"}
                         key={i}
                       >
                         <Flex
@@ -248,7 +284,7 @@ const AddNewProject = () => {
                           }}
                         >
                           <Icon as={SiGithub} h={5} w={5} mr={2} />
-                          <Text color={"grey.100"}>bossoncode/</Text>
+                          <Text color={"grey.100"}>{username}/</Text>
                           <Text>{repo.name}</Text>
                         </Flex>
                       </Button>
@@ -268,6 +304,9 @@ const AddNewProject = () => {
               <TabPanel>
                 <Input
                   placeholder={"Project name"}
+                  p="14px"
+                  h="60px"
+                  w="100%"
                   my={2}
                   value={projectName}
                   onChange={(e) => {
@@ -276,11 +315,15 @@ const AddNewProject = () => {
                 />
                 <Input
                   placeholder={"Project description"}
+                  p="14px"
+                  h="60px"
                   my={2}
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <Input
                   placeholder={"Website"}
+                  p="14px"
+                  h="60px"
                   my={2}
                   onChange={(e) => {
                     setWebsiteURL(e.target.value);
@@ -317,6 +360,7 @@ const AddNewProject = () => {
                   </Flex>
                   <Input
                     placeholder={"Search"}
+                    h="60px"
                     my={4}
                     ref={stackQueryRef}
                     onChange={(e) => {

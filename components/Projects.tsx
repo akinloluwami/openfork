@@ -31,7 +31,9 @@ const Projects = () => {
 
   useEffect(() => {
     async function fetchProjects() {
-      let { data: projects } = await supabase.from("projects").select("*");
+      let { data: projects, error } = await supabase.from("projects").select("*");
+      console.table({projects, error})
+      console.log(projects)
       setProjects(projects);
     }
 

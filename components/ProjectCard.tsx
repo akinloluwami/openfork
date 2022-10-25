@@ -9,6 +9,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import Link from "next/link";
+import {useState, useEffect} from "react"
 import { supabase } from "../utils/supabaseClient";
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
+  const [username, setUsername] = useState("")
   const truncate = (str: string) => {
     const maxLength = 35;
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
@@ -30,8 +32,11 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
       .from("profiles")
       .select("username")
       .eq("id", id);
-    return error ? error : profiles[0]?.username;
+    profiles && setUsername(profiles[0]?.username);
   };
+  useEffect(()=>{
+    owner && getUsername(owner)
+  },[])
   return (
     <Link href={`?projects/${name}`} as={`/projects/${name?.toLowerCase()}`}>
       <Flex
@@ -54,7 +59,7 @@ const ProjectCard = ({ name, owner, description, imgSrc, onOpen }: Props) => {
               <Text fontSize={"0.7em"}>{name}</Text>
 
               <Text fontSize="14px" fontWeight="thin" py={2}>
-                {getUsername(owner)}
+               {username}
               </Text>
             </Heading>
           </Flex>
