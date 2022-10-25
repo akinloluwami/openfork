@@ -28,7 +28,8 @@ import ts from "../../utils/techstack";
 import { octokit } from "../../utils/octokitClient";
 import { supabase } from "../../utils/supabaseClient";
 import Head from "next/head";
-
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 interface RepoData {
   name: string;
   svn_url: string;
@@ -77,8 +78,9 @@ const AddNewProject = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
   const [publishing, setPublishing] = useState(false);
-
+  const [showConfetti, setShowConfetti] = useState(false);
   const stackQueryRef: any = useRef();
+  const { width, height } = useWindowSize();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -114,10 +116,13 @@ const AddNewProject = () => {
 
     const { data, error } = await supabase.from("projects").insert(project);
     setPublishing(false);
-    if (data) {
-      console.log(data);
-    } else {
+    if (error) {
       console.log(error);
+    } else {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 3000);
     }
   };
 
@@ -136,6 +141,14 @@ const AddNewProject = () => {
         gap={3}
         mt={5}
       >
+        <Button
+          onClick={() => {
+            setShowConfetti(!showConfetti);
+          }}
+        >
+          SHOW
+        </Button>
+        {showConfetti && <Confetti width={width} height={height} />}
         <Flex direction={"column"}>
           <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
