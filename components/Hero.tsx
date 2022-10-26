@@ -63,7 +63,8 @@ const Hero: NextPage = () => {
             We understand that other open-source project directories contain a
             lot of projects you may not really be excited about contributing to.
             So we created Openfork, bringing you a lot of exciting projects you
-            can actually contribute to and have a direct impact on.
+            can actually contribute to and have a direct impact on. We also made
+            Openfork social so you can discover talented developers.
           </Text>
           {!user ? (
             <Center>
