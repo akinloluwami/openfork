@@ -38,7 +38,9 @@ const ProfileOptions = () => {
         <MenuItem>
           <Link href={`/${user?.user_name}`}>Profile</Link>
         </MenuItem>
-        <MenuItem>My Projects</MenuItem>
+        <MenuItem>
+          <Link href={`/${user?.user_name}/projects`}> My Projects</Link>
+        </MenuItem>
         <MenuItem>Settings</MenuItem>
         <MenuDivider />
         <MenuItem
