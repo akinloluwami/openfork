@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { signInWithGithub } from "../utils/supabase/auth";
 import userInfo from "../utils/userInfo";
 import { supabase } from "../utils/supabaseClient";
+import Link from "next/link";
 const Hero: NextPage = () => {
   const [user, setUser] = useState<any>({});
 
@@ -59,11 +60,12 @@ const Hero: NextPage = () => {
             textAlign={"center"}
             fontFamily={"var(--satoshi)"}
           >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
-            dolorem inventore alias assumenda quisquam qui repellat eaque illo
-            architecto dolor iur
+            We understand that other open-source project directories contain a
+            lot of projects you may not really be excited about contributing to.
+            So we created Openfork, bringing you a lot of exciting projects you
+            can actually contribute to and have a direct impact on.
           </Text>
-          {!user && (
+          {!user ? (
             <Center>
               <Button
                 mt={5}
@@ -75,6 +77,20 @@ const Hero: NextPage = () => {
               >
                 Sign In With GitHub
               </Button>
+            </Center>
+          ) : (
+            <Center>
+              <Link href={"/projects/new"}>
+                <Button
+                  mt={5}
+                  leftIcon={<FaGithub />}
+                  bgGradient={gradient}
+                  variant="solid"
+                  size="lg"
+                >
+                  Publish new project
+                </Button>
+              </Link>
             </Center>
           )}
         </Box>
