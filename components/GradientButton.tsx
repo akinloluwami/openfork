@@ -8,7 +8,6 @@ interface Props {
 const GradientButton = ({ text, outlined }: Props) => {
   return (
     <Button
-      ml={20}
       bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
       fontSize="13px"
       p={0.5}
