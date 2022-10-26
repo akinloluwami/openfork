@@ -130,7 +130,8 @@ const AddNewProject = () => {
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
-      }, 3000);
+      }, 5000);
+      handleTabsChange(0);
       setDescription("");
       setGithubURL("");
       setProjectName("");
@@ -154,13 +155,13 @@ const AddNewProject = () => {
         gap={3}
         mt={5}
       >
-        <Button
+        {/* <Button
           onClick={() => {
             setShowConfetti(!showConfetti);
           }}
         >
           SHOW
-        </Button>
+        </Button> */}
         {showConfetti && <Confetti width={width} height={height} />}
         <Flex direction={"column"}>
           <Text fontSize={"4xl"} fontWeight={"bold"}>
