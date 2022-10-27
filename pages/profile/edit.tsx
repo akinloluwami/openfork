@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
@@ -30,6 +31,7 @@ const EditProfile = () => {
   const [userId, setUserId] = useState("");
   const [headline, setHeadline] = useState("");
   const [updating, setUpdating] = useState(false);
+  const toast = useToast();
 
   const fetchUserInfo = async () => {
     const user: any = (await supabase.auth.getUser()).data.user;
@@ -109,8 +111,6 @@ const EditProfile = () => {
       .from("profiles")
       .update(updateInfo)
       .eq("id", userId);
-
-    console.log(data || error);
   };
 
   const updateProfile = () => {
@@ -119,12 +119,23 @@ const EditProfile = () => {
       (link: LinkProps) => !link.title || !link.url
     );
     if (emptyLinksData.length > 0) {
-      console.log("Failed!!!");
-      setUpdating(false);
+      toast({
+        title: "Fill in all link info",
+        duration: 4000,
+        isClosable: true,
+        status: "error",
+      });
+    } else if (!displayName) {
+      toast({
+        title: "Name cannot be empty",
+        duration: 4000,
+        isClosable: true,
+        status: "error",
+      });
     } else {
       runProfileUpdate();
-      setUpdating(false);
     }
+    setUpdating(false);
   };
 
   return (
