@@ -5,16 +5,17 @@ import {
   CloseButton,
   Flex,
   Input,
+  Spinner,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import ContainerLayout from "../../Layout/ContainerLayout";
 import { useState } from "react";
 import GradientButton from "../../components/GradientButton";
-import { CloseIcon } from "@chakra-ui/icons";
+import { supabase } from "../../utils/supabaseClient";
 
 interface LinkProps {
   id: number;
@@ -26,12 +27,41 @@ const EditProfile = () => {
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
   const [links, setLinks] = useState<any>([]);
+  const [userId, setUserId] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [updating, setUpdating] = useState(false);
+
+  const fetchUserInfo = async () => {
+    const user: any = (await supabase.auth.getUser()).data.user;
+    setUserId(user.id);
+    let { data: profiles, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId);
+    if (profiles) {
+      const userData = profiles[0];
+      setDisplayName(userData.display_name);
+      userData.links === null ? setLinks([]) : setLinks(userData.links);
+      userData.bio === null ? setBio("") : setBio(userData.bio);
+      userData.headline === null
+        ? setHeadline("")
+        : setHeadline(userData.headline);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, [userId]);
+
+  function generateId() {
+    return Math.random().toString(36).substring(2);
+  }
 
   const addNewLink = () => {
     setLinks([
       ...links,
       {
-        id: links.length + 1,
+        id: generateId(),
         title: "",
         url: "",
       },
@@ -40,6 +70,61 @@ const EditProfile = () => {
 
   const deleteLink = (id: number) => {
     setLinks(links.filter((link: LinkProps) => link.id !== id));
+  };
+
+  const inputTitle = (id: number, title: string) => {
+    const newLinks = links.map((link: LinkProps) => {
+      if (link.id === id) {
+        return {
+          ...link,
+          title: title,
+        };
+      }
+      return link;
+    });
+    setLinks(newLinks);
+  };
+
+  const inputUrl = (id: number, url: string) => {
+    const newLinks = links.map((link: LinkProps) => {
+      if (link.id === id) {
+        return {
+          ...link,
+          url: url,
+        };
+      }
+      return link;
+    });
+    setLinks(newLinks);
+  };
+
+  const runProfileUpdate = async () => {
+    const updateInfo = {
+      display_name: displayName,
+      bio,
+      headline,
+      links,
+    };
+    const { data, error } = await supabase
+      .from("profiles")
+      .update(updateInfo)
+      .eq("id", userId);
+
+    console.log(data || error);
+  };
+
+  const updateProfile = () => {
+    setUpdating(true);
+    const emptyLinksData = links.filter(
+      (link: LinkProps) => !link.title || !link.url
+    );
+    if (emptyLinksData.length > 0) {
+      console.log("Failed!!!");
+      setUpdating(false);
+    } else {
+      runProfileUpdate();
+      setUpdating(false);
+    }
   };
 
   return (
@@ -60,6 +145,7 @@ const EditProfile = () => {
               onChange={(e) => {
                 setDisplayName(e.target.value);
               }}
+              value={displayName}
             />
             {!displayName && (
               <Text fontSize={"sm"} color={"red.500"}>
@@ -70,7 +156,11 @@ const EditProfile = () => {
 
           <Box my={5}>
             <Text>Headline</Text>
-            <Input placeholder={"A tagline explaining yourself."} />
+            <Input
+              placeholder={"A tagline explaining yourself."}
+              value={headline}
+              onChange={(e) => setHeadline(e.target.value)}
+            />
           </Box>
 
           <Box my={5}>
@@ -80,6 +170,7 @@ const EditProfile = () => {
               onChange={(e) => setBio(e.target.value)}
               maxLength={240}
               height={"120px"}
+              value={bio}
             />
             <Text>{bio.length}/240 characters.</Text>
           </Box>
@@ -91,8 +182,20 @@ const EditProfile = () => {
             <Box>
               {links.map((link: LinkProps) => (
                 <Flex key={link.id} align={"center"} my={5} gap={3}>
-                  <Input placeholder="Link title" />
-                  <Input placeholder="Link URL" />
+                  <Input
+                    placeholder="Link title"
+                    value={link.title}
+                    onChange={(e) => {
+                      inputTitle(link.id, e.target.value);
+                    }}
+                  />
+                  <Input
+                    placeholder="Link URL"
+                    value={link.url}
+                    onChange={(e) => {
+                      inputUrl(link.id, e.target.value);
+                    }}
+                  />
                   <CloseButton
                     title="Delete link"
                     onClick={() => {
@@ -106,8 +209,10 @@ const EditProfile = () => {
               Add link
             </Button>
           </Box>
-          <Box my={10}>
-            <GradientButton text="Save changes" />
+          <Box my={10} onClick={updateProfile}>
+            <GradientButton
+              text={updating ? "Saving changes..." : "Save changes"}
+            />
           </Box>
         </Box>
         <Flex direction={"column"} align={"center"} gap={4}>
