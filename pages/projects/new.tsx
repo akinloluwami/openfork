@@ -76,7 +76,7 @@ const AddNewProject = () => {
   const [repoFullname, setRepoFullname] = useState("");
   const [validurl, setValidURL] = useState(false);
   const [stackQuery, setStackQuery] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [techStack, setTechStack] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
   const [publishing, setPublishing] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -98,7 +98,6 @@ const AddNewProject = () => {
           per_page: 100,
         })
         .then((data: any) => {
-          console.log(data.data);
           setRepos(data.data);
         });
     }
@@ -113,7 +112,7 @@ const AddNewProject = () => {
       description,
       github_url: githubURL,
       website_url: websiteURL,
-      tags,
+      tech_stack: techStack,
     };
 
     const { data, error } = await supabase.from("projects").insert(project);
@@ -428,7 +427,7 @@ const AddNewProject = () => {
                             my={2}
                             onClick={() => {
                               setSelectedTags([...selectedTags, tag]);
-                              setTags([...tags, tag.name]);
+                              setTechStack([...techStack, tag.name]);
                               setStackQuery("");
                               stackQueryRef.current.value = "";
                             }}
