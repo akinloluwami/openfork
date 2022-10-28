@@ -55,6 +55,21 @@ const Projects = () => {
     router.push("/");
   };
 
+  const upvoteProject = async (id: number, upvotes: any) => {
+    const { data, error } = await supabase
+      .from("projects")
+      .update({
+        upvotes: [
+          ...upvotes,
+          {
+            userId: (await supabase.auth.getUser()).data.user?.id,
+            created_at: new Date(),
+          },
+        ],
+      })
+      .eq("id", id);
+  };
+
   return (
     <ContainerLayout>
       <>
@@ -100,15 +115,18 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects?.map((items: any) => (
+          {projects?.map((project: any) => (
             <ProjectCard
-              key={items.id}
-              name={items.name}
-              owner={items.user}
-              description={items.description}
+              id={project.id}
+              key={project.id}
+              name={project.name}
+              owner={project.user}
+              description={project.description}
               onOpen={() => {
-                cardCLick(items.name);
+                cardCLick(project.name);
               }}
+              upvotes={project.upvotes === null ? [] : project.upvotes}
+              upvoteProject={upvoteProject}
             />
           ))}
         </Grid>
