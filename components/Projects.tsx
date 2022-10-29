@@ -63,7 +63,7 @@ const Projects = () => {
     //     upvotes: [
     //       ...upvotes,
     //       {
-    //         userId: (await supabase.auth.getUser()).data.user?.id,
+    //   /      userId: /////////;(await supabase.auth.getUser()).data.user?.id,
     //         created_at: new Date(),
     //       },
     //     ],
