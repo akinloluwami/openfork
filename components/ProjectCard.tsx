@@ -71,40 +71,27 @@ const ProjectCard = ({
   }, []);
 
   return (
-    <Link href={`?projects/${name}`} as={`/projects/${name?.toLowerCase()}`}>
-      <Flex
-        alignItems={"center"}
-        justifyContent={"center"}
-        p={0.5}
-        maxW={["90vw", "400px"]}
-        bg={"transparent"}
-        cursor="pointer"
-        borderRadius={"md"}
-        _hover={{
-          background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
-        }}
-        onClick={onOpen}
-      >
+    <Flex
+      alignItems={"center"}
+      justifyContent={"center"}
+      p={1}
+      maxW={["90vw", "400px"]}
+      bg={"transparent"}
+      cursor="pointer"
+      borderRadius={"md"}
+      _hover={{
+        background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
+      }}
+    >
         <Box p={6} bg="#111" borderRadius={"md"}>
-          <Flex align="center" gap="10px">
+          <Box>
+      <Link href={`?projects/${name}`} as={`/projects/${name?.toLowerCase()}`}>
+       <Box 
+      onClick={onOpen}>
+       <Flex align="center" gap="10px">
             <Heading as="h3" fontSize="30px">
               <Flex justifyContent={"space-between"} align="center" w={"320px"}>
                 <Text fontSize={"0.7em"}>{name}</Text>
-                <Button
-                  as={Button}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    upvoteProject(id, upvotes);
-                  }}
-                  bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-                >
-                  <Flex align={"center"}>
-                    <Text fontSize={"xl"}>
-                      <TbArrowBigUpLines />
-                    </Text>
-                    <Text ml={1}>{upvotes.length || 0}</Text>
-                  </Flex>
-                </Button>
               </Flex>
               <Flex align={"center"}>
                 <Text fontSize="14px" fontWeight="thin" py={2}>
@@ -127,9 +114,29 @@ const ProjectCard = ({
             <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
             <StackTag stackName={"TypeScript"} icon={SiTypescript} />
           </Flex>
+       </Box>
+      </Link>
         </Box>
-      </Flex>
-    </Link>
+
+        <Button
+        as={Button}
+        mt="5px"
+        onClick={(e) => {
+          e.preventDefault();
+          upvoteProject(id, upvotes);
+        }}
+        bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+      >
+        <Flex align={"center"}>
+          <Text fontSize={"xl"}>
+            <TbArrowBigUpLines />
+          </Text>
+          <Text ml={1}>{upvotes.length || 0}</Text>
+        </Flex>
+      </Button>
+        </Box>
+     
+    </Flex>
   );
 };
 
