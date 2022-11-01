@@ -57,19 +57,28 @@ const Projects = () => {
 
   const upvoteProject = async (id: number, upvotes: any) => {
     /***DON'T UNCOMMENT THIS!!! I WANT TO MAKE SURE I USER CAN'T UPVOTE A PROJECT TWICE AND ALSO ABLE TO UNUPVOTE (IF THAT'S A WORD...lol) !!! I'LL ADD THE SOON*/
-    // const { data, error } = await supabase
-    //   .from("projects")
-    //   .update({
-    //     upvotes: [
-    //       ...upvotes,
-    //       {
-    //   /      userId: /////////;(await supabase.auth.getUser()).data.user?.id,
-    //         created_at: new Date(),
-    //       },
-    //     ],
-    //   })
-    //   .eq("id", id);
-    console.log("Upvoted");
+    const currentUserId = (await supabase.auth.getUser()).data.user?.id;
+
+    const upvoted = upvotes.find(
+      (upvote: string) => upvote.userId === currentUserId
+    );
+
+    if (upvoted) {
+      console.log(upvoted);
+    } else {
+      const { data, error } = await supabase
+        .from("projects")
+        .update({
+          upvotes: [
+            ...upvotes,
+            {
+              userId: (await supabase.auth.getUser()).data.user?.id,
+              created_at: new Date(),
+            },
+          ],
+        })
+        .eq("id", id);
+    }
   };
 
   return (
