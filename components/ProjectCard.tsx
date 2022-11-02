@@ -83,59 +83,70 @@ const ProjectCard = ({
         background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
       }}
     >
-        <Box p={6} bg="#111" borderRadius={"md"}>
-          <Box>
-      <Link href={`?projects/${name}`} as={`/projects/${name?.toLowerCase()}`}>
-       <Box 
-      onClick={onOpen}>
-       <Flex align="center" gap="10px">
-            <Heading as="h3" fontSize="30px">
-              <Flex justifyContent={"space-between"} align="center" w={"320px"}>
-                <Text fontSize={"0.7em"}>{name}</Text>
+      <Box p={6} bg="#111" borderRadius={"md"}>
+        <Box>
+          <Link
+            href={`?projects/${name}`}
+            as={`/projects/${name?.toLowerCase()}`}
+          >
+            <Box onClick={onOpen}>
+              <Flex align="center" gap="10px">
+                <Heading as="h3" fontSize="30px">
+                  <Flex
+                    justifyContent={"space-between"}
+                    align="center"
+                    w={"320px"}
+                  >
+                    <Text fontSize={"0.7em"}>{name}</Text>
+                  </Flex>
+                  <Flex align={"center"}>
+                    <Text fontSize="14px" fontWeight="thin" py={2}>
+                      {username}
+                    </Text>
+                    <Text fontSize="14px" fontWeight="thin" py={2}>
+                      {isVerified && <Icon as={GoVerified} ml={1} />}
+                    </Text>
+                  </Flex>
+                </Heading>
               </Flex>
-              <Flex align={"center"}>
-                <Text fontSize="14px" fontWeight="thin" py={2}>
-                  {username}
-                </Text>
-                <Text fontSize="14px" fontWeight="thin" py={2}>
-                  {isVerified && <Icon as={GoVerified} ml={1} />}
-                </Text>
+              <Text m="15px 0" fontSize="15px">
+                {" "}
+                {truncate(description)}
+              </Text>
+              {/*  */}
+              <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
+                <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
+                <StackTag stackName={"Supabase"} icon={SiSupabase} />
+                <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
+                <StackTag stackName={"TypeScript"} icon={SiTypescript} />
               </Flex>
-            </Heading>
-          </Flex>
-          <Text m="15px 0" fontSize="15px">
-            {" "}
-            {truncate(description)}
-          </Text>
-          {/*  */}
-          <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-            <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
-            <StackTag stackName={"Supabase"} icon={SiSupabase} />
-            <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-            <StackTag stackName={"TypeScript"} icon={SiTypescript} />
-          </Flex>
-       </Box>
-      </Link>
+            </Box>
+          </Link>
         </Box>
 
-        <Button
-        as={Button}
-        mt="5px"
-        onClick={(e) => {
-          e.preventDefault();
-          upvoteProject(id, upvotes);
-        }}
-        bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-      >
-        <Flex align={"center"}>
-          <Text fontSize={"xl"}>
-            <TbArrowBigUpLines />
-          </Text>
-          <Text ml={1}>{upvotes.length || 0}</Text>
-        </Flex>
-      </Button>
-        </Box>
-     
+        {currentUser && (
+          <Button
+            as={Button}
+            mt="5px"
+            onClick={(e) => {
+              e.preventDefault();
+              upvoteProject(id, upvotes);
+            }}
+            background={
+              upvotes.find((upvote) => upvote.userId === currentUser.id)
+                ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+                : ""
+            }
+          >
+            <Flex align={"center"}>
+              <Text fontSize={"xl"}>
+                <TbArrowBigUpLines />
+              </Text>
+              <Text ml={1}>{upvotes.length || 0}</Text>
+            </Flex>
+          </Button>
+        )}
+      </Box>
     </Flex>
   );
 };
