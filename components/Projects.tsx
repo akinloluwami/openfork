@@ -34,8 +34,6 @@ const Projects = () => {
       let { data: projects, error } = await supabase
         .from("projects")
         .select("*");
-      console.table({ projects, error });
-      console.log(projects);
       setProjects(projects);
     }
 
@@ -64,7 +62,15 @@ const Projects = () => {
     );
 
     if (upvoted) {
-      console.log(upvoted);
+      const newUpvotes = upvotes.filter(
+        (upvote) => upvote.userId !== currentUserId
+      );
+      const { data, error } = await supabase
+        .from("projects")
+        .update({
+          upvotes: newUpvotes,
+        })
+        .eq("id", id);
     } else {
       const { data, error } = await supabase
         .from("projects")
