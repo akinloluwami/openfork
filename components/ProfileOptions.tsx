@@ -25,7 +25,7 @@ const ProfileOptions = () => {
 
   const getUser = async () => {
     const user: any = (await supabase.auth.getUser()).data.user;
-    setUserId(user.id);
+    (await supabase.auth.getUser()) && setUserId(user?.id);
     let { data: profiles, error } = await supabase
       .from("profiles")
       .select("*")
