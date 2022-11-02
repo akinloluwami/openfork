@@ -54,7 +54,6 @@ const Projects = () => {
   };
 
   const upvoteProject = async (id: number, upvotes: any) => {
-    /***DON'T UNCOMMENT THIS!!! I WANT TO MAKE SURE I USER CAN'T UPVOTE A PROJECT TWICE AND ALSO ABLE TO UNUPVOTE (IF THAT'S A WORD...lol) !!! I'LL ADD THE SOON*/
     const currentUserId = (await supabase.auth.getUser()).data.user?.id;
 
     const upvoted = upvotes.find(
