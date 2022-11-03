@@ -21,14 +21,23 @@ interface userProps {
 const ProfileOptions = () => {
   const [user, setUser] = useState<any>();
   const router = useRouter();
-  useEffect(() => {
-    async function getUser() {
-      await supabase.auth.getUser().then((data) => {
-        setUser(data.data.user?.user_metadata);
-      });
+  const [userId, setUserId] = useState("");
+
+  const getUser = async () => {
+    const user: any = (await supabase.auth.getUser()).data.user;
+    (await supabase.auth.getUser()) && setUserId(user?.id);
+    let { data: profiles, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId);
+    if (profiles) {
+      setUser(profiles[0]);
     }
+  };
+  useEffect(() => {
     getUser();
-  }, []);
+  }, [userId]);
+
   return (
     <Menu isLazy>
       <MenuButton>
@@ -36,9 +45,11 @@ const ProfileOptions = () => {
       </MenuButton>
       <MenuList>
         <MenuItem>
-          <Link href={`/${user?.user_name}`}>Profile</Link>
+          <Link href={`/${user?.username}`}>Profile</Link>
         </MenuItem>
-        <MenuItem>My Projects</MenuItem>
+        <MenuItem>
+          <Link href={`/${user?.username}/projects`}> My Projects</Link>
+        </MenuItem>
         <MenuItem>Settings</MenuItem>
         <MenuDivider />
         <MenuItem

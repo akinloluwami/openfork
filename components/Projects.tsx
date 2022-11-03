@@ -31,8 +31,10 @@ const Projects = () => {
 
   useEffect(() => {
     async function fetchProjects() {
-      let { data: Projects } = await supabase.from("Projects").select("*");
-      setProjects(Projects);
+      let { data: projects, error } = await supabase
+        .from("projects")
+        .select("*");
+      setProjects(projects);
     }
 
     fetchProjects();
@@ -49,6 +51,39 @@ const Projects = () => {
     setPageTitle(initPageTitle);
     onClose();
     router.push("/");
+  };
+
+  const upvoteProject = async (id: number, upvotes: any) => {
+    const currentUserId = (await supabase.auth.getUser()).data.user?.id;
+
+    const upvoted = upvotes.find(
+      (upvote: any) => upvote.userId === currentUserId
+    );
+
+    if (upvoted) {
+      const newUpvotes = upvotes.filter(
+        (upvote: any) => upvote.userId !== currentUserId
+      );
+      const { data, error } = await supabase
+        .from("projects")
+        .update({
+          upvotes: newUpvotes,
+        })
+        .eq("id", id);
+    } else {
+      const { data, error } = await supabase
+        .from("projects")
+        .update({
+          upvotes: [
+            ...upvotes,
+            {
+              userId: (await supabase.auth.getUser()).data.user?.id,
+              created_at: new Date(),
+            },
+          ],
+        })
+        .eq("id", id);
+    }
   };
 
   return (
@@ -96,15 +131,18 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects.map((items: any) => (
+          {projects?.map((project: any) => (
             <ProjectCard
-              key={items.id}
-              name={items.name}
-              owner={"@bossoncode"}
-              description={items.description}
+              id={project.id}
+              key={project.id}
+              name={project.name}
+              owner={project.user}
+              description={project.description}
               onOpen={() => {
-                cardCLick(items.name);
+                cardCLick(project.name);
               }}
+              upvotes={project.upvotes === null ? [] : project.upvotes}
+              upvoteProject={upvoteProject}
             />
           ))}
         </Grid>

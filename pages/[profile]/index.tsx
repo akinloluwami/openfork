@@ -1,12 +1,21 @@
 import Avatar from "../../components/Avatar";
 import Header from "../../components/Header";
 import GradientButton from "../../components/GradientButton";
-import { Box, Flex, Heading, Text, Center, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Center,
+  Icon,
+  Button,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import { GoVerified } from "react-icons/go";
 import { supabase } from "../../utils/supabaseClient";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export async function getStaticProps(content: any) {
   let { data } = await supabase
@@ -35,6 +44,7 @@ export async function getStaticPaths() {
 const Profile = ({ data, children }: { data: any; children: any }) => {
   const user = data;
   const [currentUser, setCurrentUser] = useState<any>({});
+  const router = useRouter();
 
   useEffect(() => {
     async function getUser() {
@@ -86,7 +96,7 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
                   {user?.is_verified && <Icon as={GoVerified} ml={1} />}
                 </Flex>
 
-                <Text fontSize="16px">Software Engineer</Text>
+                <Text fontSize="16px">{user?.headline}</Text>
                 <Flex fontSize="13px" gap="10px" m="10px 0">
                   <Text>Following: 69</Text>
                   <Text>Followers: 69k</Text>
@@ -96,8 +106,8 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
             </Flex>
           </Flex>
           {currentUser?.user_name == user?.username ? (
-            <Link href={"/my/profile/edit"} passHref>
-              <GradientButton text="Edit my Profile" />
+            <Link href={"/profile/edit"} passHref>
+              <Button>Edit my profile</Button>
             </Link>
           ) : (
             <GradientButton text={"Follow"} />
@@ -106,9 +116,22 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
 
         <Box p="30px 0">
           <Center>
-            <Flex>
+            <Flex pb={10}>
               {pages.map((page, i) => (
-                <Text mx={5} key={i}>
+                <Text
+                  mx={5}
+                  key={i}
+                  bg={
+                    router.asPath.split("/")[2] ===
+                    page.title.toLocaleLowerCase()
+                      ? "purple.500"
+                      : !router.asPath.split("/")[2] && page.title === "About"
+                      ? "purple.500"
+                      : ""
+                  }
+                  px={2}
+                  borderRadius={"xl"}
+                >
                   <Link href={`/${user.username}${page.href}`}>
                     {page.title}
                   </Link>
@@ -117,6 +140,7 @@ const Profile = ({ data, children }: { data: any; children: any }) => {
             </Flex>
           </Center>
           <Center>
+            {!children && <Text>{user?.bio}</Text>}
             <Box> {children}</Box>
           </Center>
         </Box>

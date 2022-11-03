@@ -7,6 +7,7 @@ import {
   Icon,
   Input,
   ListItem,
+  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -17,15 +18,19 @@ import {
   TagLeftIcon,
   Text,
   UnorderedList,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
+import { FaCheck } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import Header from "../../components/Header";
 import userInfo from "../../utils/userInfo";
 import ts from "../../utils/techstack";
 import { octokit } from "../../utils/octokitClient";
 import { supabase } from "../../utils/supabaseClient";
-
+import Head from "next/head";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 interface RepoData {
   name: string;
   svn_url: string;
@@ -37,6 +42,21 @@ interface TagData {
   logo: any;
 }
 
+const Check = ({ done = false }) => {
+  return (
+    <Flex
+      w="50px"
+      h="50px"
+      borderRadius="50px"
+      align="center"
+      justify="center"
+      bg={done ? "gray.400" : "green.500"}
+    >
+      <FaCheck />
+    </Flex>
+  );
+};
+
 const AddNewProject = () => {
   const regex =
     /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
@@ -47,6 +67,7 @@ const AddNewProject = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [repos, setRepos] = useState([]);
+  const [username, setUsername] = useState("");
   const [query, setQuery] = useState("");
   const [projectName, setProjectName] = useState("");
   const [githubURL, setGithubURL] = useState("");
@@ -55,10 +76,13 @@ const AddNewProject = () => {
   const [repoFullname, setRepoFullname] = useState("");
   const [validurl, setValidURL] = useState(false);
   const [stackQuery, setStackQuery] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [techStack, setTechStack] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
-
+  const [publishing, setPublishing] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const stackQueryRef: any = useRef();
+  const { width, height } = useWindowSize();
+  const toast = useToast();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -67,23 +91,78 @@ const AddNewProject = () => {
   useEffect(() => {
     async function getRepos() {
       const user = (await supabase.auth.getUser()).data.user;
+      setUsername(user?.user_metadata?.user_name);
       octokit
         .request("GET /users/{username}/repos", {
           username: user?.user_metadata?.user_name,
           per_page: 100,
         })
         .then((data: any) => {
-          console.log(data.data);
           setRepos(data.data);
         });
     }
     getRepos();
   }, []);
+
+  const publishProject = async () => {
+    setPublishing(true);
+    const project = {
+      user: (await supabase.auth.getUser()).data.user?.id,
+      name: projectName,
+      description,
+      github_url: githubURL,
+      website_url: websiteURL,
+      tech_stack: techStack,
+    };
+
+    const { data, error } = await supabase.from("projects").insert(project);
+    setPublishing(false);
+    if (error) {
+      console.log(error);
+    } else {
+      toast({
+        title: "Your project has been publish",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 5000);
+      handleTabsChange(0);
+      setDescription("");
+      setGithubURL("");
+      setProjectName("");
+      setSelectedTags([]);
+      setWebsiteURL("");
+    }
+  };
+
   return (
-    <Box w={"80%"} m={"auto"}>
+    <>
+      <Head>
+        <title>Publish a new project - Openfork</title>
+      </Head>
       <Header />
-      <Flex align={"flex-start"} justify={"space-between"} gap={3} mt={5}>
-        <Flex direction={"column"} w={"50%"}>
+      <Flex
+        align={"flex-start"}
+        m={"auto"}
+        className="new-project-wrapper"
+        p="0 7%"
+        justify={"space-between"}
+        gap={3}
+        mt={5}
+      >
+        {/* <Button
+          onClick={() => {
+            setShowConfetti(!showConfetti);
+          }}
+        >
+          SHOW
+        </Button> */}
+        {showConfetti && <Confetti width={width} height={height} />}
+        <Flex direction={"column"}>
           <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
           </Text>
@@ -91,48 +170,65 @@ const AddNewProject = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
             quisquam.
           </Text>
-          <Box mt={5}>
-            <Text fontSize={"xl"}>Todos</Text>
-            <UnorderedList>
+          <Box mt={10} display={["none", "block"]}>
+            {/* <Text fontSize={"xl"}><b>Progress</b></Text> */}
+            <UnorderedList display="flex" gap="20px">
               <ListItem
                 my={2}
-                textDecoration={githubURL && "line-through"}
-                color={githubURL && "gray.400"}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
+                // textDecoration={githubURL && "line-through"}
+                // color={githubURL && "gray.400"}
               >
-                Select repository
+                <Check done={!!!githubURL} />
+                Repository
+              </ListItem>
+              {/* <ListItem
+                 my={2}
+                 display="flex"
+                 alignItems="center"
+                 flexDirection="column"
+                 gap="10px"
+              >
+               <Check done={!!!projectName} />
+                Name
+              </ListItem> */}
+              <ListItem
+                my={2}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
+              >
+                <Check done={!!!description} />
+                Description
               </ListItem>
               <ListItem
                 my={2}
-                textDecoration={projectName && "line-through"}
-                color={projectName && "gray.400"}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
               >
-                Set project name
+                <Check done={!!!validurl} />
+                Link (Optional)
               </ListItem>
               <ListItem
                 my={2}
-                textDecoration={description && "line-through"}
-                color={description && "gray.400"}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap="10px"
               >
-                Set project description
-              </ListItem>
-              <ListItem
-                my={2}
-                textDecoration={validurl ? "line-through" : ""}
-                color={validurl ? "gray.400" : ""}
-              >
-                Link to website (optional)
-              </ListItem>
-              <ListItem
-                my={2}
-                textDecoration={selectedTags.length > 0 ? "line-through" : ""}
-                color={selectedTags.length > 0 ? "gray.400" : ""}
-              >
-                Select tech stack
+                <Check done={selectedTags.length < 1} />
+                Tech-stack
               </ListItem>
             </UnorderedList>
           </Box>
         </Flex>
-        <Flex w={"50%"} justify={"center"}>
+        <Flex>
           <Tabs index={tabIndex} onChange={handleTabsChange}>
             <TabList>
               <Tab>Repository</Tab>
@@ -147,26 +243,30 @@ const AddNewProject = () => {
                   <Input
                     placeholder={"Search repository"}
                     my={2}
+                    h="60px"
                     onChange={(e) => {
                       setQuery(e.target.value);
                     }}
                   />
                 )}
+
                 {githubURL !== "" && (
                   <Button
                     bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                     fontSize="13px"
                     p={0.5}
                     my={3}
-                    w={350}
+                    maxW={350}
+                    h="60px"
                   >
                     <Flex
+                      overflow="hidden"
                       align={"center"}
                       bg={"#000"}
                       my={3}
                       w={"100%"}
                       h={"100%"}
-                      p={0.5}
+                      p={"10px"}
                       cursor={"pointer"}
                       borderRadius={"5px"}
                     >
@@ -183,47 +283,53 @@ const AddNewProject = () => {
                     />
                   </Button>
                 )}
-                {!query ? (
-                  <></>
-                ) : githubURL !== "" ? (
-                  <></>
-                ) : (
-                  repos
-                    .filter((r: RepoData) =>
-                      r.name.toLowerCase().includes(query.toLowerCase())
-                    )
-                    .map((repo: RepoData, i) => (
-                      <Button
-                        bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-                        fontSize="13px"
-                        p={0.5}
-                        m={3}
-                        w={350}
-                        key={i}
-                      >
-                        <Flex
-                          align={"center"}
-                          bg={"#000"}
-                          my={3}
-                          w={"100%"}
-                          h={"100%"}
+                <Flex direction="column" gap="15px">
+                  {!query ? (
+                    <></>
+                  ) : githubURL !== "" ? (
+                    <></>
+                  ) : (
+                    repos
+                      .filter((r: RepoData) =>
+                        r.name.toLowerCase().includes(query.toLowerCase())
+                      )
+                      .map((repo: RepoData, i) => (
+                        <Button
+                          bg="linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+                          fontSize="13px"
                           p={0.5}
-                          cursor={"pointer"}
-                          borderRadius={"5px"}
-                          onClick={() => {
-                            setGithubURL(repo.svn_url);
-                            setProjectName(repo.name);
-                            setQuery("");
-                            setRepoFullname(repo.full_name);
-                          }}
+                          m={3}
+                          w="80vw"
+                          position="relative"
+                          maxW={"350px"}
+                          key={i}
                         >
-                          <Icon as={SiGithub} h={5} w={5} mr={2} />
-                          <Text color={"grey.100"}>bossoncode/</Text>
-                          <Text>{repo.name}</Text>
-                        </Flex>
-                      </Button>
-                    ))
-                )}
+                          <Flex
+                            align={"center"}
+                            overflow="hidden"
+                            bg={"#000"}
+                            my={3}
+                            w={"100%"}
+                            h={"100%"}
+                            p={0.5}
+                            cursor={"pointer"}
+                            borderRadius={"5px"}
+                            onClick={() => {
+                              setGithubURL(repo.svn_url);
+                              setProjectName(repo.name);
+                              setQuery("");
+                              setRepoFullname(repo.full_name);
+                            }}
+                          >
+                            <Icon as={SiGithub} h={5} w={5} mr={2} />
+                            <Text color={"grey.100"}>{username}/</Text>
+                            <Text>{repo.name}</Text>
+                          </Flex>
+                        </Button>
+                      ))
+                  )}
+                </Flex>
+
                 <Box>
                   <Button
                     disabled={!githubURL}
@@ -238,6 +344,9 @@ const AddNewProject = () => {
               <TabPanel>
                 <Input
                   placeholder={"Project name"}
+                  p="14px"
+                  h="60px"
+                  w="100%"
                   my={2}
                   value={projectName}
                   onChange={(e) => {
@@ -246,11 +355,15 @@ const AddNewProject = () => {
                 />
                 <Input
                   placeholder={"Project description"}
+                  p="14px"
+                  h="60px"
                   my={2}
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <Input
                   placeholder={"Website"}
+                  p="14px"
+                  h="60px"
                   my={2}
                   onChange={(e) => {
                     setWebsiteURL(e.target.value);
@@ -287,6 +400,7 @@ const AddNewProject = () => {
                   </Flex>
                   <Input
                     placeholder={"Search"}
+                    h="60px"
                     my={4}
                     ref={stackQueryRef}
                     onChange={(e) => {
@@ -313,7 +427,7 @@ const AddNewProject = () => {
                             my={2}
                             onClick={() => {
                               setSelectedTags([...selectedTags, tag]);
-                              setTags([...tags, tag.name]);
+                              setTechStack([...techStack, tag.name]);
                               setStackQuery("");
                               stackQueryRef.current.value = "";
                             }}
@@ -322,8 +436,11 @@ const AddNewProject = () => {
                           </Tag>
                         ))}
                   </Flex>
-                  <Button disabled={selectedTags.length < 1}>
-                    Publish project
+                  <Button
+                    disabled={selectedTags.length < 1}
+                    onClick={publishProject}
+                  >
+                    {publishing ? <Spinner size={"lg"} /> : "Publish Project"}
                   </Button>
                 </Flex>
               </TabPanel>
@@ -331,7 +448,7 @@ const AddNewProject = () => {
           </Tabs>
         </Flex>
       </Flex>
-    </Box>
+    </>
   );
 };
 
