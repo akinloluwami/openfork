@@ -7,7 +7,7 @@ import { gradient } from "../styles/gradient";
 import { signInWithGithub } from "../utils/supabase/auth";
 import Notifications from "./Notifications";
 import ProfileOptions from "./ProfileOptions";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
 const Header = () => {
