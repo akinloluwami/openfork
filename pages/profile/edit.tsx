@@ -108,14 +108,22 @@ const EditProfile = () => {
       headline,
       links,
     };
+    setUpdating(true);
+
     const { data, error } = await supabase
       .from("profiles")
       .update(updateInfo)
       .eq("id", userId);
+    setUpdating(false);
+    toast({
+      title: "Profile updated successfully",
+      duration: 4000,
+      isClosable: true,
+      status: "success",
+    });
   };
 
   const updateProfile = () => {
-    setUpdating(true);
     const emptyLinksData = links.filter(
       (link: LinkProps) => !link.title || !link.url
     );
@@ -136,7 +144,6 @@ const EditProfile = () => {
     } else {
       runProfileUpdate();
     }
-    setUpdating(false);
   };
 
   // const updateDP = async () => {
@@ -252,9 +259,15 @@ const EditProfile = () => {
             </Button>
           </Box>
           <Box my={10} onClick={updateProfile}>
-            <GradientButton
-              text={updating ? "Saving changes..." : "Save changes"}
-            />
+            <Button disabled={updating}>
+              {updating ? (
+                <Flex gap={3}>
+                  Saving changes... <Spinner size={"sm"} />{" "}
+                </Flex>
+              ) : (
+                "Save changes"
+              )}
+            </Button>
           </Box>
         </Box>
         <Flex direction={"column"} align={"center"} gap={4}>
