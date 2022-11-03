@@ -11,7 +11,7 @@ const colors = {
 
 const progress = new ProgressBar({
   size: 2,
-  color: "#38a169",
+  color: "#805ad5",
   className: "bar-of-progress",
   delay: 100,
 });
