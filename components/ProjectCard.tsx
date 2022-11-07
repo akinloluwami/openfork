@@ -7,6 +7,7 @@ import {
   Avatar,
   Icon,
   Button,
+  Link,
 } from "@chakra-ui/react";
 import StackTag from "./Tag";
 import {
@@ -17,7 +18,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import { TbArrowBigUpLines } from "react-icons/tb";
-import Link from "next/link";
+// import Link from "next/link";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { GoVerified } from "react-icons/go";
@@ -97,7 +98,12 @@ const ProjectCard = ({
                   align="center"
                   w={"320px"}
                 >
-                  <Text fontSize={"0.7em"}>{name}</Text>
+                  <Link
+                    href={"https://github.com/bossoncode/fetiino"}
+                    target={"_blank"}
+                  >
+                    <Text fontSize={"0.7em"}>{name}</Text>
+                  </Link>
                 </Flex>
                 <Flex align={"center"}>
                   <Text fontSize="14px" fontWeight="thin" py={2}>
