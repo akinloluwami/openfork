@@ -35,6 +35,7 @@ const Projects = () => {
         .from("projects")
         .select("*");
       setProjects(projects);
+      console.log(projects[0]);
     }
 
     fetchProjects();
@@ -139,6 +140,7 @@ const Projects = () => {
               owner={project.user}
               description={project.description}
               github={project.github_url}
+              techStack={project.tech_stack}
               // onOpen={() => {
               //   cardCLick(project.name);
               // }}
