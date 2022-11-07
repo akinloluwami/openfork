@@ -33,6 +33,7 @@ interface Props {
   upvotes?: any;
   upvoteProject?: any;
   github?: string;
+  techStack?: any;
 }
 
 const ProjectCard = ({
@@ -45,6 +46,7 @@ const ProjectCard = ({
   upvoteProject,
   upvotes,
   github,
+  techStack,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -86,7 +88,7 @@ const ProjectCard = ({
         background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
       }}
     >
-      <Box p={6} bg="#111" borderRadius={"md"}>
+      <Box w={"100%"} p={6} bg="#111" borderRadius={"md"}>
         <Box>
           {/* <Link
             href={`?projects/${name}`}
@@ -120,29 +122,20 @@ const ProjectCard = ({
             </Text>
             {/*  */}
             <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-              <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
+              {/* <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
               <StackTag stackName={"Supabase"} icon={SiSupabase} />
               <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-              <StackTag stackName={"TypeScript"} icon={SiTypescript} />
+              <StackTag stackName={"TypeScript"} icon={SiTypescript} /> */}
+              {techStack.map((stack: string) => (
+                <StackTag stackName={stack} />
+              ))}
             </Flex>
           </Box>
           {/* </Link> */}
         </Box>
 
         {currentUser && (
-          <Button
-            as={Button}
-            mt="5px"
-            onClick={(e) => {
-              e.preventDefault();
-              upvoteProject(id, upvotes);
-            }}
-            background={
-              upvotes.find((upvote) => upvote.userId === currentUser.id)
-                ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-                : ""
-            }
-          >
+          <Button as={Button} mt="5px">
             <Flex align={"center"}>
               <Text fontSize={"xl"}>
                 <TbArrowBigUpLines />
