@@ -138,9 +138,9 @@ const Projects = () => {
               name={project.name}
               owner={project.user}
               description={project.description}
-              onOpen={() => {
-                cardCLick(project.name);
-              }}
+              // onOpen={() => {
+              //   cardCLick(project.name);
+              // }}
               upvotes={project.upvotes === null ? [] : project.upvotes}
               upvoteProject={upvoteProject}
             />
