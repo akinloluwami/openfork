@@ -138,6 +138,7 @@ const Projects = () => {
               name={project.name}
               owner={project.user}
               description={project.description}
+              github={project.github_url}
               // onOpen={() => {
               //   cardCLick(project.name);
               // }}
