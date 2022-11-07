@@ -92,7 +92,7 @@ const Projects = () => {
         <Head>
           <title>{pageTitle}</title>
         </Head>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        {/* <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
@@ -121,7 +121,7 @@ const Projects = () => {
               <Button variant="ghost">Secondary Action</Button>
             </ModalFooter>
           </ModalContent>
-        </Modal>
+        </Modal> */}
         <Grid
           mt={20}
           alignItems={"center"}
