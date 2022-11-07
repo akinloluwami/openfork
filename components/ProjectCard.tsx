@@ -32,6 +32,7 @@ interface Props {
   onOpen?: any;
   upvotes?: any;
   upvoteProject?: any;
+  github?: string;
 }
 
 const ProjectCard = ({
@@ -43,6 +44,7 @@ const ProjectCard = ({
   onOpen,
   upvoteProject,
   upvotes,
+  github,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -98,10 +100,7 @@ const ProjectCard = ({
                   align="center"
                   w={"320px"}
                 >
-                  <Link
-                    href={"https://github.com/bossoncode/fetiino"}
-                    target={"_blank"}
-                  >
+                  <Link href={github} target={"_blank"}>
                     <Text fontSize={"0.7em"}>{name}</Text>
                   </Link>
                 </Flex>
