@@ -85,43 +85,43 @@ const ProjectCard = ({
     >
       <Box p={6} bg="#111" borderRadius={"md"}>
         <Box>
-          <Link
+          {/* <Link
             href={`?projects/${name}`}
             as={`/projects/${name?.toLowerCase()}`}
-          >
-            <Box onClick={onOpen}>
-              <Flex align="center" gap="10px">
-                <Heading as="h3" fontSize="30px">
-                  <Flex
-                    justifyContent={"space-between"}
-                    align="center"
-                    w={"320px"}
-                  >
-                    <Text fontSize={"0.7em"}>{name}</Text>
-                  </Flex>
-                  <Flex align={"center"}>
-                    <Text fontSize="14px" fontWeight="thin" py={2}>
-                      {username}
-                    </Text>
-                    <Text fontSize="14px" fontWeight="thin" py={2}>
-                      {isVerified && <Icon as={GoVerified} ml={1} />}
-                    </Text>
-                  </Flex>
-                </Heading>
-              </Flex>
-              <Text m="15px 0" fontSize="15px">
-                {" "}
-                {truncate(description)}
-              </Text>
-              {/*  */}
-              <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-                <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
-                <StackTag stackName={"Supabase"} icon={SiSupabase} />
-                <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-                <StackTag stackName={"TypeScript"} icon={SiTypescript} />
-              </Flex>
-            </Box>
-          </Link>
+          > */}
+          <Box onClick={onOpen}>
+            <Flex align="center" gap="10px">
+              <Heading as="h3" fontSize="30px">
+                <Flex
+                  justifyContent={"space-between"}
+                  align="center"
+                  w={"320px"}
+                >
+                  <Text fontSize={"0.7em"}>{name}</Text>
+                </Flex>
+                <Flex align={"center"}>
+                  <Text fontSize="14px" fontWeight="thin" py={2}>
+                    {username}
+                  </Text>
+                  <Text fontSize="14px" fontWeight="thin" py={2}>
+                    {isVerified && <Icon as={GoVerified} ml={1} />}
+                  </Text>
+                </Flex>
+              </Heading>
+            </Flex>
+            <Text m="15px 0" fontSize="15px">
+              {" "}
+              {truncate(description)}
+            </Text>
+            {/*  */}
+            <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
+              <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
+              <StackTag stackName={"Supabase"} icon={SiSupabase} />
+              <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
+              <StackTag stackName={"TypeScript"} icon={SiTypescript} />
+            </Flex>
+          </Box>
+          {/* </Link> */}
         </Box>
 
         {currentUser && (
