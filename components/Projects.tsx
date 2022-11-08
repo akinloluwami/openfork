@@ -1,4 +1,4 @@
-import { Button, Grid, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Center, Grid, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
@@ -21,23 +21,27 @@ interface ProjectProps {
 }
 
 const Projects = () => {
-  const [projects, setProjects] = useState<any>([]);
+  const [openProjects, setOpenProjects] = useState<any>([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = Router;
   const initPageTitle =
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
+  const [projectsEnd, setProjectsEnd] = useState(false);
+  async function fetchProjects() {
+    let { data: projects, error } = await supabase
+      .from("projects")
+      .select("*")
+      .range(openProjects.length, openProjects.length + 4);
+    if (projects?.length < 5) {
+      setProjectsEnd(true);
+    }
+    setOpenProjects([...openProjects, ...projects]);
+    console.log(projects);
+  }
 
   useEffect(() => {
-    async function fetchProjects() {
-      let { data: projects, error } = await supabase
-        .from("projects")
-        .select("*");
-      setProjects(projects);
-      console.log(projects[0]);
-    }
-
     fetchProjects();
   }, []);
 
@@ -132,7 +136,7 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects?.map((project: any) => (
+          {openProjects?.map((project: any) => (
             <ProjectCard
               id={project.id}
               key={project.id}
@@ -149,6 +153,13 @@ const Projects = () => {
             />
           ))}
         </Grid>
+        <Center my={10}>
+          {projectsEnd ? (
+            <Text>No more projects...</Text>
+          ) : (
+            <Button onClick={fetchProjects}>Load more...</Button>
+          )}
+        </Center>
       </>
     </ContainerLayout>
   );
