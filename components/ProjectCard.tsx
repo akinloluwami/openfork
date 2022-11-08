@@ -126,10 +126,7 @@ const ProjectCard = ({
             </Text>
             {/*  */}
             <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-              {/* <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
-              <StackTag stackName={"Supabase"} icon={SiSupabase} />
-              <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-              <StackTag stackName={"TypeScript"} icon={SiTypescript} /> */}
+              {/*<StackTag stackName={"TypeScript"} icon={SiTypescript} />*/}
               {techStack.map((stack: string) => (
                 <StackTag stackName={stack} />
               ))}
@@ -139,7 +136,19 @@ const ProjectCard = ({
         </Box>
 
         {currentUser && (
-          <Button as={Button} mt="5px">
+          <Button
+            as={Button}
+            mt="5px"
+            onClick={(e) => {
+              e.preventDefault();
+              upvoteProject(id, upvotes);
+            }}
+            background={
+              upvotes.find((upvote) => upvote.userId === currentUser.id)
+                ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+                : ""
+            }
+          >
             <Flex align={"center"}>
               <Text fontSize={"xl"}>
                 <TbArrowBigUpLines />
