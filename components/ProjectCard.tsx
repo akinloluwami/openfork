@@ -35,7 +35,7 @@ interface Props {
   upvoteProject?: any;
   github?: string;
   techStack?: any;
-  isUpvoting?: boolean;
+  isUpvoting?: number;
 }
 
 const ProjectCard = ({
