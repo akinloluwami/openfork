@@ -1,4 +1,5 @@
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ProjectCard from "../../components/ProjectCard";
@@ -16,8 +17,18 @@ const Projects = () => {
       setMyProject(projects);
       console.log(projects);
     }
-
     fetchProjects();
+  }, []);
+
+  const isLoggedIn = async () => {
+    const check = await supabase.auth.getUser();
+    if (check.data.user === null) {
+      Router.push("/");
+    }
+  };
+
+  useEffect(() => {
+    isLoggedIn();
   }, []);
 
   return (
