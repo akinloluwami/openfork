@@ -8,6 +8,7 @@ import {
   Icon,
   Button,
   Link,
+  Spinner,
 } from "@chakra-ui/react";
 import StackTag from "./Tag";
 import {
@@ -34,6 +35,7 @@ interface Props {
   upvoteProject?: any;
   github?: string;
   techStack?: any;
+  isUpvoting?: boolean;
 }
 
 const ProjectCard = ({
@@ -47,6 +49,7 @@ const ProjectCard = ({
   upvotes,
   github,
   techStack,
+  isUpvoting,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -135,7 +138,7 @@ const ProjectCard = ({
           {/* </Link> */}
         </Box>
 
-        {currentUser && (
+        {/* {currentUser && (
           <Button
             as={Button}
             mt="5px"
@@ -150,13 +153,19 @@ const ProjectCard = ({
             }
           >
             <Flex align={"center"}>
-              <Text fontSize={"xl"}>
-                <TbArrowBigUpLines />
-              </Text>
-              <Text ml={1}>{upvotes.length || 0}</Text>
+              {isUpvoting === id ? (
+                <Spinner size={"md"} />
+              ) : (
+                <>
+                  <Text fontSize={"xl"}>
+                    <TbArrowBigUpLines />
+                  </Text>
+                  <Text ml={1}>{upvotes.length || 0}</Text>
+                </>
+              )}
             </Flex>
           </Button>
-        )}
+        )} */}
       </Box>
     </Flex>
   );
