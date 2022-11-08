@@ -1,4 +1,5 @@
-import { Box, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Grid, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -6,7 +7,7 @@ import ProjectCard from "../../components/ProjectCard";
 import { supabase } from "../../utils/supabaseClient";
 
 const Projects = () => {
-  const [myProjects, setMyProject] = useState([]);
+  const [myProjects, setMyProject] = useState<any>([]);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -15,7 +16,6 @@ const Projects = () => {
         .select("*")
         .eq("user", (await supabase.auth.getUser()).data.user?.id);
       setMyProject(projects);
-      console.log(projects);
     }
     fetchProjects();
   }, []);
@@ -48,6 +48,21 @@ const Projects = () => {
         gap={5}
         py={10}
       >
+        {myProjects.length < 1 && (
+          <Center>
+            <Box>
+              <Text my={5} fontSize={"4xl"}>
+                You don't have any projects yet.
+              </Text>
+              <Center>
+                <Link href={"/projects/new"}>
+                  <Button>Publish your first project</Button>
+                </Link>
+              </Center>
+            </Box>
+          </Center>
+        )}
+
         {myProjects?.map((project: any) => (
           <ProjectCard
             id={project.id}
