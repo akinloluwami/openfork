@@ -29,11 +29,14 @@ const Projects = () => {
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
   const [projectsEnd, setProjectsEnd] = useState(false);
-  const [isUpvoting, setIsUpvoting] = useState(0);
+  const [isUpvoting, setIsUpvoting] = useState<number>(0);
 
   async function fetchProjects() {
-    let { data: projects, error } = await supabase.from("projects").select("*");
-    // .range(openProjects.length, openProjects.length + 4);
+    let { data: projects, error } = await supabase
+      .from("projects")
+      .select("*")
+      .range(openProjects.length, openProjects.length + 4);
+
     if (projects?.length < 5) {
       setProjectsEnd(true);
     }
@@ -140,6 +143,11 @@ const Projects = () => {
           gap={5}
           py={10}
         >
+          {openProjects.length < 1 && (
+            <Center>
+              <Text fontSize={"3xl"}>No projects</Text>
+            </Center>
+          )}
           {openProjects?.map((project: any) => (
             <ProjectCard
               id={project.id}
@@ -160,7 +168,7 @@ const Projects = () => {
         </Grid>
         <Center my={10}>
           {projectsEnd ? (
-            <Text>No more projects...</Text>
+            <Text>You have reached the end...</Text>
           ) : (
             <Button onClick={fetchProjects}>Load more...</Button>
           )}
