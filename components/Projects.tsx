@@ -29,11 +29,11 @@ const Projects = () => {
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
   const [projectsEnd, setProjectsEnd] = useState(false);
+  const [isUpvoting, setIsUpvoting] = useState(0);
+
   async function fetchProjects() {
-    let { data: projects, error } = await supabase
-      .from("projects")
-      .select("*")
-      .range(openProjects.length, openProjects.length + 4);
+    let { data: projects, error } = await supabase.from("projects").select("*");
+    // .range(openProjects.length, openProjects.length + 4);
     if (projects?.length < 5) {
       setProjectsEnd(true);
     }
@@ -66,6 +66,7 @@ const Projects = () => {
     );
 
     if (upvoted) {
+      setIsUpvoting(id);
       const newUpvotes = upvotes.filter(
         (upvote: any) => upvote.userId !== currentUserId
       );
@@ -75,7 +76,9 @@ const Projects = () => {
           upvotes: newUpvotes,
         })
         .eq("id", id);
+      setIsUpvoting(0);
     } else {
+      setIsUpvoting(id);
       const { data, error } = await supabase
         .from("projects")
         .update({
@@ -88,6 +91,7 @@ const Projects = () => {
           ],
         })
         .eq("id", id);
+      setIsUpvoting(0);
     }
   };
 
@@ -150,6 +154,7 @@ const Projects = () => {
               // }}
               upvotes={project.upvotes === null ? [] : project.upvotes}
               upvoteProject={upvoteProject}
+              isUpvoting={isUpvoting}
             />
           ))}
         </Grid>
