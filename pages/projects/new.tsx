@@ -31,6 +31,7 @@ import { supabase } from "../../utils/supabaseClient";
 import Head from "next/head";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import Router from "next/router";
 interface RepoData {
   name: string;
   svn_url: string;
@@ -129,7 +130,8 @@ const AddNewProject = () => {
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
-      }, 5000);
+        Router.push("/");
+      }, 2500);
       handleTabsChange(0);
       setDescription("");
       setGithubURL("");
