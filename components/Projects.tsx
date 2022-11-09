@@ -32,12 +32,12 @@ const Projects = () => {
   const [isUpvoting, setIsUpvoting] = useState<number>(0);
 
   async function fetchProjects() {
-    let { data: projects, error } = await supabase
+    let { data: projects }: { data: any } = await supabase
       .from("projects")
       .select("*")
       .range(openProjects.length, openProjects.length + 4);
 
-    if (projects?.length < 5) {
+    if (projects!.length < 5) {
       setProjectsEnd(true);
     }
     setOpenProjects([...openProjects, ...projects]);
