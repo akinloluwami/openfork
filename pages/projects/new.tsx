@@ -168,10 +168,7 @@ const AddNewProject = () => {
           <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
           </Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            quisquam.
-          </Text>
+          <Text>{/**Some text goes here*/}</Text>
           <Box mt={10} display={["none", "block"]}>
             {/* <Text fontSize={"xl"}><b>Progress</b></Text> */}
             <UnorderedList display="flex" gap="20px">
