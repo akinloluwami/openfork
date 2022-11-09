@@ -409,7 +409,7 @@ const AddNewProject = () => {
                       }
                       timer = setTimeout(() => {
                         setStackQuery(e.target.value);
-                      }, 800);
+                      }, 300);
                     }}
                   />
                   <Flex direction={"column"}>
@@ -417,7 +417,9 @@ const AddNewProject = () => {
                       ts
                         .filter(
                           (t) =>
-                            t.name.toLowerCase().includes(stackQuery) &&
+                            t.name
+                              .toLowerCase()
+                              .includes(stackQuery.toLowerCase()) &&
                             !selectedTags.includes(t)
                         )
                         .map((tag, i) => (
