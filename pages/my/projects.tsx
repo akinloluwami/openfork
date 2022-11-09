@@ -45,8 +45,13 @@ const Projects = () => {
             My projects
           </Text>
         </Flex>
+        <Center mt={10}>
+          <Link href={"/projects/new"}>
+            <Button>Publish new project</Button>
+          </Link>
+        </Center>
         <Grid
-          mt={20}
+          mt={5}
           alignItems={"center"}
           w="100%"
           templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
