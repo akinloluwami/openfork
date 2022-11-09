@@ -41,7 +41,6 @@ const Projects = () => {
       setProjectsEnd(true);
     }
     setOpenProjects([...openProjects, ...projects]);
-    console.log(projects);
   }
 
   useEffect(() => {
