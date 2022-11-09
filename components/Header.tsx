@@ -7,7 +7,7 @@ import { gradient } from "../styles/gradient";
 import { signInWithGithub } from "../utils/supabase/auth";
 import Notifications from "./Notifications";
 import ProfileOptions from "./ProfileOptions";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 import { supabase } from "../utils/supabaseClient";
 const Header = () => {
@@ -36,16 +36,16 @@ const Header = () => {
           <Flex align="center" gap="10px">
             <Box>
               <Flex gap="20px" justify="space-around" align="center">
-                <Notifications />
+                {/* <Notifications /> */}
                 <ProfileOptions />
               </Flex>
             </Box>
           </Flex>
         ) : (
           <Flex align="center" gap="10px">
-            <Link href={"/"}>
+            {/* <Link href={"/"}>
               <Text fontSize="14px">Contribute</Text>
-            </Link>
+            </Link> */}
             <Button
               leftIcon={<FaGithub />}
               bgGradient={gradient}

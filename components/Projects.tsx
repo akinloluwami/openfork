@@ -1,4 +1,4 @@
-import { Button, Grid, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Center, Grid, Text, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
@@ -21,22 +21,29 @@ interface ProjectProps {
 }
 
 const Projects = () => {
-  const [projects, setProjects] = useState<any>([]);
+  const [openProjects, setOpenProjects] = useState<any>([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = Router;
   const initPageTitle =
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
+  const [projectsEnd, setProjectsEnd] = useState(false);
+  const [isUpvoting, setIsUpvoting] = useState<number>(0);
+
+  async function fetchProjects() {
+    let { data: projects }: { data: any } = await supabase
+      .from("projects")
+      .select("*")
+      .range(openProjects.length, openProjects.length + 4);
+
+    if (projects!.length < 5) {
+      setProjectsEnd(true);
+    }
+    setOpenProjects([...openProjects, ...projects]);
+  }
 
   useEffect(() => {
-    async function fetchProjects() {
-      let { data: projects, error } = await supabase
-        .from("projects")
-        .select("*");
-      setProjects(projects);
-    }
-
     fetchProjects();
   }, []);
 
@@ -61,6 +68,7 @@ const Projects = () => {
     );
 
     if (upvoted) {
+      setIsUpvoting(id);
       const newUpvotes = upvotes.filter(
         (upvote: any) => upvote.userId !== currentUserId
       );
@@ -70,7 +78,9 @@ const Projects = () => {
           upvotes: newUpvotes,
         })
         .eq("id", id);
+      setIsUpvoting(0);
     } else {
+      setIsUpvoting(id);
       const { data, error } = await supabase
         .from("projects")
         .update({
@@ -83,6 +93,7 @@ const Projects = () => {
           ],
         })
         .eq("id", id);
+      setIsUpvoting(0);
     }
   };
 
@@ -92,7 +103,7 @@ const Projects = () => {
         <Head>
           <title>{pageTitle}</title>
         </Head>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        {/* <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
@@ -121,7 +132,7 @@ const Projects = () => {
               <Button variant="ghost">Secondary Action</Button>
             </ModalFooter>
           </ModalContent>
-        </Modal>
+        </Modal> */}
         <Grid
           mt={20}
           alignItems={"center"}
@@ -131,21 +142,36 @@ const Projects = () => {
           gap={5}
           py={10}
         >
-          {projects?.map((project: any) => (
+          {openProjects.length < 1 && (
+            <Center>
+              <Text fontSize={"3xl"}>No projects</Text>
+            </Center>
+          )}
+          {openProjects?.map((project: any) => (
             <ProjectCard
               id={project.id}
               key={project.id}
               name={project.name}
               owner={project.user}
               description={project.description}
-              onOpen={() => {
-                cardCLick(project.name);
-              }}
+              github={project.github_url}
+              techStack={project.tech_stack}
+              // onOpen={() => {
+              //   cardCLick(project.name);
+              // }}
               upvotes={project.upvotes === null ? [] : project.upvotes}
               upvoteProject={upvoteProject}
+              isUpvoting={isUpvoting}
             />
           ))}
         </Grid>
+        <Center my={10}>
+          {projectsEnd ? (
+            <Text>You have reached the end...</Text>
+          ) : (
+            <Button onClick={fetchProjects}>Load more...</Button>
+          )}
+        </Center>
       </>
     </ContainerLayout>
   );

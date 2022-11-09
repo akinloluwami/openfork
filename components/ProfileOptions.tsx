@@ -44,13 +44,14 @@ const ProfileOptions = () => {
         <Avatar size={["md"]} src={user?.avatar_url} />
       </MenuButton>
       <MenuList>
-        <MenuItem>
+        {/* <MenuItem>
           <Link href={`/${user?.username}`}>Profile</Link>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
-          <Link href={`/${user?.username}/projects`}> My Projects</Link>
+          {/* <Link href={`/${user?.username}/projects`}> My Projects</Link> */}
+          <Link href={"/my/projects"}> My Projects</Link>
         </MenuItem>
-        <MenuItem>Settings</MenuItem>
+        {/* <MenuItem>Settings</MenuItem> */}
         <MenuDivider />
         <MenuItem
           onClick={() => {

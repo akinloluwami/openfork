@@ -31,6 +31,7 @@ import { supabase } from "../../utils/supabaseClient";
 import Head from "next/head";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import Router from "next/router";
 interface RepoData {
   name: string;
   svn_url: string;
@@ -129,7 +130,8 @@ const AddNewProject = () => {
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);
-      }, 5000);
+        Router.push("/");
+      }, 2500);
       handleTabsChange(0);
       setDescription("");
       setGithubURL("");
@@ -166,10 +168,7 @@ const AddNewProject = () => {
           <Text fontSize={"4xl"} fontWeight={"bold"}>
             Publish A New Project 🚀{" "}
           </Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            quisquam.
-          </Text>
+          <Text>{/**Some text goes here*/}</Text>
           <Box mt={10} display={["none", "block"]}>
             {/* <Text fontSize={"xl"}><b>Progress</b></Text> */}
             <UnorderedList display="flex" gap="20px">

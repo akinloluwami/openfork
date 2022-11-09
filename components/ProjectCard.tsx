@@ -7,6 +7,8 @@ import {
   Avatar,
   Icon,
   Button,
+  Link,
+  Spinner,
 } from "@chakra-ui/react";
 import StackTag from "./Tag";
 import {
@@ -17,7 +19,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import { TbArrowBigUpLines } from "react-icons/tb";
-import Link from "next/link";
+// import Link from "next/link";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { GoVerified } from "react-icons/go";
@@ -31,6 +33,9 @@ interface Props {
   onOpen?: any;
   upvotes?: any;
   upvoteProject?: any;
+  github?: string;
+  techStack?: any;
+  isUpvoting?: number;
 }
 
 const ProjectCard = ({
@@ -42,15 +47,18 @@ const ProjectCard = ({
   onOpen,
   upvoteProject,
   upvotes,
+  github,
+  techStack,
+  isUpvoting,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const truncate = (str: string) => {
-    const maxLength = 35;
+    const maxLength = 40;
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
   };
-
+  const [showTruncated, setShowTruncated] = useState(true);
   const getUsername = async (id: string) => {
     let { data: profiles, error } = await supabase
       .from("profiles")
@@ -83,48 +91,54 @@ const ProjectCard = ({
         background: "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)",
       }}
     >
-      <Box p={6} bg="#111" borderRadius={"md"}>
+      <Box w={"100%"} p={6} bg="#111" borderRadius={"md"}>
         <Box>
-          <Link
+          {/* <Link
             href={`?projects/${name}`}
             as={`/projects/${name?.toLowerCase()}`}
-          >
-            <Box onClick={onOpen}>
-              <Flex align="center" gap="10px">
-                <Heading as="h3" fontSize="30px">
-                  <Flex
-                    justifyContent={"space-between"}
-                    align="center"
-                    w={"320px"}
-                  >
+          > */}
+          <Box onClick={onOpen}>
+            <Flex align="center" gap="10px">
+              <Heading as="h3" fontSize="30px">
+                <Flex
+                  justifyContent={"space-between"}
+                  align="center"
+                  w={"320px"}
+                >
+                  <Link href={github} target={"_blank"}>
                     <Text fontSize={"0.7em"}>{name}</Text>
-                  </Flex>
-                  <Flex align={"center"}>
-                    <Text fontSize="14px" fontWeight="thin" py={2}>
-                      {username}
-                    </Text>
-                    <Text fontSize="14px" fontWeight="thin" py={2}>
-                      {isVerified && <Icon as={GoVerified} ml={1} />}
-                    </Text>
-                  </Flex>
-                </Heading>
-              </Flex>
-              <Text m="15px 0" fontSize="15px">
-                {" "}
-                {truncate(description)}
-              </Text>
-              {/*  */}
-              <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-                <StackTag stackName={"Chakra UI"} icon={SiChakraui} />
-                <StackTag stackName={"Supabase"} icon={SiSupabase} />
-                <StackTag stackName={"NextJS"} icon={SiNextdotjs} />
-                <StackTag stackName={"TypeScript"} icon={SiTypescript} />
-              </Flex>
-            </Box>
-          </Link>
+                  </Link>
+                </Flex>
+                <Flex align={"center"}>
+                  <Text fontSize="14px" fontWeight="thin" py={2}>
+                    {username}
+                  </Text>
+                  <Text fontSize="14px" fontWeight="thin" py={2}>
+                    {isVerified && <Icon as={GoVerified} ml={1} />}
+                  </Text>
+                </Flex>
+              </Heading>
+            </Flex>
+            <Text
+              m="15px 0"
+              fontSize="15px"
+              onClick={() => setShowTruncated(!showTruncated)}
+            >
+              {" "}
+              {showTruncated ? truncate(description) : description}
+            </Text>
+            {/*  */}
+            <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
+              {/*<StackTag stackName={"TypeScript"} icon={SiTypescript} />*/}
+              {techStack.map((stack: string, i: number) => (
+                <StackTag stackName={stack} key={i} />
+              ))}
+            </Flex>
+          </Box>
+          {/* </Link> */}
         </Box>
 
-        {currentUser && (
+        {/* {currentUser && (
           <Button
             as={Button}
             mt="5px"
@@ -139,13 +153,19 @@ const ProjectCard = ({
             }
           >
             <Flex align={"center"}>
-              <Text fontSize={"xl"}>
-                <TbArrowBigUpLines />
-              </Text>
-              <Text ml={1}>{upvotes.length || 0}</Text>
+              {isUpvoting === id ? (
+                <Spinner size={"md"} />
+              ) : (
+                <>
+                  <Text fontSize={"xl"}>
+                    <TbArrowBigUpLines />
+                  </Text>
+                  <Text ml={1}>{upvotes.length || 0}</Text>
+                </>
+              )}
             </Flex>
           </Button>
-        )}
+        )} */}
       </Box>
     </Flex>
   );
