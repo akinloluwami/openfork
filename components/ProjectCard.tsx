@@ -55,7 +55,7 @@ const ProjectCard = ({
   const [isVerified, setIsVerified] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const truncate = (str: string) => {
-    const maxLength = 35;
+    const maxLength = 40;
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
   };
   const [showTruncated, setShowTruncated] = useState(true);
@@ -130,8 +130,8 @@ const ProjectCard = ({
             {/*  */}
             <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
               {/*<StackTag stackName={"TypeScript"} icon={SiTypescript} />*/}
-              {techStack.map((stack: string) => (
-                <StackTag stackName={stack} />
+              {techStack.map((stack: string, i: number) => (
+                <StackTag stackName={stack} key={i} />
               ))}
             </Flex>
           </Box>
