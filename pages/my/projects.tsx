@@ -1,9 +1,11 @@
 import { Box, Button, Center, Flex, Grid, Text } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ProjectCard from "../../components/ProjectCard";
+import ContainerLayout from "../../Layout/ContainerLayout";
 import { supabase } from "../../utils/supabaseClient";
 
 const Projects = () => {
@@ -32,54 +34,59 @@ const Projects = () => {
   }, []);
 
   return (
-    <Box>
-      <Header />
-      <Flex justify={"center"}>
-        <Text fontSize={"3xl"} fontWeight={"semibold"}>
-          My projects
-        </Text>
-      </Flex>
-      <Grid
-        mt={20}
-        alignItems={"center"}
-        w="100%"
-        templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
-        justifyContent={"center"}
-        gap={5}
-        py={10}
-      >
-        {myProjects.length < 1 && (
-          <Center>
-            <Box>
-              <Text my={5} fontSize={"4xl"}>
-                You don't have any projects yet.
-              </Text>
-              <Center>
-                <Link href={"/projects/new"}>
-                  <Button>Publish your first project</Button>
-                </Link>
-              </Center>
-            </Box>
-          </Center>
-        )}
+    <ContainerLayout>
+      <Head>
+        <title>My Projects | Openfork</title>
+      </Head>
+      <Box>
+        <Header />
+        <Flex justify={"center"}>
+          <Text fontSize={"3xl"} fontWeight={"semibold"}>
+            My projects
+          </Text>
+        </Flex>
+        <Grid
+          mt={20}
+          alignItems={"center"}
+          w="100%"
+          templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
+          justifyContent={"center"}
+          gap={5}
+          py={10}
+        >
+          {myProjects.length < 1 && (
+            <Center>
+              <Box>
+                <Text my={5} fontSize={"4xl"}>
+                  You don't have any projects yet.
+                </Text>
+                <Center>
+                  <Link href={"/projects/new"}>
+                    <Button>Publish your first project</Button>
+                  </Link>
+                </Center>
+              </Box>
+            </Center>
+          )}
 
-        {myProjects?.map((project: any) => (
-          <ProjectCard
-            id={project.id}
-            key={project.id}
-            name={project.name}
-            owner={project.user}
-            description={project.description}
-            github={project.github_url}
-            techStack={project.tech_stack}
-            // onOpen={() => {
-            //   cardCLick(project.name);
-            // }}
-            upvotes={project.upvotes === null ? [] : project.upvotes}
-          />
-        ))}
-      </Grid>
-    </Box>
+          {myProjects?.map((project: any) => (
+            <ProjectCard
+              id={project.id}
+              key={project.id}
+              name={project.name}
+              owner={project.user}
+              description={project.description}
+              github={project.github_url}
+              techStack={project.tech_stack}
+              // onOpen={() => {
+              //   cardCLick(project.name);
+              // }}
+              upvotes={project.upvotes === null ? [] : project.upvotes}
+            />
+          ))}
+        </Grid>
+      </Box>
+    </ContainerLayout>
   );
 };
 
