@@ -1,5 +1,4 @@
-import { Main, NextScript } from "next/document";
-import Head from "next/head";
+import { Main, NextScript, Head } from "next/document";
 
 <Head>
   <script
