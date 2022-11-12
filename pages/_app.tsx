@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
+import Script from "next/script";
 const colors = {
   brand: {
     accent: "#1a365d",
@@ -23,9 +24,11 @@ Router.events.on("routeChangeError", progress.finish);
 const theme = extendTheme({ colors });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </>
   );
 }
 
