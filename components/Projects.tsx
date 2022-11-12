@@ -100,9 +100,7 @@ const Projects = () => {
   return (
     <ContainerLayout>
       <>
-        <Head>
-          <title>{pageTitle}</title>
-        </Head>
+        <Head>{/* <title>{pageTitle}</title> */}</Head>
         {/* <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
