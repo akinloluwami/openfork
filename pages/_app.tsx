@@ -32,11 +32,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         </title>
         <meta
           property="og:image"
-          content="https://db5pap001files.storage.live.com/y4mCrJoWuRk2wlojIlspEW8fZVnTwzZCLr7NhEDO1vSEp5Ayo19hYkX8mmxZ15YIZSEC3PQ5DMNvYodJec2XNCDwhRoQZNYeQKuTQyBCoyao6lzQ2WeYZi0coXdbcg63R1Aa2Z1qfnWkL7_tdOplJpmgXLOKcBvzD97txNFyWHC9IyjJhbHgBi1Izq5Cmd5qGxZ?width=1200&height=627&cropmode=none"
+          content="https://tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/openfork_OG.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL29wZW5mb3JrX09HLnBuZyIsImlhdCI6MTY2ODIzNzQzMCwiZXhwIjoxOTgzNTk3NDMwfQ.cLDjR7WlXJnv2nrL-luqjOgrIGggLuH_XM99-jBVfHA"
         />
         <meta
           property="og:image:secure_url"
-          content="https://db5pap001files.storage.live.com/y4mCrJoWuRk2wlojIlspEW8fZVnTwzZCLr7NhEDO1vSEp5Ayo19hYkX8mmxZ15YIZSEC3PQ5DMNvYodJec2XNCDwhRoQZNYeQKuTQyBCoyao6lzQ2WeYZi0coXdbcg63R1Aa2Z1qfnWkL7_tdOplJpmgXLOKcBvzD97txNFyWHC9IyjJhbHgBi1Izq5Cmd5qGxZ?width=1200&height=627&cropmode=none"
+          content="https://tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/openfork_OG.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL29wZW5mb3JrX09HLnBuZyIsImlhdCI6MTY2ODIzNzQzMCwiZXhwIjoxOTgzNTk3NDMwfQ.cLDjR7WlXJnv2nrL-luqjOgrIGggLuH_XM99-jBVfHA"
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta
           name="twitter:image"
-          content="https://db5pap001files.storage.live.com/y4mCrJoWuRk2wlojIlspEW8fZVnTwzZCLr7NhEDO1vSEp5Ayo19hYkX8mmxZ15YIZSEC3PQ5DMNvYodJec2XNCDwhRoQZNYeQKuTQyBCoyao6lzQ2WeYZi0coXdbcg63R1Aa2Z1qfnWkL7_tdOplJpmgXLOKcBvzD97txNFyWHC9IyjJhbHgBi1Izq5Cmd5qGxZ?width=1200&height=627&cropmode=none"
+          content="https://tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/openfork_OG.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL29wZW5mb3JrX09HLnBuZyIsImlhdCI6MTY2ODIzNzQzMCwiZXhwIjoxOTgzNTk3NDMwfQ.cLDjR7WlXJnv2nrL-luqjOgrIGggLuH_XM99-jBVfHA"
         />
       </Head>
       <ChakraProvider theme={theme}>
