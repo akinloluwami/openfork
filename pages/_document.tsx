@@ -13,13 +13,11 @@ import { Main, NextScript, Head } from "next/document";
 </Head>;
 
 <body>
-  <body>
-    <Main />
-    <NextScript />
-    <noscript
-      dangerouslySetInnerHTML={{
-        __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=G-GVTLXMTJ30" height="0" width="0" style="display: none; visibility: hidden;" />`,
-      }}
-    />
-  </body>
+  <Main />
+  <NextScript />
+  <noscript
+    dangerouslySetInnerHTML={{
+      __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=G-GVTLXMTJ30" height="0" width="0" style="display: none; visibility: hidden;" />`,
+    }}
+  />
 </body>;
