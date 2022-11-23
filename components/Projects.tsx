@@ -16,8 +16,17 @@ import Router from "next/router";
 import { supabase } from "../utils/supabaseClient";
 
 interface ProjectProps {
+  id?: number;
   name: string;
+  owner?: string;
   description: string;
+  imgSrc?: any;
+  onOpen?: any;
+  upvotes?: any;
+  upvoteProject?: any;
+  github?: string;
+  techStack?: any;
+  isUpvoting?: number;
 }
 
 const Projects = () => {
@@ -78,21 +87,39 @@ const Projects = () => {
           upvotes: newUpvotes,
         })
         .eq("id", id);
+      const newOpenProjects = openProjects.map((project: ProjectProps) => {
+        if (project.id === id) {
+          return {
+            ...project,
+            upvotes: newUpvotes,
+          };
+        }
+        return project;
+      });
+      setOpenProjects(newOpenProjects);
       setIsUpvoting(0);
     } else {
+      const upvoteData = {
+        userId: (await supabase.auth.getUser()).data.user?.id,
+        created_at: new Date(),
+      };
       setIsUpvoting(id);
       const { data, error } = await supabase
         .from("projects")
         .update({
-          upvotes: [
-            ...upvotes,
-            {
-              userId: (await supabase.auth.getUser()).data.user?.id,
-              created_at: new Date(),
-            },
-          ],
+          upvotes: [...upvotes, upvoteData],
         })
         .eq("id", id);
+      const newOpenProjects = openProjects.map((project: ProjectProps) => {
+        if (project.id === id) {
+          return {
+            ...project,
+            upvotes: [...upvotes, upvoteData],
+          };
+        }
+        return project;
+      });
+      setOpenProjects(newOpenProjects);
       setIsUpvoting(0);
     }
   };
