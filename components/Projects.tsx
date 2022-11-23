@@ -78,10 +78,15 @@ const Projects = () => {
 
     if (upvoted) {
       setIsUpvoting(id);
+      let { data: dbUpvotes } = await supabase
+        .from("projects")
+        .select("upvotes")
+        .eq("id", id);
+      console.log(dbUpvotes);
       const newUpvotes = upvotes.filter(
         (upvote: any) => upvote.userId !== currentUserId
       );
-      const { data, error } = await supabase
+      await supabase
         .from("projects")
         .update({
           upvotes: newUpvotes,
@@ -99,6 +104,11 @@ const Projects = () => {
       setOpenProjects(newOpenProjects);
       setIsUpvoting(0);
     } else {
+      let { data: dbUpvotes } = await supabase
+        .from("projects")
+        .select("upvotes")
+        .eq("id", id);
+
       const upvoteData = {
         userId: (await supabase.auth.getUser()).data.user?.id,
         created_at: new Date(),
@@ -107,7 +117,7 @@ const Projects = () => {
       const { data, error } = await supabase
         .from("projects")
         .update({
-          upvotes: [...upvotes, upvoteData],
+          upvotes: [...dbUpvotes, upvoteData],
         })
         .eq("id", id);
       const newOpenProjects = openProjects.map((project: ProjectProps) => {
