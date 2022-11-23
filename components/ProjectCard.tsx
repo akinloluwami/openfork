@@ -53,7 +53,7 @@ const ProjectCard = ({
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser]: any = useState({});
   const truncate = (str: string) => {
     const maxLength = 40;
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
@@ -138,16 +138,13 @@ const ProjectCard = ({
           {/* </Link> */}
         </Box>
 
-        {/* {currentUser && (
+        {currentUser && (
           <Button
             as={Button}
             mt="5px"
-            onClick={(e) => {
-              e.preventDefault();
-              upvoteProject(id, upvotes);
-            }}
+            onClick={() => upvoteProject(id, upvotes)}
             background={
-              upvotes.find((upvote) => upvote.userId === currentUser.id)
+              upvotes.find((upvote: any) => upvote.userId === currentUser.id)
                 ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                 : ""
             }
@@ -165,7 +162,7 @@ const ProjectCard = ({
               )}
             </Flex>
           </Button>
-        )} */}
+        )}
       </Box>
     </Flex>
   );
