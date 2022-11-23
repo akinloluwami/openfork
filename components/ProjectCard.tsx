@@ -37,6 +37,9 @@ interface Props {
   techStack?: any;
   isUpvoting?: number;
 }
+interface upvoteProps {
+  userId: string;
+}
 
 const ProjectCard = ({
   id,
@@ -144,7 +147,9 @@ const ProjectCard = ({
             mt="5px"
             onClick={() => upvoteProject(id, upvotes)}
             background={
-              upvotes.find((upvote: any) => upvote.userId === currentUser.id)
+              upvotes.find(
+                (upvote: upvoteProps) => upvote.userId === currentUser.id
+              )
                 ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                 : ""
             }

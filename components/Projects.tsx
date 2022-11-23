@@ -15,6 +15,10 @@ import Head from "next/head";
 import Router from "next/router";
 import { supabase } from "../utils/supabaseClient";
 
+interface upvoteProps {
+  userId: string;
+}
+
 interface ProjectProps {
   id?: number;
   name: string;
@@ -22,7 +26,7 @@ interface ProjectProps {
   description: string;
   imgSrc?: any;
   onOpen?: any;
-  upvotes?: any;
+  upvotes?: upvoteProps[];
   upvoteProject?: any;
   github?: string;
   techStack?: any;
@@ -114,7 +118,7 @@ const Projects = () => {
         created_at: new Date(),
       };
       setIsUpvoting(id);
-      const { data, error } = await supabase
+      await supabase
         .from("projects")
         .update({
           upvotes: [...dbUpvotes, upvoteData],
@@ -124,7 +128,7 @@ const Projects = () => {
         if (project.id === id) {
           return {
             ...project,
-            upvotes: [...upvotes, upvoteData],
+            upvotes: [...dbUpvotes, upvoteData],
           };
         }
         return project;
