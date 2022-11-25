@@ -46,10 +46,10 @@ const Projects = () => {
       .select("*")
       .range(openProjects.length, openProjects.length + 4);
 
-    if (projects!.length < 5) {
+    if (projects && projects!.length < 5) {
       setProjectsEnd(true);
     }
-    setOpenProjects([...openProjects, ...projects]);
+   projects && setOpenProjects([...openProjects, ...projects]);
   }
 
   useEffect(() => {
