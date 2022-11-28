@@ -60,6 +60,7 @@ const Projects = () => {
     projects && setOpenProjects([...openProjects, ...projects]);
 
     setisLoading(false);
+    console.log(projects);
   }
 
   useEffect(() => {
@@ -79,8 +80,12 @@ const Projects = () => {
     router.push("/");
   };
 
-  const upvoteProject = async (id: number) => {
+  const upvoteProject = async (id: number, upvotes: upvoteProps[]) => {
     console.log(id);
+    const currentUser = (await supabase.auth.getUser()).data.user?.id;
+    await supabase
+      .from("project_upvotes")
+      .insert([{ project_id: id, user_id: currentUser }]);
   };
 
   return (
