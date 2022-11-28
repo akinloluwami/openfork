@@ -14,6 +14,7 @@ import {
 import Head from "next/head";
 import Router from "next/router";
 import { supabase } from "../utils/supabaseClient";
+import { ProjectProgress } from "./Progress";
 
 interface upvoteProps {
   userId: string;
@@ -78,68 +79,8 @@ const Projects = () => {
     router.push("/");
   };
 
-  const upvoteProject = async (id: number, upvotes: upvoteProps[]) => {
-    const currentUserId = (await supabase.auth.getUser()).data.user?.id;
-
-    const upvoted = upvotes.find(
-      (upvote: upvoteProps) => upvote.userId === currentUserId
-    );
-
-    if (upvoted) {
-      setIsUpvoting(id);
-      let { data: dbUpvotes } = await supabase
-        .from("projects")
-        .select("upvotes")
-        .eq("id", id);
-      const newUpvotes = upvotes.filter(
-        (upvote: upvoteProps) => upvote.userId !== currentUserId
-      );
-      await supabase
-        .from("projects")
-        .update({
-          upvotes: newUpvotes,
-        })
-        .eq("id", id);
-      const newOpenProjects = openProjects.map((project: ProjectProps) => {
-        if (project.id === id) {
-          return {
-            ...project,
-            upvotes: newUpvotes,
-          };
-        }
-        return project;
-      });
-      setOpenProjects(newOpenProjects);
-      setIsUpvoting(0);
-    } else {
-      let { data: dbUpvotes } = await supabase
-        .from("projects")
-        .select("upvotes")
-        .eq("id", id);
-
-      const upvoteData = {
-        userId: (await supabase.auth.getUser()).data.user?.id,
-        created_at: new Date(),
-      };
-      setIsUpvoting(id);
-      await supabase
-        .from("projects")
-        .update({
-          upvotes: [...dbUpvotes, upvoteData],
-        })
-        .eq("id", id);
-      const newOpenProjects = openProjects.map((project: ProjectProps) => {
-        if (project.id === id) {
-          return {
-            ...project,
-            upvotes: [...dbUpvotes, upvoteData],
-          };
-        }
-        return project;
-      });
-      setOpenProjects(newOpenProjects);
-      setIsUpvoting(0);
-    }
+  const upvoteProject = async (id: number) => {
+    console.log(id);
   };
 
   return (
