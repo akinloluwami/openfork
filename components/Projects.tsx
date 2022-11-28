@@ -22,14 +22,15 @@ interface upvoteProps {
 interface ProjectProps {
   id?: number;
   name: string;
+  user?: string;
   owner?: string;
   description: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: upvoteProps[];
   upvoteProject?: any;
-  github?: string;
-  techStack?: any;
+  github_url?: string;
+  tech_stack?: any;
   isUpvoting?: number;
 }
 
@@ -38,6 +39,7 @@ const Projects = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = Router;
+
   const initPageTitle =
     "Openfork - Open-source projects you can actually contribute to.";
   const [pageTitle, setPageTitle] = useState(initPageTitle);
@@ -73,11 +75,11 @@ const Projects = () => {
     router.push("/");
   };
 
-  const upvoteProject = async (id: number, upvotes: any) => {
+  const upvoteProject = async (id: number, upvotes: upvoteProps[]) => {
     const currentUserId = (await supabase.auth.getUser()).data.user?.id;
 
     const upvoted = upvotes.find(
-      (upvote: any) => upvote.userId === currentUserId
+      (upvote: upvoteProps) => upvote.userId === currentUserId
     );
 
     if (upvoted) {
@@ -86,9 +88,8 @@ const Projects = () => {
         .from("projects")
         .select("upvotes")
         .eq("id", id);
-      console.log(dbUpvotes);
       const newUpvotes = upvotes.filter(
-        (upvote: any) => upvote.userId !== currentUserId
+        (upvote: upvoteProps) => upvote.userId !== currentUserId
       );
       await supabase
         .from("projects")
@@ -186,7 +187,7 @@ const Projects = () => {
               <Text fontSize={"3xl"}>No projects</Text>
             </Center>
           )}
-          {openProjects?.map((project: any) => (
+          {openProjects?.map((project: ProjectProps) => (
             <ProjectCard
               id={project.id}
               key={project.id}
