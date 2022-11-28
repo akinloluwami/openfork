@@ -45,6 +45,7 @@ const Projects = () => {
   const [pageTitle, setPageTitle] = useState(initPageTitle);
   const [projectsEnd, setProjectsEnd] = useState(false);
   const [isUpvoting, setIsUpvoting] = useState<number>(0);
+  const [isProjectLoading, setisLoading] = useState(true);
 
   async function fetchProjects() {
     let { data: projects }: { data: any } = await supabase
@@ -52,10 +53,12 @@ const Projects = () => {
       .select("*")
       .range(openProjects.length, openProjects.length + 4);
 
-    if (projects!.length < 5) {
+    if (projects && projects!.length < 5) {
       setProjectsEnd(true);
     }
-    setOpenProjects([...openProjects, ...projects]);
+    projects && setOpenProjects([...openProjects, ...projects]);
+
+    setisLoading(false);
   }
 
   useEffect(() => {
@@ -174,19 +177,12 @@ const Projects = () => {
           </ModalContent>
         </Modal> */}
         <Grid
-          mt={20}
           alignItems={"center"}
           w="100%"
           templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
           justifyContent={"center"}
           gap={5}
-          py={10}
         >
-          {openProjects.length < 1 && (
-            <Center>
-              <Text fontSize={"3xl"}>No projects</Text>
-            </Center>
-          )}
           {openProjects?.map((project: ProjectProps) => (
             <ProjectCard
               id={project.id}
@@ -205,11 +201,23 @@ const Projects = () => {
             />
           ))}
         </Grid>
+        {isProjectLoading ? (
+          <ProjectProgress />
+        ) : (
+          openProjects.length < 1 && (
+            <Center>
+              <Text fontSize={"xl"}>No projects</Text>
+            </Center>
+          )
+        )}
         <Center my={10}>
           {projectsEnd ? (
             <Text>You have reached the end...</Text>
           ) : (
-            <Button onClick={fetchProjects}>Load more...</Button>
+            openProjects.length > 0 &&
+            !isProjectLoading && (
+              <Button onClick={fetchProjects}>Load more...</Button>
+            )
           )}
         </Center>
       </>

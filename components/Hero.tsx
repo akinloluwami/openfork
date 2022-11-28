@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import { Flex, Box, Heading, Text, Button, Center } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Button, Center,Icon } from "@chakra-ui/react";
 // import ProjectCard from "./ProjectCard";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaSearch } from "react-icons/fa";
 import { gradient } from "../styles/gradient";
 import ContainerLayout from "../Layout/ContainerLayout";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +9,32 @@ import { signInWithGithub } from "../utils/supabase/auth";
 import userInfo from "../utils/userInfo";
 import { supabase } from "../utils/supabaseClient";
 import Link from "next/link";
+
+const TopNav =()=>{
+  return(
+    <Flex p="10px" mb="20px" align="center" justify="space-between" gap="10px" wrap="wrap">
+      <Flex gap="10px" fontWeight="600" align="center">
+        <Icon opacity=".5" as={FaSearch} mr="15px"/>
+        <Text opacity="1" cursor="pointer">Popular</Text>
+        {/* <Text opacity=".5" cursor="pointer">Upvoted</Text>
+        <Text opacity=".5" cursor="pointer">Discussions</Text> */}
+        <Text opacity=".5" cursor="pointer">Recent</Text>
+      </Flex>
+
+        <Link href={"/projects/new"}>
+                <Button
+                  leftIcon={<FaGithub />}
+                  bgGradient={gradient}
+                  variant="solid"
+                  size="sm"
+                >
+                   New project
+                </Button>
+              </Link>
+    </Flex>
+  )
+}
+
 const Hero: NextPage = () => {
   const [user, setUser] = useState<any>({});
 
@@ -22,12 +48,14 @@ const Hero: NextPage = () => {
   }, []);
   return (
     <ContainerLayout>
-      <Flex
+     {!user ? (
+        <Flex
         alignItems={"center"}
         // justifyContent={"flex-start"}
         minH={"80vh"}
         direction={"column"}
         pt={"3em"}
+        my="15"
       >
         <Box>
           <Heading
@@ -96,6 +124,7 @@ const Hero: NextPage = () => {
           )}
         </Box>
       </Flex>
+     ): <TopNav />}
     </ContainerLayout>
   );
 };
