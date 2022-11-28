@@ -48,6 +48,14 @@ const Projects = () => {
   const [isUpvoting, setIsUpvoting] = useState<number>(0);
   const [isProjectLoading, setisLoading] = useState(true);
 
+  async function getUpvotes(projectId: number) {
+    let { data: project_upvotes, error } = await supabase
+      .from("project_upvotes")
+      .select("*")
+      .eq("project_id", projectId);
+    return project_upvotes;
+  }
+
   async function fetchProjects() {
     let { data: projects }: { data: any } = await supabase
       .from("projects")
@@ -57,10 +65,21 @@ const Projects = () => {
     if (projects && projects!.length < 5) {
       setProjectsEnd(true);
     }
-    projects && setOpenProjects([...openProjects, ...projects]);
+    //////ASYNC BUGGGGGGG!!!!!!!!!!!!! 😭 👇🏽 😭😭😭😭😭😭///////////////
+    const newOpenProjects = projects.map(async (project: ProjectProps) => {
+      const upvotes = await getUpvotes(project.id!);
+      return {
+        ...project,
+        upvotes,
+      };
+    });
+
+    console.log(newOpenProjects);
+    ///////////////////////////////////////////////////////////////////////
+
+    // projects && setOpenProjects([...openProjects, ...projects]);
 
     setisLoading(false);
-    console.log(projects);
   }
 
   useEffect(() => {
