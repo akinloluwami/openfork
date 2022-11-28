@@ -49,11 +49,10 @@ const Projects = () => {
   const [isProjectLoading, setisLoading] = useState(true);
 
   async function getUpvotes(projectId: number) {
-    let { data: project_upvotes, error } = await supabase
+    return await supabase
       .from("project_upvotes")
       .select("*")
       .eq("project_id", projectId);
-    return project_upvotes;
   }
 
   async function fetchProjects() {
@@ -66,8 +65,8 @@ const Projects = () => {
       setProjectsEnd(true);
     }
     //////ASYNC BUGGGGGGG!!!!!!!!!!!!! 😭 👇🏽 😭😭😭😭😭😭///////////////
-    const newOpenProjects = projects.map(async (project: ProjectProps) => {
-      const upvotes = await getUpvotes(project.id!);
+    const newOpenProjects = projects.map((project: ProjectProps) => {
+      const upvotes = getUpvotes(project.id!);
       return {
         ...project,
         upvotes,
