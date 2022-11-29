@@ -1,4 +1,4 @@
-import { Button, Center, Grid, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Center, Grid, Text, useDisclosure, usePopoverStyles } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
@@ -65,15 +65,35 @@ const Projects = () => {
       setProjectsEnd(true);
     }
     //////ASYNC BUGGGGGGG!!!!!!!!!!!!! 😭 👇🏽 😭😭😭😭😭😭///////////////
-    const newOpenProjects = projects.map((project: ProjectProps) => {
-      const upvotes = getUpvotes(project.id!);
-      return {
-        ...project,
-        upvotes,
-      };
-    });
+    // SOLUTION 1
+    const newOpenProjects = async ()=>{
+      const arr = []
+    if(projects){
+      for(let i =0; i<projects.length; i++){
+      const upvotes = await getUpvotes(projects[i].id!);
+      arr.push({
+        project:projects[i],
+        upvotes
+      })
+    }
+    }
+      return arr
+    }
 
-    console.log(newOpenProjects);
+
+    // SOLUTION 2
+      const newOpenProjects2 = await projects ? projects.map(async(project: ProjectProps) => {
+        const upvotes = await getUpvotes(project.id!);
+        return {
+          project,
+          upvotes,
+        };
+      }):[];
+
+      // CALL AWAIT ON EACH newOpenProjects2 index 
+    // console.log(await newOpenProjects2[0]);
+
+    // console.log(await newOpenProjects());
     ///////////////////////////////////////////////////////////////////////
 
     // projects && setOpenProjects([...openProjects, ...projects]);
