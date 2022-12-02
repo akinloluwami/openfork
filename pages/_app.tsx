@@ -5,6 +5,8 @@ import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
 import Script from "next/script";
 import Head from "next/head";
+import { Provider } from "react-supabase";
+import { supabase } from "../utils/supabaseClient";
 const colors = {
   brand: {
     accent: "#1a365d",
@@ -58,6 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="https://tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/openfork_OG.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL29wZW5mb3JrX09HLnBuZyIsImlhdCI6MTY2ODIzNzQzMCwiZXhwIjoxOTgzNTk3NDMwfQ.cLDjR7WlXJnv2nrL-luqjOgrIGggLuH_XM99-jBVfHA"
         />
       </Head>
+
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>

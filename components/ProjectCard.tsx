@@ -37,6 +37,9 @@ interface Props {
   techStack?: any;
   isUpvoting?: number;
 }
+interface upvoteProps {
+  user_id: string;
+}
 
 const ProjectCard = ({
   id,
@@ -54,6 +57,7 @@ const ProjectCard = ({
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [currentUser, setCurrentUser]: any = useState({});
+  const [projectUpvotes, setProjectUpvotes] = useState([...upvotes]);
   const truncate = (str: string) => {
     const maxLength = 40;
     return str.length > maxLength ? `${str.slice(0, maxLength)}...` : str;
@@ -77,6 +81,30 @@ const ProjectCard = ({
     owner && getUsername(owner);
     getCurrentUser();
   }, []);
+
+  function checkUpvoted(user_id: string) {
+    return projectUpvotes.some(function (project) {
+      return project.user_id === user_id;
+    });
+  }
+
+  const clientUpvote = () => {
+    const obj = {
+      created_at: new Date(),
+      id: 100,
+      project_id: id,
+      user_id: currentUser.id,
+    };
+
+    if (checkUpvoted(currentUser.id)) {
+      const newUpvotes = projectUpvotes.filter(
+        (upvote: upvoteProps) => !upvote.user_id
+      );
+      setProjectUpvotes(newUpvotes);
+    } else {
+      setProjectUpvotes([...projectUpvotes, obj]);
+    }
+  };
 
   return (
     <Flex
@@ -142,24 +170,23 @@ const ProjectCard = ({
           <Button
             as={Button}
             mt="5px"
-            onClick={() => upvoteProject(id, upvotes)}
+            onClick={() => {
+              upvoteProject(id, upvotes);
+              clientUpvote();
+            }}
             background={
-              upvotes.find((upvote: any) => upvote.userId === currentUser.id)
+              projectUpvotes.find(
+                (upvote: upvoteProps) => upvote.user_id === currentUser.id
+              )
                 ? "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
                 : ""
             }
           >
             <Flex align={"center"}>
-              {isUpvoting === id ? (
-                <Spinner size={"md"} />
-              ) : (
-                <>
-                  <Text fontSize={"xl"}>
-                    <TbArrowBigUpLines />
-                  </Text>
-                  <Text ml={1}>{upvotes.length || 0}</Text>
-                </>
-              )}
+              <Text fontSize={"xl"}>
+                <TbArrowBigUpLines />
+              </Text>
+              <Text ml={1}>{projectUpvotes.length || 0}</Text>
             </Flex>
           </Button>
         )}
