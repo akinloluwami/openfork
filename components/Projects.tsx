@@ -1,4 +1,11 @@
-import { Button, Center, Grid, Text, useDisclosure, usePopoverStyles } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Grid,
+  Text,
+  useDisclosure,
+  usePopoverStyles,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ContainerLayout from "../Layout/ContainerLayout";
 import ProjectCard from "./ProjectCard";
@@ -17,7 +24,7 @@ import { supabase } from "../utils/supabaseClient";
 import { ProjectProgress } from "./Progress";
 
 interface upvoteProps {
-  userId: string;
+  user_id: string;
 }
 
 interface ProjectProps {
@@ -56,6 +63,7 @@ const Projects = () => {
   }
 
   async function fetchProjects() {
+    setisLoading(true);
     let { data: projects }: { data: any } = await supabase
       .from("projects")
       .select("*")
@@ -64,40 +72,22 @@ const Projects = () => {
     if (projects && projects!.length < 5) {
       setProjectsEnd(true);
     }
-    //////ASYNC BUGGGGGGG!!!!!!!!!!!!! 😭 👇🏽 😭😭😭😭😭😭///////////////
-    // SOLUTION 1
-    const newOpenProjects = async ()=>{
-      const arr = []
-    if(projects){
-      for(let i =0; i<projects.length; i++){
-      const upvotes = await getUpvotes(projects[i].id!);
-      arr.push({
-        project:projects[i],
-        upvotes
-      })
-    }
-    }
-      return arr
-    }
+    const newOpenProjects = async () => {
+      const arr = [];
+      if (projects) {
+        for (let i = 0; i < projects.length; i++) {
+          const upvotes = await getUpvotes(projects[i].id!);
+          arr.push({
+            ...projects[i],
+            upvotes: upvotes.data,
+          });
+        }
+      }
+      return arr;
+    };
 
-
-    // SOLUTION 2
-      const newOpenProjects2 = await projects ? projects.map(async(project: ProjectProps) => {
-        const upvotes = await getUpvotes(project.id!);
-        return {
-          project,
-          upvotes,
-        };
-      }):[];
-
-      // CALL AWAIT ON EACH newOpenProjects2 index 
-    // console.log(await newOpenProjects2[0]);
-
-    // console.log(await newOpenProjects());
-    ///////////////////////////////////////////////////////////////////////
-
-    // projects && setOpenProjects([...openProjects, ...projects]);
-
+    const newProjects = await newOpenProjects();
+    projects && setOpenProjects([...openProjects, ...newProjects]);
     setisLoading(false);
   }
 
@@ -119,11 +109,23 @@ const Projects = () => {
   };
 
   const upvoteProject = async (id: number, upvotes: upvoteProps[]) => {
-    console.log(id);
     const currentUser = (await supabase.auth.getUser()).data.user?.id;
-    await supabase
-      .from("project_upvotes")
-      .insert([{ project_id: id, user_id: currentUser }]);
+
+    function checkUpvoted(user_id: string) {
+      return upvotes.some(function (project) {
+        return project.user_id === user_id;
+      });
+    }
+    if (checkUpvoted(currentUser!)) {
+      await supabase
+        .from("project_upvotes")
+        .delete()
+        .eq("user_id", currentUser);
+    } else {
+      await supabase
+        .from("project_upvotes")
+        .insert([{ project_id: id, user_id: currentUser }]);
+    }
   };
 
   return (
