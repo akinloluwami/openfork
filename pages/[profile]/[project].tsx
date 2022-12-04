@@ -13,6 +13,7 @@ import { TbArrowBigUpLines } from "react-icons/tb";
 import StackTag from "../../components/Tag";
 import { IoIosShareAlt } from "react-icons/io";
 import { RiShareForwardFill } from "react-icons/ri";
+import { gradient } from "../../styles/gradient";
 
 interface upvoteProps {
   user_id: string;
@@ -112,6 +113,13 @@ const Project = ({ data }: { data: any }) => {
               onClick={() => {
                 upvoteProject();
               }}
+              bg={
+                checkUpvoted()
+                  ? ""
+                  : "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+              }
+              border={"2px"}
+              borderColor={checkUpvoted() ? "#d53f8c" : "transparent"}
             >
               <TbArrowBigUpLines />
               <Text>
