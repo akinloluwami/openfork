@@ -114,6 +114,7 @@ const AddNewProject = () => {
       github_url: githubURL,
       website_url: websiteURL,
       tech_stack: techStack,
+      slug: projectName.toLowerCase().replaceAll(" ", "-"),
     };
 
     const { data, error } = await supabase.from("projects").insert(project);
