@@ -120,7 +120,8 @@ const Projects = () => {
       await supabase
         .from("project_upvotes")
         .delete()
-        .eq("user_id", currentUser);
+        .eq("user_id", currentUser)
+        .eq("project_id", id);
     } else {
       await supabase
         .from("project_upvotes")
