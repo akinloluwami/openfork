@@ -90,7 +90,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
         .eq("project_id", id);
 
       const newUpvotes = upvotes.filter(
-        (upvote: upvoteProps) => !upvote.user_id
+        (upvote: upvoteProps) => upvote.user_id !== currentUser
       );
       setUpvotes(newUpvotes);
     } else {
