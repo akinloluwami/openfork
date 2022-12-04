@@ -98,7 +98,7 @@ const ProjectCard = ({
 
     if (checkUpvoted(currentUser.id)) {
       const newUpvotes = projectUpvotes.filter(
-        (upvote: upvoteProps) => !upvote.user_id
+        (upvote: upvoteProps) => upvote.user_id !== currentUser.id
       );
       setProjectUpvotes(newUpvotes);
     } else {
