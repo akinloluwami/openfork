@@ -16,9 +16,19 @@ import { RiShareForwardFill } from "react-icons/ri";
 import { gradient } from "../../styles/gradient";
 
 interface upvoteProps {
-  user_id: string;
+  id: number;
+  user_id?: string;
+  project_id: number;
+  created_at: Date;
 }
 
+interface ProjectProps {
+  id: number;
+  name: string;
+  description: string;
+  github_url: string;
+  tech_stack: string[];
+}
 export async function getServerSideProps(context: any) {
   let { data: user }: { data: any } = await supabase
     .from("profiles")
@@ -36,11 +46,11 @@ export async function getServerSideProps(context: any) {
     },
   };
 }
-const Project = ({ data }: { data: any }) => {
+const Project = ({ data }: { data: ProjectProps }) => {
   const { id, name, description, github_url, tech_stack } = data || {};
 
-  const [upvotes, setUpvotes] = useState<any>([]);
-  const [currentUser, setCurrentUser] = useState<any>("");
+  const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
+  const [currentUser, setCurrentUser] = useState<string>();
 
   const getUpvotes = async () => {
     let { data: upvotes }: { data: any } = await supabase
@@ -60,13 +70,13 @@ const Project = ({ data }: { data: any }) => {
   }, [currentUser, supabase]);
 
   function checkUpvoted() {
-    return upvotes.some(function (project: any) {
+    return upvotes.some(function (project: upvoteProps) {
       return project.user_id === currentUser;
     });
   }
 
   const upvoteProject = async () => {
-    const obj = {
+    const obj: upvoteProps = {
       created_at: new Date(),
       id: 100,
       project_id: id,
@@ -76,7 +86,9 @@ const Project = ({ data }: { data: any }) => {
       await supabase
         .from("project_upvotes")
         .delete()
-        .eq("user_id", currentUser);
+        .eq("user_id", currentUser)
+        .eq("project_id", id);
+
       const newUpvotes = upvotes.filter(
         (upvote: upvoteProps) => !upvote.user_id
       );
