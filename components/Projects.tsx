@@ -1,6 +1,9 @@
 import {
+  Box,
   Button,
   Center,
+  CloseButton,
+  Flex,
   Grid,
   Text,
   useDisclosure,
@@ -22,13 +25,14 @@ import Head from "next/head";
 import Router from "next/router";
 import { supabase } from "../utils/supabaseClient";
 import { ProjectProgress } from "./Progress";
+import ProjectModal from "./ProjectModal";
 
 interface upvoteProps {
   user_id: string;
 }
 
 interface ProjectProps {
-  id?: number;
+  id: number;
   name: string;
   user?: string;
   owner?: string;
@@ -40,13 +44,16 @@ interface ProjectProps {
   github_url?: string;
   tech_stack?: any;
   isUpvoting?: number;
+  slug: string;
 }
 
 const Projects = () => {
   const [openProjects, setOpenProjects] = useState<any>([]);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const router = Router;
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const initPageTitle =
     "Openfork - Open-source projects you can actually contribute to.";
@@ -54,6 +61,7 @@ const Projects = () => {
   const [projectsEnd, setProjectsEnd] = useState(false);
   const [isUpvoting, setIsUpvoting] = useState<number>(0);
   const [isProjectLoading, setisLoading] = useState(true);
+  const [projectId, setProjectId] = useState(0);
 
   async function getUpvotes(projectId: number) {
     return await supabase
@@ -95,16 +103,17 @@ const Projects = () => {
     fetchProjects();
   }, []);
 
-  const cardCLick = (title: string) => {
-    onOpen();
-    setPageTitle(`${title} - Openfork`);
-    router.push(`/?projects/${title.toLowerCase()}`, undefined, {
+  const cardCLick = (title: string, description: string, projectId: number) => {
+    setIsOpen(true);
+    setPageTitle(`${title} - ${description}`);
+    setProjectId(projectId);
+    router.push("/", undefined, {
       shallow: true,
     });
   };
   const cardClose = () => {
     setPageTitle(initPageTitle);
-    onClose();
+    setIsOpen(false);
     router.push("/");
   };
 
@@ -131,38 +140,15 @@ const Projects = () => {
 
   return (
     <ContainerLayout>
-      <>
-        <Head>{/* <title>{pageTitle}</title> */}</Head>
-        {/* <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla
-                vitae tenetur laudantium pariatur asperiores distinctio, magni
-                est numquam tempore ullam nisi error, cupiditate autem dolore?
-                Tenetur commodi enim veritatis odio, doloribus soluta
-                reprehenderit optio repellendus inventore cum omnis eius
-                recusandae.
-              </Text>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={() => {
-                  cardClose();
-                }}
-              >
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal> */}
+      <Box position={"relative"} w={"100%"}>
+        <ProjectModal
+          isOpen={isOpen}
+          cardClose={cardClose}
+          projectId={projectId}
+        />
+        <Head>
+          <title>{pageTitle}</title>
+        </Head>
         <Grid
           alignItems={"center"}
           w="100%"
@@ -179,9 +165,10 @@ const Projects = () => {
               description={project.description}
               github={project.github_url}
               techStack={project.tech_stack}
-              // onOpen={() => {
-              //   cardCLick(project.name);
-              // }}
+              slug={project.slug}
+              onOpen={() => {
+                cardCLick(project.name, project.description, project.id);
+              }}
               upvotes={project.upvotes === null ? [] : project.upvotes}
               upvoteProject={upvoteProject}
               isUpvoting={isUpvoting}
@@ -207,7 +194,7 @@ const Projects = () => {
             )
           )}
         </Center>
-      </>
+      </Box>
     </ContainerLayout>
   );
 };
