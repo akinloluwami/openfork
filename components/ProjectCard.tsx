@@ -27,7 +27,7 @@ interface Props {
   id?: number;
   name: string;
   owner?: string;
-  description: string;
+  tagline: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: any;
@@ -45,7 +45,7 @@ const ProjectCard = ({
   id,
   name,
   owner,
-  description,
+  tagline,
   imgSrc,
   onOpen,
   upvoteProject,
@@ -151,7 +151,7 @@ const ProjectCard = ({
                 onClick={() => setShowTruncated(!showTruncated)}
               >
                 {" "}
-                {showTruncated ? truncate(description) : description}
+                {showTruncated ? truncate(tagline) : tagline}
               </Text>
               {/*  */}
               <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
