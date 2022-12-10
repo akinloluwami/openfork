@@ -36,7 +36,7 @@ interface ProjectProps {
   name: string;
   user?: string;
   owner?: string;
-  description: string;
+  tagline: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: upvoteProps[];
@@ -103,9 +103,9 @@ const Projects = () => {
     fetchProjects();
   }, []);
 
-  const cardCLick = (title: string, description: string, projectId: number) => {
+  const cardCLick = (title: string, tagline: string, projectId: number) => {
     setIsOpen(true);
-    setPageTitle(`${title} - ${description}`);
+    setPageTitle(`${title} - ${tagline}`);
     setProjectId(projectId);
     router.push("/", undefined, {
       shallow: true,
@@ -162,12 +162,12 @@ const Projects = () => {
               key={project.id}
               name={project.name}
               owner={project.user}
-              description={project.description}
+              tagline={project.tagline}
               github={project.github_url}
               techStack={project.tech_stack}
               slug={project.slug}
               onOpen={() => {
-                cardCLick(project.name, project.description, project.id);
+                cardCLick(project.name, project.tagline, project.id);
               }}
               upvotes={project.upvotes === null ? [] : project.upvotes}
               upvoteProject={upvoteProject}
