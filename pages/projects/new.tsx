@@ -74,6 +74,7 @@ const AddNewProject = () => {
   const [githubURL, setGithubURL] = useState("");
   const [websiteURL, setWebsiteURL] = useState("");
   const [description, setDescription] = useState("");
+  const [tagline, setTagline] = useState("");
   const [repoFullname, setRepoFullname] = useState("");
   const [validurl, setValidURL] = useState(false);
   const [stackQuery, setStackQuery] = useState("");
@@ -110,6 +111,7 @@ const AddNewProject = () => {
     const project = {
       user: (await supabase.auth.getUser()).data.user?.id,
       name: projectName,
+      tagline,
       description,
       github_url: githubURL,
       website_url: websiteURL,
@@ -134,7 +136,7 @@ const AddNewProject = () => {
         Router.push("/");
       }, 2500);
       handleTabsChange(0);
-      setDescription("");
+      setTagline("");
       setGithubURL("");
       setProjectName("");
       setSelectedTags([]);
@@ -202,8 +204,8 @@ const AddNewProject = () => {
                 flexDirection="column"
                 gap="10px"
               >
-                <Check done={!!!description} />
-                Description
+                <Check done={!!!tagline} />
+                Tagline
               </ListItem>
               <ListItem
                 my={2}
@@ -233,7 +235,7 @@ const AddNewProject = () => {
             <TabList>
               <Tab>Repository</Tab>
               <Tab isDisabled={!githubURL}>Details</Tab>
-              <Tab isDisabled={!projectName || !description || !githubURL}>
+              <Tab isDisabled={!projectName || !tagline || !githubURL}>
                 Tech stack
               </Tab>
             </TabList>
@@ -277,7 +279,7 @@ const AddNewProject = () => {
                       onClick={() => {
                         setGithubURL("");
                         setProjectName("");
-                        setDescription("");
+                        setTagline("");
                         setValidURL(false);
                       }}
                     />
@@ -342,39 +344,60 @@ const AddNewProject = () => {
                 </Box>
               </TabPanel>
               <TabPanel>
-                <Input
-                  placeholder={"Project name"}
-                  p="14px"
-                  h="60px"
-                  w="100%"
-                  my={2}
-                  value={projectName}
-                  onChange={(e) => {
-                    setProjectName(e.target.value);
-                  }}
-                />
-                <Input
-                  placeholder={"Project description"}
-                  p="14px"
-                  h="60px"
-                  my={2}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-                <Input
-                  placeholder={"Website"}
-                  p="14px"
-                  h="60px"
-                  my={2}
-                  onChange={(e) => {
-                    setWebsiteURL(e.target.value);
-                    setValidURL(testUrl(e.target.value));
-                  }}
-                />
+                <Box>
+                  <Text>Project name</Text>
+                  <Input
+                    placeholder={"Simply the name of the project"}
+                    p="14px"
+                    h="60px"
+                    w="100%"
+                    my={2}
+                    value={projectName}
+                    onChange={(e) => {
+                      setProjectName(e.target.value);
+                    }}
+                  />
+                </Box>
+                <Box>
+                  <Text>Tagline</Text>
+                  <Input
+                    placeholder={
+                      "Concise and descriptive tagline of the project"
+                    }
+                    p="14px"
+                    h="60px"
+                    my={2}
+                    onChange={(e) => setTagline(e.target.value)}
+                  />
+                </Box>
+                <Box>
+                  <Text>Website link</Text>
+                  <Input
+                    placeholder={"Link to the project website"}
+                    p="14px"
+                    h="60px"
+                    my={2}
+                    onChange={(e) => {
+                      setWebsiteURL(e.target.value);
+                      setValidURL(testUrl(e.target.value));
+                    }}
+                  />
+                </Box>
+                <Box>
+                  <Text>Description</Text>
+                  <Input
+                    placeholder={"A short description of the project"}
+                    p="14px"
+                    h="60px"
+                    my={2}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                  />
+                </Box>
                 <Button
                   disabled={
-                    !projectName ||
-                    !description ||
-                    (websiteURL !== "" && !validurl)
+                    !projectName || !tagline || (websiteURL !== "" && !validurl)
                   }
                   onClick={() => handleTabsChange(2)}
                 >
