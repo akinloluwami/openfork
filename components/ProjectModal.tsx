@@ -1,4 +1,11 @@
-import { Box, CloseButton, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  CloseButton,
+  Flex,
+  Heading,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 
@@ -42,13 +49,13 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
   }, [projectId]);
 
   return (
-    <>
+    <Flex align={"center"} justify={"center"}>
       <Box
+        h={"400px"}
         w={"100%"}
         m={"auto"}
         position={"absolute"}
         top={0}
-        h={"400px"}
         bg={"blue.800"}
         zIndex={"modal"}
         display={isOpen ? "flex" : "none"}
@@ -64,13 +71,13 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
 
         <Box w={"90%"} mx={"auto"}>
           {loading ? (
-            <Text>Loading...</Text>
+            <Spinner size={"md"} />
           ) : (
             <Heading>{project.name}</Heading>
           )}
         </Box>
       </Box>
-    </>
+    </Flex>
   );
 };
 
