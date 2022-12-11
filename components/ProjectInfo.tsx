@@ -19,7 +19,13 @@ interface ProjectProps {
   tech_stack: string[];
 }
 
-const ProjectInfo = ({ id, name, tagline, github_url, tech_stack }: any) => {
+const ProjectInfo = ({
+  id,
+  name,
+  tagline,
+  github_url,
+  tech_stack,
+}: ProjectProps) => {
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
 
@@ -41,7 +47,7 @@ const ProjectInfo = ({ id, name, tagline, github_url, tech_stack }: any) => {
   }, [currentUser, supabase]);
 
   function checkUpvoted() {
-    return upvotes.some(function (project: upvoteProps) {
+    return upvotes?.some(function (project: upvoteProps) {
       return project.user_id === currentUser;
     });
   }
@@ -112,7 +118,7 @@ const ProjectInfo = ({ id, name, tagline, github_url, tech_stack }: any) => {
         </Flex>
       </Flex>
       <Box my={5}>
-        {tech_stack.map((stack: string, i: number) => (
+        {tech_stack?.map((stack: string, i: number) => (
           <Tag mr={2} size={"lg"} key={i}>
             {stack}
           </Tag>
