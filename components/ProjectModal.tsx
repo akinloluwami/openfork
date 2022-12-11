@@ -9,6 +9,7 @@ import {
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import ProjectComments from "./ProjectComments";
+import ProjectInfo from "./ProjectInfo";
 
 interface upvoteProps {
   user_id: string;
@@ -71,11 +72,16 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
         />
 
         <Box w={"90%"} mx={"auto"}>
-          {loading ? (
-            <Spinner size={"md"} />
-          ) : (
+          {loading && <Spinner size={"md"} />}
+          {!loading && isOpen && (
             <>
-              <Heading>{project.name}</Heading>
+              <ProjectInfo
+                id={project.id}
+                name={project.name}
+                tagline={project.tagline}
+                github_url={project.github_url}
+                tech_stack={project.tech_stack}
+              />
               <ProjectComments postId={projectId} userId={""} />
             </>
           )}
