@@ -19,7 +19,6 @@ const ProjectComments = ({
       .select("*")
       .eq("project_id", postId);
     setComments(project_comments);
-    console.log(project_comments);
   };
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const ProjectComments = ({
         })} */}
 
         {comments.map((comment: any) => (
-          <ProjectSingleComment comment={comment} />
+          <ProjectSingleComment comment={comment} key={comment.id} />
         ))}
       </Box>
     </Box>
