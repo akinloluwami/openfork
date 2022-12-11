@@ -14,6 +14,7 @@ import StackTag from "../../components/Tag";
 import { IoIosShareAlt } from "react-icons/io";
 import { RiShareForwardFill } from "react-icons/ri";
 import { gradient } from "../../styles/gradient";
+import ProjectComments from "../../components/ProjectComments";
 
 interface upvoteProps {
   id: number;
@@ -50,7 +51,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
   const { id, name, description, github_url, tech_stack } = data || {};
 
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
-  const [currentUser, setCurrentUser] = useState<string>();
+  const [currentUser, setCurrentUser] = useState<any>();
 
   const getUpvotes = async () => {
     let { data: upvotes }: { data: any } = await supabase
@@ -100,6 +101,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
       setUpvotes([...upvotes, obj]);
     }
   };
+
   return (
     <>
       {data === null ? (
@@ -126,26 +128,28 @@ const Project = ({ data }: { data: ProjectProps }) => {
                 <Link href={github_url} target="_blank" fontSize={"3xl"}>
                   <SiGithub />
                 </Link>
-                <Button
-                  size={"lg"}
-                  gap={3}
-                  onClick={() => {
-                    upvoteProject();
-                  }}
-                  bg={
-                    checkUpvoted()
-                      ? ""
-                      : "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-                  }
-                  border={"2px"}
-                  borderColor={checkUpvoted() ? "#d53f8c" : "transparent"}
-                >
-                  <TbArrowBigUpLines />
-                  <Text>
-                    {" "}
-                    {checkUpvoted() ? "Upvoted" : "Upvote"} {upvotes.length}
-                  </Text>
-                </Button>
+                {currentUser && (
+                  <Button
+                    size={"lg"}
+                    gap={3}
+                    onClick={() => {
+                      upvoteProject();
+                    }}
+                    bg={
+                      checkUpvoted()
+                        ? ""
+                        : "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
+                    }
+                    border={"2px"}
+                    borderColor={checkUpvoted() ? "#d53f8c" : "transparent"}
+                  >
+                    <TbArrowBigUpLines />
+                    <Text>
+                      {" "}
+                      {checkUpvoted() ? "Upvoted" : "Upvote"} {upvotes.length}
+                    </Text>
+                  </Button>
+                )}
               </Flex>
             </Flex>
             <Box my={5}>
@@ -159,6 +163,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
               <Flex align={"center"} fontSize={"xl"} gap={1}></Flex>
             </Flex>
           </Box>
+          <ProjectComments userId={currentUser} postId={id} />
         </div>
       )}
     </>
