@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
+import ProjectComments from "./ProjectComments";
 
 interface upvoteProps {
   user_id: string;
@@ -51,12 +52,12 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
   return (
     <Flex align={"center"} justify={"center"}>
       <Box
-        h={"400px"}
+        h={"fit-content"}
         w={"100%"}
         m={"auto"}
         position={"absolute"}
         top={0}
-        bg={"blue.800"}
+        bg={"#0a0a0a"}
         zIndex={"modal"}
         display={isOpen ? "flex" : "none"}
         borderRadius={"xl"}
@@ -73,7 +74,10 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
           {loading ? (
             <Spinner size={"md"} />
           ) : (
-            <Heading>{project.name}</Heading>
+            <>
+              <Heading>{project.name}</Heading>
+              <ProjectComments postId={projectId} userId={""} />
+            </>
           )}
         </Box>
       </Box>
