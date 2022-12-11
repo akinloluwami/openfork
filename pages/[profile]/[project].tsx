@@ -26,7 +26,7 @@ interface upvoteProps {
 interface ProjectProps {
   id: number;
   name: string;
-  description: string;
+  tagline: string;
   github_url: string;
   tech_stack: string[];
 }
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 const Project = ({ data }: { data: ProjectProps }) => {
-  const { id, name, description, github_url, tech_stack } = data || {};
+  const { id, name, tagline, github_url, tech_stack } = data || {};
 
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
@@ -110,7 +110,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
         <div>
           <Head>
             <title>
-              {name} - {description}
+              {name} - {tagline}
             </title>
           </Head>
           <Header />
@@ -121,7 +121,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
                   {name}
                 </Text>
                 <Text mb={3} mt={1} fontSize={"1.5rem"} fontWeight={"thin"}>
-                  {description}
+                  {tagline}
                 </Text>
               </Box>
               <Flex align={"center"} gap={3}>
