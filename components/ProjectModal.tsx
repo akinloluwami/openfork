@@ -34,7 +34,14 @@ interface ProjectProps {
 const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
   const [loading, setLoading] = useState(false);
   const [project, setProject] = useState<any>({});
+  const [currentUser, setCurrentUser] = useState<any>();
 
+  const getCurrentUser = async () => {
+    setCurrentUser((await supabase.auth.getUser()).data.user?.id);
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, [supabase]);
   const fetchProject = async () => {
     setLoading(true);
     let { data: project }: { data: any } = await supabase
@@ -82,7 +89,7 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
                 github_url={project.github_url}
                 tech_stack={project.tech_stack}
               />
-              <ProjectComments postId={projectId} userId={""} />
+              <ProjectComments postId={projectId} userId={currentUser} />
             </>
           )}
         </Box>
