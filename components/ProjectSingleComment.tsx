@@ -11,6 +11,13 @@ interface UserProps {
   is_verified: boolean;
 }
 
+interface UpvoteProps {
+  id: number;
+  user_id: string;
+  comment_id: string;
+  created_at: Date;
+}
+
 const ProjectSingleComment = ({ comment }: any) => {
   const [user, setUser] = useState<UserProps>({
     avatar_url: "",
@@ -18,6 +25,9 @@ const ProjectSingleComment = ({ comment }: any) => {
     username: "",
     is_verified: false,
   });
+
+  const [upvotes, setUpvotes] = useState<UpvoteProps[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>();
 
   const fetchUser = async () => {
     let { data: profiles, error }: any = await supabase
@@ -27,9 +37,46 @@ const ProjectSingleComment = ({ comment }: any) => {
     setUser(profiles[0]);
   };
 
+  const getCurrentUser = async () => {
+    setCurrentUser((await supabase.auth.getUser()).data.user?.id);
+  };
+
   useEffect(() => {
+    getCurrentUser();
     fetchUser();
   }, []);
+
+  function checkUpvoted() {
+    return upvotes?.some(function (upvote: UpvoteProps) {
+      return upvote.user_id === currentUser;
+    });
+  }
+
+  const upvoteComment = async () => {
+    const obj = {
+      created_at: new Date(),
+      id: Math.floor(Math.random() * 10) + 1000000000,
+      comment_id: comment.id,
+      user_id: currentUser,
+    };
+    if (checkUpvoted()) {
+      await supabase
+        .from("comment_upvotes")
+        .delete()
+        .eq("user_id", currentUser)
+        .eq("comment_id", comment.id);
+
+      const newUpvotes = upvotes.filter(
+        (upvote: UpvoteProps) => upvote.user_id !== currentUser
+      );
+      setUpvotes(newUpvotes);
+    } else {
+      await supabase
+        .from("comment_upvotes")
+        .insert([{ comment_id: comment.id, user_id: currentUser }]);
+      setUpvotes([...upvotes, obj]);
+    }
+  };
 
   return (
     <Box mb={10}>
@@ -50,7 +97,13 @@ const ProjectSingleComment = ({ comment }: any) => {
       </Flex>
       <Text>{comment.comment_text}</Text>
       <Flex gap={7} my={2} fontSize={"xs"}>
-        <Text cursor={"pointer"}>Upvote(0)</Text>
+        <Text
+          cursor={"pointer"}
+          color={checkUpvoted() ? "#d53f8c" : ""}
+          onClick={() => currentUser && upvoteComment()}
+        >
+          {checkUpvoted() ? " Upvoted" : " Upvote"} ({upvotes.length})
+        </Text>
         {/* <Text>Reply</Text> */}
         <Text>
           {new Date(comment.created_at).toLocaleDateString("en-US", {
