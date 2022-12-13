@@ -131,7 +131,83 @@ const Projects = () => {
 
   return (
     <ContainerLayout>
-      Hiiiii
+      <>
+        <Head>{/* <title>{pageTitle}</title> */}</Head>
+        {/* <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla
+                vitae tenetur laudantium pariatur asperiores distinctio, magni
+                est numquam tempore ullam nisi error, cupiditate autem dolore?
+                Tenetur commodi enim veritatis odio, doloribus soluta
+                reprehenderit optio repellendus inventore cum omnis eius
+                recusandae.
+              </Text>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  cardClose();
+                }}
+              >
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal> */}
+        <Grid
+          alignItems={"center"}
+          w="100%"
+          templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
+          justifyContent={"center"}
+          gap={5}
+        >
+          {openProjects?.map((project: ProjectProps) => (
+            <ProjectCard
+              id={project.id}
+              key={project.id}
+              name={project.name}
+              owner={project.user}
+              description={project.description}
+              github={project.github_url}
+              techStack={project.tech_stack}
+              // onOpen={() => {
+              //   cardCLick(project.name);
+              // }}
+              upvotes={project.upvotes === null ? [] : project.upvotes}
+              upvoteProject={upvoteProject}
+              isUpvoting={isUpvoting}
+            />
+          ))}
+        </Grid>
+        {isProjectLoading ? (
+          <ProjectProgress />
+        ) : (
+          openProjects.length < 1 && (
+            <Center>
+              <Text fontSize={"xl"}>No projects</Text>
+            </Center>
+          )
+        )}
+        <Center my={10}>
+          {projectsEnd ? (
+            <Text>You have reached the end...</Text>
+          ) : (
+            openProjects.length > 0 &&
+            !isProjectLoading && (
+              <Button onClick={fetchProjects}>Load more...</Button>
+            )
+          )}
+        </Center>
+      </>
     </ContainerLayout>
   );
 };
