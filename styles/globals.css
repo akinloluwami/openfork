@@ -41,8 +41,24 @@ body {
 
 }
 
-@media screen and (max-width:950px){
+/* @media screen and (max-width:950px){
   .new-project-wrapper{
     flex-wrap:wrap
+  }
+} */
+
+.new-project .progress *{
+  transition:0.3s ease background
+}
+@media screen and (max-width:750px) {
+  .new-project .wrapper{
+    flex-direction:column
+  }
+
+  .new-project .wrapper > *{
+    width:100%
+  }
+  .new-project .progress{
+    display:none
   }
 }
