@@ -28,11 +28,11 @@ interface upvoteProps {
 }
 
 interface ProjectProps {
+  tagline: string;
   id?: number;
   name: string;
   user?: string;
   owner?: string;
-  description: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: upvoteProps[];
@@ -176,7 +176,7 @@ const Projects = () => {
               key={project.id}
               name={project.name}
               owner={project.user}
-              description={project.description}
+              tagline={project.tagline}
               github={project.github_url}
               techStack={project.tech_stack}
               // onOpen={() => {

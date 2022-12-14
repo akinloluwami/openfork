@@ -28,7 +28,7 @@ interface Props {
   id?: number;
   name: string;
   owner?: string;
-  description: string;
+  tagline: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: any;
@@ -36,6 +36,7 @@ interface Props {
   github?: string;
   techStack?: any;
   isUpvoting?: number;
+  // slug: string;
 }
 interface upvoteProps {
   user_id: string;
@@ -45,7 +46,7 @@ const ProjectCard = ({
   id,
   name,
   owner,
-  description,
+  tagline,
   imgSrc,
   onOpen,
   upvoteProject,
@@ -53,6 +54,7 @@ const ProjectCard = ({
   github,
   techStack,
   isUpvoting,
+  // slug,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -153,7 +155,7 @@ const ProjectCard = ({
               onClick={() => setShowTruncated(!showTruncated)}
             >
               {" "}
-              {showTruncated ? truncate(description || "") : description}
+                {showTruncated ? truncate(tagline) : tagline}
             </Text>
             {/*  */}
             <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
