@@ -153,7 +153,7 @@ const ProjectCard = ({
               onClick={() => setShowTruncated(!showTruncated)}
             >
               {" "}
-              {showTruncated ? truncate(description) : description}
+              {showTruncated ? truncate(description || "") : description}
             </Text>
             {/*  */}
             <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
