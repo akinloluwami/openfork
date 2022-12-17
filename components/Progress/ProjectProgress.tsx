@@ -10,6 +10,7 @@ return(
      <Grid
           alignItems={"center"}
           w="100%"
+          my="4"
           templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
           justifyContent={"center"}
           gap={5}
