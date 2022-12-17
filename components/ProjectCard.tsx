@@ -28,6 +28,7 @@ interface Props {
   name: string;
   owner?: string;
   tagline: string;
+  tagline: string;
   imgSrc?: any;
   onOpen?: any;
   upvotes?: any;
