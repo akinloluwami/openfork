@@ -41,7 +41,16 @@ const ProjectSingleComment = ({ comment }: any) => {
     setCurrentUser((await supabase.auth.getUser()).data.user?.id);
   };
 
+  const getUpvotes = async () => {
+    let { data: comment_upvotes }: { data: any } = await supabase
+      .from("comment_upvotes")
+      .select("*");
+    console.log(comment_upvotes);
+    setUpvotes(comment_upvotes);
+  };
+
   useEffect(() => {
+    getUpvotes();
     getCurrentUser();
     fetchUser();
   }, []);
