@@ -219,56 +219,6 @@ const ProjectInfo = ({
           </Button>
         </Flex>
       </Box>
-
-      {/* <Box w={"60%"} my={2} mx={"auto"}>
-      <Flex justify={"space-between"} align={"center"}>
-        <Box>
-          <Text fontSize={"2rem"} fontWeight={600}>
-            {name}
-          </Text>
-          <Text mb={3} mt={1} fontSize={"1.5rem"} fontWeight={"thin"}>
-            {tagline}
-          </Text>
-        </Box>
-        <Flex align={"center"} gap={3}>
-          <Link href={github_url} target="_blank" fontSize={"3xl"}>
-            <SiGithub />
-          </Link>
-          {currentUser && (
-            <Button
-              size={"lg"}
-              gap={3}
-              onClick={() => {
-                upvoteProject();
-              }}
-              bg={
-                checkUpvoted()
-                  ? ""
-                  : "linear-gradient(to left, #805ad5 0%, #d53f8c 100%)"
-              }
-              border={"2px"}
-              borderColor={checkUpvoted() ? "#d53f8c" : "transparent"}
-            >
-              <TbArrowBigUpLines />
-              <Text>
-                {" "}
-                {checkUpvoted() ? "Upvoted" : "Upvote"} {upvotes.length}
-              </Text>
-            </Button>
-          )}
-        </Flex>
-      </Flex>
-      <Box my={5}>
-        {tech_stack?.map((stack: string, i: number) => (
-          <Tag mr={2} size={"lg"} key={i}>
-            {stack}
-          </Tag>
-        ))}
-      </Box>
-      <Flex align={"center"}>
-        <Flex align={"center"} fontSize={"xl"} gap={1}></Flex>
-      </Flex>
-    </Box> */}
     </>
   );
 };
