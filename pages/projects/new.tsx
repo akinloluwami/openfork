@@ -131,7 +131,7 @@ const AddNewProject = () => {
       toast({
         title: "Your project has been publish",
         status: "success",
-        duration: 9000,
+        duration: 1500,
         isClosable: true,
       });
       setShowConfetti(true);
