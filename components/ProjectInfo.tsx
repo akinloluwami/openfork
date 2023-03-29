@@ -210,10 +210,10 @@ const ProjectInfo = ({
               {checkUpvoted() ? "Upvoted" : "Upvote"} {upvotes.length}
             </Text>
           </Button>
-          <Button size={"lg"} gap={3}>
+          {/* <Button size={"lg"} gap={3}>
             <FaShare />
             <Text>Share</Text>
-          </Button>
+          </Button> */}
         </Flex>
       </Box>
     </Box>
