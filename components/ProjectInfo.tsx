@@ -187,22 +187,6 @@ const ProjectInfo = ({
 
         <Text width={"lg"}>{description && description}</Text>
 
-        <Flex m="12px 0">
-          {loading && <Spinner />}
-          {/* {!loading && !error && screenshots && (
-            <Box>
-              <Image
-                src={screenshots[0]}
-                objectFit="cover"
-                bg={"grey.900"}
-                w="full"
-                h="350px"
-                alt="screenshot"
-              />
-            </Box>
-          )} */}
-        </Flex>
-
         <Flex gap={4} py="10px">
           <Text>{upvotes.length || "0 "} Upvotes</Text>
           <Text>{comments} Comments</Text>
