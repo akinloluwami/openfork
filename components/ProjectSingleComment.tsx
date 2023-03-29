@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Icon, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { GoVerified } from "react-icons/go";
 import { TbArrowBigUpLines } from "react-icons/tb";
@@ -30,6 +30,7 @@ const ProjectSingleComment = ({ comment }: any) => {
 
   const [upvotes, setUpvotes] = useState<UpvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
+  const toast = useToast();
 
   const fetchUser = async () => {
     let { data: profiles, error }: any = await supabase
@@ -64,6 +65,15 @@ const ProjectSingleComment = ({ comment }: any) => {
   }
 
   const upvoteComment = async () => {
+    if (!(await supabase.auth.getUser())) {
+      toast({
+        title: "Sign in to upvote",
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
     const obj = {
       created_at: new Date(),
       id: Math.floor(Math.random() * 10) + 1000000000,
