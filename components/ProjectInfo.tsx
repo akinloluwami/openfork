@@ -214,7 +214,7 @@ const ProjectInfo = ({
 
         <Flex m="12px 0">
           {loading && <Spinner />}
-          {!loading && !error && screenshots && (
+          {/* {!loading && !error && screenshots && (
             <Box>
               <Image
                 src={screenshots[0]}
@@ -225,7 +225,7 @@ const ProjectInfo = ({
                 alt="screenshot"
               />
             </Box>
-          )}
+          )} */}
         </Flex>
 
         <Flex gap={4} py="10px">
