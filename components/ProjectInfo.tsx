@@ -9,6 +9,7 @@ import {
   Text,
   Spinner,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SiGithub } from "react-icons/si";
@@ -100,7 +101,29 @@ const ProjectInfo = ({
     });
   }
 
+  const toast = useToast();
+
+  const [user, setUser] = useState<any>({});
+
+  useEffect(() => {
+    async function getUser() {
+      await supabase.auth.getUser().then((data) => {
+        setUser(data.data.user?.user_metadata);
+      });
+    }
+    getUser();
+  }, []);
+
   const upvoteProject = async () => {
+    if (!user) {
+      toast({
+        title: "Sign in to upvote",
+        status: "warning",
+        duration: 900,
+        isClosable: true,
+      });
+      return;
+    }
     const obj: upvoteProps = {
       created_at: new Date(),
       id: 100,
