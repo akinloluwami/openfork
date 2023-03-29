@@ -125,43 +125,6 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
           </ModalContent>
         </Modal>
       </Box>
-      {/* <Flex align={"center"} justify={"center"}>
-      <Box
-        h={"fit-content"}
-        w={"100%"}
-        m={"auto"}
-        position={"absolute"}
-        top={0}
-        bg={"#0a0a0a"}
-        zIndex={"modal"}
-        display={isOpen ? "flex" : "none"}
-        borderRadius={"xl"}
-        flexDirection={"column"}
-      >
-        <CloseButton
-          size={"lg"}
-          onClick={() => {
-            cardClose();
-          }}
-        />
-
-        <Box w={"90%"} mx={"auto"}>
-          {loading && <Spinner size={"md"} />}
-          {!loading && isOpen && (
-            <>
-              <ProjectInfo
-                id={project.id}
-                name={project.name}
-                tagline={project.tagline}
-                github_url={project.github_url}
-                tech_stack={project.tech_stack}
-              />
-              <ProjectComments postId={projectId} userId={currentUser} />
-            </>
-          )}
-        </Box>
-      </Box>
-    </Flex> */}
     </>
   );
 };
