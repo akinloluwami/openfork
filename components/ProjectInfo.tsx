@@ -210,7 +210,7 @@ const ProjectInfo = ({
           ))}
         </Flex>
 
-        <Text>{description && description}</Text>
+        <Text width={"lg"}>{description && description}</Text>
 
         <Flex m="12px 0">
           {loading && <Spinner />}
