@@ -30,6 +30,7 @@ const ProjectCommentInput = ({
       project_id: postId,
       user_id: userId,
       comment_text: commentText,
+      created_at: Date.now(),
     });
   };
   return (
