@@ -18,7 +18,6 @@ import { supabase } from "../utils/supabaseClient";
 import path from "path";
 import { useRouter } from "next/router";
 import { GoVerified } from "react-icons/go";
-// import githubContent from "../utils/githubContent";
 
 interface upvoteProps {
   id: number;
@@ -61,30 +60,6 @@ const ProjectInfo = ({
     const split = githubUrl.split("/"); // https://github.com/user/repo
     const username = split[3];
     const repo = split[4];
-    const api = `https://api.github.com/repos/${username}/${repo}`;
-
-    const fetchData = async () => {
-      const apiFetch = await fetch(api);
-      setLoading(false);
-      if (apiFetch.ok) {
-        const repoData = await apiFetch.json();
-        setRepoData(repoData);
-        const url = `https://raw.githubusercontent.com/${username}/${repo}/${repoData.default_branch}/${filename}`;
-        const response = await fetch(url);
-        if (response.ok) {
-          const configFile = JSON.parse(`${await response.text()}`);
-          setConfig(configFile);
-          return;
-        }
-        setError(true);
-        return;
-      }
-      setError(true);
-    };
-
-    fetchData();
-    // console.log(repoData)
-    // console.log(config, error)
     if (config.screenshots && !error) {
       const images = config.screenshots.map((shot: string) => {
         return path.join(
