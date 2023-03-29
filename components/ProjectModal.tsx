@@ -110,6 +110,7 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
                         tagline={project.tagline}
                         github_url={project.github_url}
                         tech_stack={project.tech_stack}
+                        description={project.description}
                       />
                     </Box>
                     <ProjectAsideProgress />

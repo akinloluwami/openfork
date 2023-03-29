@@ -33,6 +33,7 @@ interface ProjectProps {
   tagline: string;
   github_url: string;
   tech_stack: string[];
+  description: string;
 }
 
 const ProjectInfo = ({
@@ -41,6 +42,7 @@ const ProjectInfo = ({
   tagline,
   github_url,
   tech_stack,
+  description,
 }: ProjectProps) => {
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
@@ -207,6 +209,8 @@ const ProjectInfo = ({
             </Tag>
           ))}
         </Flex>
+
+        <Text>{description && description}</Text>
 
         <Flex m="12px 0">
           {loading && <Spinner />}
