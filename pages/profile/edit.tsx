@@ -146,36 +146,6 @@ const EditProfile = () => {
     }
   };
 
-  // const updateDP = async () => {
-  //   const { data, error } = await supabase.storage
-  //     .from("avatars")
-  //     .upload(
-  //       `public/${userId}-${new Date().getTime().toString()}`,
-  //       newProfileImage
-  //     );
-  //   if (data) {
-  //     const path: any = data?.path;
-  //     const url: string = `https:tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/${path}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzLzM2NDk2YTk0LTlkOTMtNGEwYy1hN2UyLTRjMzQ4MWY3ZDQ3Yy0xNjY2ODMzNjUwODk3IiwiaWF0IjoxNjY2ODMzNzAzLCJleHAiOjE5ODIxOTM3MDN9.qPtcYuLB-Ipcde_a9nNoYpgkl6ivpK0MgZRm_Aw3JPA`;
-
-  //     /*
-
-  //     https://tebioleiibrvzamyqsia.supabase.co/storage/v1/object/sign/avatars/public/36496a94-9d93-4a0c-a7e2-4c3481f7d47c-1666835737376?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL3B1YmxpYy8zNjQ5NmE5NC05ZDkzLTRhMGMtYTdlMi00YzM0ODFmN2Q0N2MtMTY2NjgzNTczNzM3NiIsImlhdCI6MTY2NjgzNjAwNCwiZXhwIjoxOTgyMTk2MDA0fQ.EOSKuob_BzlZeK4KEcH53Tq-YRbgM-KXMexhHBU5HEA*/
-  //     const { data, error } = await supabase
-  //       .from("profiles")
-  //       .update({ avatar_url: url })
-  //       .eq("id", userId);
-  //     if (data) {
-  //       console.log("====================================");
-  //       console.log(data);
-  //       console.log("====================================");
-  //     } else {
-  //       console.log("====================================");
-  //       console.log(error);
-  //       console.log("====================================");
-  //     }
-  //   }
-  // };
-
   return (
     <ContainerLayout>
       <Head>
