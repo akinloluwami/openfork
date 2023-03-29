@@ -13,7 +13,7 @@ const ProjectComments = ({
   userId: string;
   postId: number;
 }) => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setisError] = useState(false);
   const fetchComments = async () => {
@@ -29,10 +29,19 @@ const ProjectComments = ({
   useEffect(() => {
     fetchComments();
   }, []);
+
+  const pushNewComment = (comment: any) => {
+    setComments([...comments, comment]);
+  };
+
   return (
     <Box mt={10} px={8}>
       {!isLoading && !isError && (
-        <ProjectCommentInput userId={userId} postId={postId} />
+        <ProjectCommentInput
+          userId={userId}
+          postId={postId}
+          pushNewComment={pushNewComment}
+        />
       )}
 
       <Box mt={5}>
