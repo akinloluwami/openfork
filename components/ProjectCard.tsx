@@ -7,7 +7,6 @@ import {
   Avatar,
   Icon,
   Button,
-  Link,
   Spinner,
 } from "@chakra-ui/react";
 import StackTag from "./Tag";
@@ -19,7 +18,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import { TbArrowBigUpLines } from "react-icons/tb";
-// import Link from "next/link";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { GoVerified } from "react-icons/go";
@@ -36,7 +35,7 @@ interface Props {
   github?: string;
   techStack?: any;
   isUpvoting?: number;
-  // slug: string;
+  slug: string;
 }
 interface upvoteProps {
   user_id: string;
@@ -54,7 +53,7 @@ const ProjectCard = ({
   github,
   techStack,
   isUpvoting,
-  // slug,
+  slug,
 }: Props) => {
   const [username, setUsername] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -123,49 +122,46 @@ const ProjectCard = ({
     >
       <Box w={"100%"} p={6} bg="#111" borderRadius={"md"}>
         <Box>
-          {/* <Link
-            href={`?projects/${name}`}
-            as={`/projects/${name?.toLowerCase()}`}
-          > */}
-          <Box onClick={onOpen}>
-            <Flex align="center" gap="10px">
-              <Heading as="h3" fontSize="30px">
-                <Flex
-                  justifyContent={"space-between"}
-                  align="center"
-                  w={"320px"}
-                >
-                  <Link href={github} target={"_blank"}>
+          <Link href={`?${username}/${name}`} as={`/${username}/${slug}`}>
+            <Box onClick={onOpen}>
+              <Flex align="center" gap="10px">
+                <Heading as="h3" fontSize="30px">
+                  <Flex
+                    justifyContent={"space-between"}
+                    align="center"
+                    w={"320px"}
+                  >
+                    {/* <Link href={github} target={"_blank"}> */}
                     <Text fontSize={"0.7em"}>{name}</Text>
-                  </Link>
-                </Flex>
-                <Flex align={"center"}>
-                  <Text fontSize="14px" fontWeight="thin" py={2}>
-                    {username}
-                  </Text>
-                  <Text fontSize="14px" fontWeight="thin" py={2}>
-                    {isVerified && <Icon as={GoVerified} ml={1} />}
-                  </Text>
-                </Flex>
-              </Heading>
-            </Flex>
-            <Text
-              m="15px 0"
-              fontSize="15px"
-              onClick={() => setShowTruncated(!showTruncated)}
-            >
-              {" "}
+                    {/* </Link> */}
+                  </Flex>
+                  <Flex align={"center"}>
+                    <Text fontSize="14px" fontWeight="thin" py={2}>
+                      {username}
+                    </Text>
+                    <Text fontSize="14px" fontWeight="thin" py={2}>
+                      {isVerified && <Icon as={GoVerified} ml={1} />}
+                    </Text>
+                  </Flex>
+                </Heading>
+              </Flex>
+              <Text
+                m="15px 0"
+                fontSize="15px"
+                onClick={() => setShowTruncated(!showTruncated)}
+              >
+                {" "}
                 {showTruncated ? truncate(tagline) : tagline}
-            </Text>
-            {/*  */}
-            <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
-              {/*<StackTag stackName={"TypeScript"} icon={SiTypescript} />*/}
-              {techStack.map((stack: string, i: number) => (
-                <StackTag stackName={stack} key={i} />
-              ))}
-            </Flex>
-          </Box>
-          {/* </Link> */}
+              </Text>
+              {/*  */}
+              <Flex gap="10px" m="10px 0" align="center" wrap="wrap">
+                {/*<StackTag stackName={"TypeScript"} icon={SiTypescript} />*/}
+                {techStack.map((stack: string, i: number) => (
+                  <StackTag stackName={stack} key={i} />
+                ))}
+              </Flex>
+            </Box>
+          </Link>
         </Box>
 
         {currentUser && (

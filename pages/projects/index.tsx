@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Header from "../../components/Header";
 import Projects from "../../components/Projects";
-import ContainerLayout from "../../Layout/ContainerLayout";
+import ContainerLayout from "../../layouts/ContainerLayout";
 
 const index = () => {
   return (

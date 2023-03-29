@@ -5,7 +5,7 @@ import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import ProjectCard from "../../components/ProjectCard";
-import ContainerLayout from "../../Layout/ContainerLayout";
+import ContainerLayout from "../../layouts/ContainerLayout";
 import { supabase } from "../../utils/supabaseClient";
 
 const Projects = () => {
@@ -80,9 +80,10 @@ const Projects = () => {
               key={project.id}
               name={project.name}
               owner={project.user}
-              description={project.description}
+              tagline={project.tagline}
               github={project.github_url}
               techStack={project.tech_stack}
+              slug={project.slug}
               // onOpen={() => {
               //   cardCLick(project.name);
               // }}

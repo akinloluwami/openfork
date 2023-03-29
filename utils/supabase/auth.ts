@@ -7,7 +7,7 @@ const signInWithGithub = async () => {
 };
 
 const signout = async () => {
-  localStorage.removeItem("sb-tebioleiibrvzamyqsia-auth-token");
+  await supabase.auth.signOut();
 };
 
 export { signInWithGithub, signout };

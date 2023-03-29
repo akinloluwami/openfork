@@ -33,6 +33,8 @@
   border-radius: 24px;
 }
 
+
+
 /* html, */
 body {
   background: #000000 !important;
@@ -41,8 +43,31 @@ body {
 
 }
 
-@media screen and (max-width:950px){
+@media screen and (max-width:900px){
+  .project-info-wrapper > *:nth-child(2){
+  display:none
+}
   .new-project-wrapper{
-    flex-wrap:wrap
+    flex-direction: column;
+  }
+}
+
+.chakra-modal__body.css-qlig70{
+  background:#000 !important
+}
+
+.new-project .progress *{
+  transition:0.3s ease background
+}
+@media screen and (max-width:750px) {
+  .new-project .wrapper{
+    flex-direction:column
+  }
+
+  .new-project .wrapper > *{
+    width:100%
+  }
+  .new-project .progress{
+    display:none
   }
 }

@@ -10,10 +10,10 @@ return(
      <Grid
           alignItems={"center"}
           w="100%"
-          my="4"
           templateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
           justifyContent={"center"}
           gap={5}
+          my={6}
         >
   {
         Array.from(Array(4)).map((_,i)=>(

@@ -2,7 +2,7 @@ import { Flex, Box, Image, Button, Text, Avatar } from "@chakra-ui/react";
 import userInfo from "../utils/userInfo";
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
-import ContainerLayout from "../Layout/ContainerLayout";
+import ContainerLayout from "../layouts/ContainerLayout";
 import { gradient } from "../styles/gradient";
 import { signInWithGithub } from "../utils/supabase/auth";
 import Notifications from "./Notifications";
