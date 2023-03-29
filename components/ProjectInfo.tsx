@@ -53,12 +53,6 @@ const ProjectInfo = ({
   const [username, setUsername] = useState("");
   const [comments, setComments] = useState(0);
 
-  const githubContent = (githubUrl: string, filename: string) => {
-    const split = githubUrl.split("/"); // https://github.com/user/repo
-    const username = split[3];
-    const repo = split[4];
-  };
-
   const getUsername = async (id: any) => {
     let { data: projects }: { data: any } = await supabase
       .from("projects")
@@ -73,14 +67,6 @@ const ProjectInfo = ({
     setUsername(profiles[0]?.username);
     setIsVerified(profiles[0]?.is_verified);
   };
-
-  useEffect(() => {
-    githubContent(github_url, ".openfork");
-    // console.log(screenshots);
-    getUsername(id);
-  }, [config, id]);
-
-  //GITHUB CONTENT END
 
   const getUpvotes = async () => {
     let { data: upvotes }: { data: any } = await supabase
