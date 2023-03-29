@@ -161,7 +161,7 @@ const ProjectInfo = ({
             <Text>Visit Github Page</Text>
           </Flex>
         </Link>
-        <Link textDecoration="underline" href={`/${username}`}>
+        {/* <Link textDecoration="underline" href={`/${username}`}>
           <Flex gap={2} align="center" my="5px">
             {" "}
             <FaUser />
@@ -170,7 +170,7 @@ const ProjectInfo = ({
               @{username} {isVerified && <Icon as={GoVerified} ml={1} />}
             </Text>
           </Flex>
-        </Link>
+        </Link> */}
 
         <Text p="25px 0">{tagline}</Text>
 
