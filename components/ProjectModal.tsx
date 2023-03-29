@@ -3,11 +3,21 @@ import {
   CloseButton,
   Flex,
   Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Skeleton,
   Spinner,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
+import { ProjectAsideProgress, ProjectInfoProgress } from "./Progress";
 import ProjectComments from "./ProjectComments";
 import ProjectInfo from "./ProjectInfo";
 
@@ -48,7 +58,6 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
       .from("projects")
       .select("*")
       .eq("id", projectId);
-    console.log(project[0]);
     setProject(project[0]);
     setLoading(false);
   };
@@ -56,9 +65,66 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
   useEffect(() => {
     isOpen && fetchProject();
   }, [projectId]);
-
+  const { onOpen, onClose } = useDisclosure();
   return (
-    <Flex align={"center"} justify={"center"}>
+    <>
+      <Box className="project-modal-container">
+        <Modal
+          onClose={onClose}
+          // finalFocusRef={btnRef}
+          size={["3xl", "5xl", "full"]}
+          colorScheme="blackAlpha"
+          isOpen={isOpen}
+          scrollBehavior={"outside"}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton onClick={() => cardClose()} />
+            <ModalBody>
+              <Box>
+                <Flex
+                  justify="space-between"
+                  // direction="column"
+                  className="project-info-wrapper"
+                >
+                  {loading && (
+                    <>
+                      <Box flex={1} p={8}>
+                        <ProjectInfoProgress />
+                      </Box>
+                      <ProjectAsideProgress />
+                    </>
+                  )}
+                </Flex>
+
+                {!loading && (
+                  <Flex
+                    justify="space-between"
+                    // direction="column"
+                    className="project-info-wrapper"
+                  >
+                    <Box flex={1} p={8}>
+                      <ProjectInfo
+                        id={project.id}
+                        name={project.name}
+                        tagline={project.tagline}
+                        github_url={project.github_url}
+                        tech_stack={project.tech_stack}
+                      />
+                    </Box>
+                    <ProjectAsideProgress />
+                  </Flex>
+                )}
+
+                {/* {!loading && } */}
+              </Box>
+
+              <ProjectComments postId={projectId} userId={currentUser} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Box>
+      {/* <Flex align={"center"} justify={"center"}>
       <Box
         h={"fit-content"}
         w={"100%"}
@@ -94,7 +160,8 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
           )}
         </Box>
       </Box>
-    </Flex>
+    </Flex> */}
+    </>
   );
 };
 

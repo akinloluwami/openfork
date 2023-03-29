@@ -1,8 +1,10 @@
 import { Avatar, Box, Flex, Icon, Text } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from "react";
 import { GoVerified } from "react-icons/go";
+import { TbArrowBigUpLines } from "react-icons/tb";
 import { supabase } from "../utils/supabaseClient";
 import ProjectCommentInput from "./ProjectCommentInput";
+import Link from "next/link";
 
 interface UserProps {
   avatar_url: string;
@@ -44,8 +46,8 @@ const ProjectSingleComment = ({ comment }: any) => {
   const getUpvotes = async () => {
     let { data: comment_upvotes }: { data: any } = await supabase
       .from("comment_upvotes")
-      .select("*");
-    console.log(comment_upvotes);
+      .select("*")
+      .eq("comment_id", comment.id);
     setUpvotes(comment_upvotes);
   };
 
@@ -92,27 +94,36 @@ const ProjectSingleComment = ({ comment }: any) => {
       <Flex mb={2} align={"center"}>
         <Avatar
           src={user.avatar_url}
-          size={"sm"}
+          size={"md"}
           mr={2}
           name={user.display_name}
         />
-        <Text fontWeight={"bold"} mr={1}>
-          {user.display_name}
-        </Text>
-        <Text fontSize={"sm"}>@{user.username}</Text>
-        <Text fontSize="sm">
-          {user.is_verified && <Icon as={GoVerified} ml={1} />}
-        </Text>
+        <Box>
+          <Text fontWeight={"bold"} mr={1}>
+            {user.display_name}
+          </Text>
+          <Flex>
+            <Link href={"/" + user.username}>
+              <>@{user.username}</>
+            </Link>
+            {user.is_verified && <Icon fontSize="sm" as={GoVerified} ml={1} />}
+          </Flex>
+        </Box>
       </Flex>
-      <Text>{comment.comment_text}</Text>
-      <Flex gap={7} my={2} fontSize={"xs"}>
-        <Text
+      <Text p={4} my={2} bg="gray.900" borderRadius="md">
+        {comment.comment_text}
+      </Text>
+      <Flex gap={7} my={3} align="center" fontSize={"xs"}>
+        <Flex
+          gap={2}
           cursor={"pointer"}
+          fontSize="md"
+          align="center"
           color={checkUpvoted() ? "#d53f8c" : ""}
           onClick={() => currentUser && upvoteComment()}
         >
-          {checkUpvoted() ? " Upvoted" : " Upvote"} ({upvotes.length})
-        </Text>
+          <TbArrowBigUpLines /> ({upvotes && upvotes.length})
+        </Flex>
         {/* <Text>Reply</Text> */}
         <Text>
           {new Date(comment.created_at).toLocaleDateString("en-US", {

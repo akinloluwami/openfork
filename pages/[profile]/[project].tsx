@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { profile } from "console";
 import Head from "next/head";
 import Header from "../../components/Header";
-import ContainerLayout from "../../Layout/ContainerLayout";
+import ContainerLayout from "../../layouts/ContainerLayout";
 import { Box, Flex, Text, Link, Button, Tag } from "@chakra-ui/react";
 // import Link from "next/link";
 import { SiGithub } from "react-icons/si";
@@ -16,6 +16,10 @@ import { RiShareForwardFill } from "react-icons/ri";
 import { gradient } from "../../styles/gradient";
 import ProjectComments from "../../components/ProjectComments";
 import ProjectInfo from "../../components/ProjectInfo";
+import {
+  ProjectInfoProgress,
+  ProjectAsideProgress,
+} from "../../components/Progress";
 
 interface upvoteProps {
   id: number;
@@ -53,6 +57,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
 
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
+  const [loading, setLoading] = useState(true);
 
   const getUpvotes = async () => {
     let { data: upvotes }: { data: any } = await supabase
@@ -64,6 +69,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
 
   const getCurrentUser = async () => {
     setCurrentUser((await supabase.auth.getUser()).data.user?.id);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -79,17 +85,52 @@ const Project = ({ data }: { data: ProjectProps }) => {
         <div>
           <Head>
             <title>
-              {name} - {tagline}
+              <>
+                {" "}
+                {name} - {tagline}{" "}
+              </>
             </title>
           </Head>
           <Header />
-          <ProjectInfo
-            tech_stack={tech_stack}
-            id={id}
-            name={name}
-            tagline={tagline}
-            github_url={github_url}
-          />
+          <Box>
+            <Flex
+              justify="space-between"
+              // direction="column"
+              className="project-info-wrapper"
+            >
+              {loading && (
+                <>
+                  <Box flex={1} p={8}>
+                    <ProjectInfoProgress />
+                  </Box>
+                  <ProjectAsideProgress />
+                </>
+              )}
+            </Flex>
+
+            {!loading && (
+              <Flex
+                justify="space-between"
+                // direction="column"
+                p={8}
+                className="project-info-wrapper"
+              >
+                <Box flex={1}>
+                  <ProjectInfo
+                    tech_stack={tech_stack}
+                    id={id}
+                    name={name}
+                    tagline={tagline}
+                    github_url={github_url}
+                  />
+                </Box>
+                <ProjectAsideProgress />
+              </Flex>
+            )}
+
+            {/* {!loading && } */}
+          </Box>
+
           <ProjectComments userId={currentUser} postId={id} />
         </div>
       )}

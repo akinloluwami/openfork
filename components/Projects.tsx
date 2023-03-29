@@ -10,7 +10,7 @@ import {
   usePopoverStyles,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ContainerLayout from "../Layout/ContainerLayout";
+import ContainerLayout from "../layouts/ContainerLayout";
 import ProjectCard from "./ProjectCard";
 import {
   Modal,
