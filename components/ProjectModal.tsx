@@ -113,7 +113,7 @@ const ProjectModal = ({ isOpen, cardClose, projectId }: any) => {
                         description={project.description}
                       />
                     </Box>
-                    <ProjectAsideProgress />
+                    {/* <ProjectAsideProgress /> */}
                   </Flex>
                 )}
 
