@@ -34,6 +34,7 @@ interface ProjectProps {
   tagline: string;
   github_url: string;
   tech_stack: string[];
+  description: string;
 }
 export async function getServerSideProps(context: any) {
   let { data: user }: { data: any } = await supabase
@@ -53,7 +54,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 const Project = ({ data }: { data: ProjectProps }) => {
-  const { id, name, tagline, github_url, tech_stack } = data || {};
+  const { id, name, tagline, github_url, tech_stack, description } = data || {};
 
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
@@ -122,6 +123,7 @@ const Project = ({ data }: { data: ProjectProps }) => {
                     name={name}
                     tagline={tagline}
                     github_url={github_url}
+                    description={description}
                   />
                 </Box>
                 <ProjectAsideProgress />
