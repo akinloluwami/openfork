@@ -122,7 +122,7 @@ const ProjectSingleComment = ({ comment }: any) => {
           color={checkUpvoted() ? "#d53f8c" : ""}
           onClick={() => currentUser && upvoteComment()}
         >
-          <TbArrowBigUpLines /> ({upvotes && upvotes.length})
+          <TbArrowBigUpLines /> ({(upvotes && upvotes.length) || 0})
         </Flex>
         {/* <Text>Reply</Text> */}
         <Text>
