@@ -80,18 +80,15 @@ const Project = ({ data }: { data: ProjectProps }) => {
 
   return (
     <>
+      <Head>
+        <title>
+          {name || "404"} - {tagline || "| Not found"}{" "}
+        </title>
+      </Head>
       {data === null ? (
         <>NULL</>
       ) : (
         <div>
-          <Head>
-            <title>
-              <>
-                {" "}
-                {name} - {tagline}{" "}
-              </>
-            </title>
-          </Head>
           <Header />
           <Box>
             <Flex
