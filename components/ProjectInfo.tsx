@@ -150,7 +150,7 @@ const ProjectInfo = ({
   };
 
   return (
-    <>
+    <Box>
       <Box p="0">
         <Heading mb="10px" fontSize={"5xl"}>
           {name}
@@ -174,7 +174,7 @@ const ProjectInfo = ({
 
         <Text p="25px 0">{tagline}</Text>
 
-        <Flex pb="10px" gap={3}>
+        <Flex mb="20px" gap={3} flexWrap="wrap" width={"90%"}>
           {tech_stack?.map((stack: string, i: number) => (
             <Tag size={"lg"} key={i}>
               {stack}
@@ -182,7 +182,7 @@ const ProjectInfo = ({
           ))}
         </Flex>
 
-        <Text width={"lg"}>{description && description}</Text>
+        <Text width={["90%", "lg"]}>{description && description}</Text>
 
         <Flex gap={4} py="10px">
           <Text>{upvotes.length || "0 "} Upvotes</Text>
@@ -216,7 +216,7 @@ const ProjectInfo = ({
           </Button>
         </Flex>
       </Box>
-    </>
+    </Box>
   );
 };
 
