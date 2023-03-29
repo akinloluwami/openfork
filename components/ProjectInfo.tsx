@@ -46,10 +46,7 @@ const ProjectInfo = ({
   const [upvotes, setUpvotes] = useState<upvoteProps[]>([]);
   const [currentUser, setCurrentUser] = useState<any>();
   const [isVerified, setIsVerified] = useState(false);
-
-  // GITHUB CONTENT TEMP LOCATION
   const [loading, setLoading] = useState(true);
-  const [screenshots, setScreenshot] = useState([]);
   const [config, setConfig] = useState<any>({});
   const [error, setError] = useState(false);
   const [repoData, setRepoData] = useState<any>({});
@@ -60,15 +57,6 @@ const ProjectInfo = ({
     const split = githubUrl.split("/"); // https://github.com/user/repo
     const username = split[3];
     const repo = split[4];
-    if (config.screenshots && !error) {
-      const images = config.screenshots.map((shot: string) => {
-        return path.join(
-          `https://raw.githubusercontent.com/${username}/${repo}/${repoData.default_branch}/`,
-          shot
-        );
-      });
-      setScreenshot(images);
-    }
   };
 
   const getUsername = async (id: any) => {
