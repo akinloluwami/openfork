@@ -6,9 +6,11 @@ import { FaPaperPlane } from "react-icons/fa";
 const ProjectCommentInput = ({
   userId,
   postId,
+  pushNewComment,
 }: {
   userId: string;
   postId: number;
+  pushNewComment: any;
 }) => {
   const inputRef = useRef();
 
@@ -24,6 +26,11 @@ const ProjectCommentInput = ({
       ]);
     setCommentText("");
     setSending(false);
+    pushNewComment({
+      project_id: postId,
+      user_id: userId,
+      comment_text: commentText,
+    });
   };
   return (
     <Box>
