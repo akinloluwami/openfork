@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"openfork/api/envconfig"
+	"openfork/api/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -26,4 +27,6 @@ func InitDatabase() {
 	}
 
 	DB = db
+
+	db.AutoMigrate(&models.User{}, &models.Project{})
 }
