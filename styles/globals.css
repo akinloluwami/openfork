@@ -1,0 +1,73 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins";
+}
+
+:root {
+  /* fonts  */
+  --satoshi: "Satoshi", sans-serif;
+  --redHat: "Red Hat Display", sans-serif;
+  --genSans: "General Sans", sans-serif;
+}
+
+:root {
+  /* fonts  */
+  --satoshi: 'Satoshi', sans-serif;
+  --redHat:  'Red Hat Display', sans-serif;
+  --genSans: 'General Sans', sans-serif;
+
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 24px;
+}
+
+
+
+/* html, */
+body {
+  background: #000000 !important;
+  color: #fff !important;
+  font-family: var(--satoshi) !important;
+
+}
+
+@media screen and (max-width:900px){
+  .project-info-wrapper > *:nth-child(2){
+  display:none
+}
+  .new-project-wrapper{
+    flex-direction: column;
+  }
+}
+
+.chakra-modal__body.css-qlig70{
+  background:#000 !important
+}
+
+.new-project .progress *{
+  transition:0.3s ease background
+}
+@media screen and (max-width:750px) {
+  .new-project .wrapper{
+    flex-direction:column
+  }
+
+  .new-project .wrapper > *{
+    width:100%
+  }
+  .new-project .progress{
+    display:none
+  }
+}
