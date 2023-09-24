@@ -1,16 +1,21 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type Project struct {
 	gorm.Model
-	user_id     uint
-	uuid        uuid.UUID
-	name        string
-	description string
-	github_url  string
-	logo_url    string
+	ID          uint `gorm:"primaryKey"`
+	UserID      uint
+	UUID        uuid.UUID
+	Name        string
+	Description string
+	GithubURL   string `gorm:"unique"`
+	LogoURL     string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
