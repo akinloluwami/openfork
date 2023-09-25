@@ -8,28 +8,35 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  name       String?
-  username   String?
-  email      String    @unique
-  password   String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  githubUrl  String?
-  profileUrl String?
-  isVerified Boolean   @default(false)
-  github     Github?
-  projects   Project[]
-  upvotes    Upvote[]
+  id           String        @id @default(cuid())
+  name         String?
+  username     String?
+  email        String        @unique
+  password     String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  githubUrl    String?
+  refreshToken RefreshToken?
+  profileUrl   String?
+  isVerified   Boolean       @default(false)
+  github       Github?
+  projects     Project[]
+  upvotes      Upvote[]
 }
 
 model Github {
   id        String   @id @default(cuid())
-  name      String
-  url       String
+  githubId  Int
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   user      User     @relation(fields: [id], references: [id])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  user      User     @relation(fields: [id], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }
 
 model Project {
