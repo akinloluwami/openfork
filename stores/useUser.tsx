@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { useEffect } from "react";
 
 interface IStore {
   id: string;
@@ -11,10 +10,7 @@ interface IStore {
 }
 
 export const useUser = create<IStore>((set) => {
-  const storedData =
-    typeof window !== "undefined"
-      ? localStorage.getItem("openfork_user")
-      : null;
+  const storedData = localStorage.getItem("openfork_user");
   const initialData = storedData ? JSON.parse(storedData) : {};
 
   const initialState: IStore = {
@@ -24,29 +20,23 @@ export const useUser = create<IStore>((set) => {
     image: initialData.image || "",
     setStore: (store: IStore) => {
       set(store);
-      if (typeof window !== "undefined") {
-        localStorage.setItem("openfork_user", JSON.stringify(store));
-      }
+      localStorage.setItem("openfork_user", JSON.stringify(store));
     },
   };
 
-  useEffect(() => {
-    if (!initialData.name || !initialData.username || !initialData.image) {
-      axios("/auth")
-        .then((response) => {
-          const data = response.data;
+  if (!initialData.name || !initialData.username || !initialData.image) {
+    axios("/auth")
+      .then((response) => {
+        const data = response.data;
 
-          initialState.setStore(data);
+        initialState.setStore(data);
 
-          if (typeof window !== "undefined") {
-            localStorage.setItem("openfork_user", JSON.stringify(data));
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching data from /auth:", error);
-        });
-    }
-  }, []);
+        localStorage.setItem("openfork_user", JSON.stringify(data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data from /auth:", error);
+      });
+  }
 
   return initialState;
 });
