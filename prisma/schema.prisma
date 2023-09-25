@@ -26,9 +26,10 @@ model User {
 
 model Github {
   id        String   @id @default(cuid())
-  githubId  Int
+  githubId  Int      @unique
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [id], references: [id])
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model RefreshToken {
