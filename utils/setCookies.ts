@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import prisma from "@/lib/prisma";
 import { JWT_SECRET_KEY } from "@/lib/secrets";
 
-export async function generateTokens(id: string) {
+export default async function setCookies(id: string) {
   try {
     const existingToken = await prisma.refreshToken.findFirst({
       where: {

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Octokit } from "octokit";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { generateTokens } from "@/utils/generateTokens";
+import setCookies from "@/utils/setCookies";
 
 export async function GET(request: Request) {
   const code = new URL(request.url).searchParams.get("code");
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
       });
 
       if (userAccount) {
-        await generateTokens(userAccount.id);
+        await setCookies(userAccount.id);
         return redirect("/");
       }
 
@@ -71,7 +71,7 @@ export async function GET(request: Request) {
         },
       });
 
-      await generateTokens(newUser.id);
+      await setCookies(newUser.id);
       redirect("/");
     } else {
       return new Response("Unauthorized request", { status: 401 });
