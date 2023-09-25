@@ -35,7 +35,8 @@ model Github {
 model RefreshToken {
   id        String   @id @default(cuid())
   token     String   @unique
-  user      User     @relation(fields: [id], references: [id])
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   expiresAt DateTime
 }
