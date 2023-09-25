@@ -44,12 +44,6 @@ export default async function generateTokens(id: string) {
     });
   }
 
-  console.log("====================================");
-  console.log(
-    `Access Token: ${access_token} | Refresh Token: ${refresh_token}`
-  );
-  console.log("====================================");
-
   const cookies = {
     access_token,
     refresh_token,
