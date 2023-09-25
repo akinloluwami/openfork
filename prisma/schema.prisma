@@ -17,7 +17,7 @@ model User {
   updatedAt    DateTime      @updatedAt
   githubUrl    String?
   refreshToken RefreshToken?
-  profileUrl   String?
+  image   String?
   isVerified   Boolean       @default(false)
   github       Github?
   projects     Project[]
