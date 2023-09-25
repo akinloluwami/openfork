@@ -7,7 +7,7 @@ It is built on NextJS and Supabase with Chakra UI as the component library. The 
 
 - NextJS 13
 - Postgres
-- DrizzleORM
+- Prisma
 - TailwindCSS (Shadcn UI)
 
 I will publish a roadmap soon.
