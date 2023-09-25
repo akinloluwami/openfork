@@ -77,6 +77,8 @@ export async function GET(request: Request) {
         email: email!,
         name: user.name,
         username: user.login,
+        githubUrl: user.html_url,
+        image: user.avatar_url,
       },
     });
 
