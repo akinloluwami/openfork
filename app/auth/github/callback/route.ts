@@ -5,10 +5,10 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { generateTokens } from "@/utils/generateTokens";
 
-export async function GET(reqeust: Request) {
-  const code = new URLSearchParams(reqeust.url).get("code");
+export async function GET(request: Request) {
+  const code = new URL(request.url).searchParams.get("code");
 
-  if (!code) return new Response("Unauthorized request", { status: 401 });
+  if (!code) return new Response("Unauthorized request1", { status: 401 });
 
   try {
     const response = await axios.post(
@@ -20,7 +20,13 @@ export async function GET(reqeust: Request) {
       }
     );
 
-    const accessToken = new URLSearchParams(response.data).get("access_token");
+    const accessToken = new URL(response.data).searchParams.get("access_token");
+
+    console.log("====================================");
+    console.log("accessToken", accessToken);
+    console.log("====================================");
+
+    console.log(accessToken);
 
     if (accessToken) {
       const octokit = new Octokit({
@@ -54,7 +60,7 @@ export async function GET(reqeust: Request) {
       const newUser = await prisma.user.create({
         data: {
           email: email!,
-          name: user.name || "",
+          name: user.name,
         },
       });
 
@@ -71,7 +77,6 @@ export async function GET(reqeust: Request) {
       return new Response("Unauthorized request", { status: 401 });
     }
   } catch (error) {
-    console.log(error);
-    return new Response("Unauthorized request", { status: 401 });
+    return new Response("Something went wrong", { status: 500 });
   }
 }
