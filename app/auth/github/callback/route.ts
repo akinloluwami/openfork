@@ -52,9 +52,10 @@ export async function GET(request: Request) {
     });
 
     if (userAccount) {
-      return new Response("Already logged in", {
-        status: 200,
+      return new Response("Log in successful. Redirecting...", {
+        status: 302,
         headers: {
+          Location: "/",
           "Set-Cookie": [
             `refresh_token=${
               (await generateTokens(userAccount.id)).refresh_token
@@ -86,9 +87,10 @@ export async function GET(request: Request) {
       },
     });
 
-    new Response("Logged in", {
-      status: 200,
+    return new Response("Account created. Redirecting...", {
+      status: 302,
       headers: {
+        Location: "/",
         "Set-Cookie": [
           `refresh_token=${
             (await generateTokens(newUser.id)).refresh_token
