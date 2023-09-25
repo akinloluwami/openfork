@@ -3,12 +3,13 @@ import axios from "axios";
 import { Octokit } from "octokit";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import setCookies from "@/utils/setCookies";
+import generateTokens from "@/utils/generateTokens";
+import dayjs from "dayjs";
 
 export async function GET(request: Request) {
   const code = new URL(request.url).searchParams.get("code");
 
-  if (!code) return new Response("Unauthorized request1", { status: 401 });
+  if (!code) return new Response("Unauthorized request", { status: 401 });
 
   try {
     const response = await axios.post(
@@ -20,63 +21,90 @@ export async function GET(request: Request) {
       }
     );
 
-    const accessToken = new URL(response.data).searchParams.get("access_token");
+    const params = new URLSearchParams(response.data);
 
-    console.log("====================================");
-    console.log("accessToken", accessToken);
-    console.log("====================================");
+    const accessToken = params.get("access_token");
 
-    console.log(accessToken);
-
-    if (accessToken) {
-      const octokit = new Octokit({
-        auth: accessToken,
-      });
-
-      const userResponse = await octokit.request("GET /user");
-
-      const userEmails = await octokit.request("GET /user/emails");
-
-      const user = userResponse.data;
-      const email = userEmails.data.find((e) => e.primary)?.email;
-
-      const githubUser = await prisma.github.findUnique({
-        where: {
-          githubId: user.id,
-        },
-      });
-
-      const userAccount = await prisma.user.findFirst({
-        where: {
-          github: githubUser,
-        },
-      });
-
-      if (userAccount) {
-        await setCookies(userAccount.id);
-        return redirect("/");
-      }
-
-      const newUser = await prisma.user.create({
-        data: {
-          email: email!,
-          name: user.name,
-        },
-      });
-
-      await prisma.github.create({
-        data: {
-          githubId: user.id,
-          userId: newUser.id,
-        },
-      });
-
-      await setCookies(newUser.id);
-      redirect("/");
-    } else {
+    if (!accessToken)
       return new Response("Unauthorized request", { status: 401 });
+
+    const octokit = new Octokit({
+      auth: accessToken,
+    });
+
+    const userResponse = await octokit.request("GET /user");
+
+    const userEmails = await octokit.request("GET /user/emails");
+
+    const user = userResponse.data;
+    const email = userEmails.data.find((e) => e.primary)?.email;
+
+    const githubUser = await prisma.github.findUnique({
+      where: {
+        githubId: user.id,
+      },
+    });
+
+    const userAccount = await prisma.user.findFirst({
+      where: {
+        github: githubUser,
+      },
+    });
+
+    if (userAccount) {
+      return new Response("Already logged in", {
+        status: 200,
+        headers: {
+          "Set-Cookie": [
+            `refresh_token=${
+              (await generateTokens(userAccount.id)).refresh_token
+            }; HttpOnly; Path=/; Max-Age=${dayjs()
+              .add(90, "d")
+              .diff(dayjs(), "seconds")}; SameSite=Lax; Secure`,
+            `access_token=${
+              (await generateTokens(userAccount.id)).access_token
+            }; HttpOnly; Path=/; Max-Age=${dayjs()
+              .add(15, "minutes")
+              .diff(dayjs(dayjs(), "seconds"))}; SameSite=Lax; Secure`,
+          ].join(", "),
+        },
+      });
     }
+
+    const newUser = await prisma.user.create({
+      data: {
+        email: email!,
+        name: user.name,
+        username: user.login,
+      },
+    });
+
+    await prisma.github.create({
+      data: {
+        githubId: user.id,
+        userId: newUser.id,
+      },
+    });
+
+    new Response("Logged in", {
+      status: 200,
+      headers: {
+        "Set-Cookie": [
+          `refresh_token=${
+            (await generateTokens(newUser.id)).refresh_token
+          }; HttpOnly; Path=/; Max-Age=${dayjs()
+            .add(90, "d")
+            .diff(dayjs(), "seconds")}; SameSite=Lax; Secure`,
+          `access_token=${
+            (await generateTokens(newUser.id)).access_token
+          }; HttpOnly; Path=/; Max-Age=${dayjs()
+            .add(15, "minutes")
+            .diff(dayjs(dayjs(), "seconds"))}; SameSite=Lax; Secure`,
+        ].join(", "),
+      },
+    });
   } catch (error) {
+    console.log(error);
     return new Response("Something went wrong", { status: 500 });
   }
 }
