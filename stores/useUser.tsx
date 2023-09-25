@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 import axios from "axios";
 
@@ -6,7 +8,6 @@ interface IStore {
   name: string;
   username: string;
   image: string;
-
   setStore: (store: IStore) => void;
 }
 
