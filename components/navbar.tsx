@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { SiGithub } from "react-icons/si";
@@ -22,6 +20,7 @@ export default function Navbar() {
         <div className="">
           <h1 className="font-semibold text-2xl">Openfork</h1>
         </div>
+
         <div className="flex items-center gap-5">
           <Link href="/">Projects</Link>
           <Link href="/people">People</Link>
