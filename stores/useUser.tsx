@@ -1,29 +1,18 @@
-import { axios } from "@/lib/axios";
-import { create } from "zustand";
+import { cookies } from "next/headers";
 
-interface IStore {
-  id: string;
-  name: string;
-  username: string;
-  image: string;
-}
+const useUser = () => {
+  console.log("hey");
 
-export const useUser = create<IStore>((set) => {
-  const initialState: IStore = {
-    id: "",
-    name: "",
-    username: "",
-    image: "",
+  const userCookie = cookies().get("openfork_user")?.value;
+
+  const user = userCookie ? JSON.parse(userCookie) : null;
+
+  return {
+    id: user?.id,
+    name: user?.name,
+    image: user?.image,
+    username: user?.username,
   };
+};
 
-  axios("/auth")
-    .then((response) => {
-      const data = response.data;
-      set(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data from /auth:", error);
-    });
-
-  return initialState;
-});
+export { useUser };
