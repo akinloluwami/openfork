@@ -1,8 +1,6 @@
 import { cookies } from "next/headers";
 
 const useUser = () => {
-  console.log("hey");
-
   const userCookie = cookies().get("openfork_user")?.value;
 
   const user = userCookie ? JSON.parse(userCookie) : null;
