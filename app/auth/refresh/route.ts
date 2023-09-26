@@ -2,19 +2,20 @@ import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { JWT_SECRET_KEY } from "@/lib/secrets";
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("refresh_token");
-
-    if (!token)
+    if (!token) {
       return new Response(
         "Unauthorized request. Refresh token is not present.",
         { status: 401 }
       );
+    }
 
-    const jwt = verify(token.value, process.env.JWT_SECRET_KEY!) as {
+    const jwt = verify(token.value, JWT_SECRET_KEY!) as {
       id: string;
     };
 
@@ -51,6 +52,10 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    return new Response("Internal sever error.", { status: 500 });
+    console.log(error);
+    return NextResponse.json(
+      { message: "Internal sever error." },
+      { status: 500 }
+    );
   }
 }

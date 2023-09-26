@@ -1,5 +1,5 @@
+import { axios } from "@/lib/axios";
 import { create } from "zustand";
-import axios from "axios";
 
 interface IStore {
   id: string;
