@@ -59,14 +59,10 @@ export async function GET(request: Request) {
           "Set-Cookie": [
             `refresh_token=${
               (await generateTokens(userAccount.id)).refresh_token
-            }; HttpOnly; Path=/; Max-Age=${dayjs()
-              .add(90, "d")
-              .diff(dayjs(), "seconds")}; SameSite=Lax; Secure`,
+            }; HttpOnly; Path=/; Max-Age=7776000; SameSite=Lax; Secure`,
             `access_token=${
               (await generateTokens(userAccount.id)).access_token
-            }; HttpOnly; Path=/; Max-Age=${dayjs()
-              .add(15, "minutes")
-              .diff(dayjs(dayjs(), "seconds"))}; SameSite=Lax; Secure`,
+            }; HttpOnly; Path=/; Max-Age=900; SameSite=Lax; Secure`,
           ].join(", "),
         },
       });
@@ -96,14 +92,10 @@ export async function GET(request: Request) {
         "Set-Cookie": [
           `refresh_token=${
             (await generateTokens(newUser.id)).refresh_token
-          }; HttpOnly; Path=/; Max-Age=${dayjs()
-            .add(90, "d")
-            .diff(dayjs(), "seconds")}; SameSite=Lax; Secure`,
+          }; HttpOnly; Path=/; Max-Age=Max-Age=7776000; SameSite=Lax; Secure`,
           `access_token=${
             (await generateTokens(newUser.id)).access_token
-          }; HttpOnly; Path=/; Max-Age=${dayjs()
-            .add(15, "minutes")
-            .diff(dayjs(dayjs(), "seconds"))}; SameSite=Lax; Secure`,
+          }; HttpOnly; Path=/; Max-Age=900; SameSite=Lax; Secure`,
         ].join(", "),
       },
     });
