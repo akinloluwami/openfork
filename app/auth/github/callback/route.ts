@@ -2,9 +2,7 @@ import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "@/lib/secrets";
 import axios from "axios";
 import { Octokit } from "octokit";
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
 import generateTokens from "@/utils/generateTokens";
-import dayjs from "dayjs";
 
 export async function GET(request: Request) {
   const code = new URL(request.url).searchParams.get("code");
@@ -52,18 +50,11 @@ export async function GET(request: Request) {
     });
 
     if (userAccount) {
+      await generateTokens(userAccount.id);
       return new Response("Log in successful. Redirecting...", {
         status: 302,
         headers: {
           Location: "/",
-          "Set-Cookie": [
-            `refresh_token=${
-              (await generateTokens(userAccount.id)).refresh_token
-            }; HttpOnly; Path=/; Max-Age=7776000; SameSite=Lax; Secure`,
-            `access_token=${
-              (await generateTokens(userAccount.id)).access_token
-            }; HttpOnly; Path=/; Max-Age=900; SameSite=Lax; Secure`,
-          ].join(", "),
         },
       });
     }
@@ -85,18 +76,11 @@ export async function GET(request: Request) {
       },
     });
 
+    await generateTokens(newUser.id);
     return new Response("Account created. Redirecting...", {
       status: 302,
       headers: {
         Location: "/",
-        "Set-Cookie": [
-          `refresh_token=${
-            (await generateTokens(newUser.id)).refresh_token
-          }; HttpOnly; Path=/; Max-Age=Max-Age=7776000; SameSite=Lax; Secure`,
-          `access_token=${
-            (await generateTokens(newUser.id)).access_token
-          }; HttpOnly; Path=/; Max-Age=900; SameSite=Lax; Secure`,
-        ].join(", "),
       },
     });
   } catch (error) {
