@@ -68,9 +68,8 @@ function Launch() {
           <h1 className="font-semibold text-2xl">Repository</h1>
           <SelectRepository
             onSelectRepository={(repository) =>
-              setProject({ ...project, repository })
+              setProject({ ...project, repository: repository.html_url })
             }
-            repositories={["https://github.com/openfork/openfork"]}
           />
         </div>
       </div>
