@@ -1,5 +1,6 @@
 "use client";
 
+import { SelectRepository } from "@/components/select-repo";
 import Head from "next/head";
 import { useState } from "react";
 import { BiSolidCheckSquare } from "react-icons/bi";
@@ -17,7 +18,7 @@ function Launch() {
     name: "",
     description: "",
     website: "",
-    repository: "ooo",
+    repository: "",
     techStack: [],
   });
 
@@ -41,7 +42,7 @@ function Launch() {
       <Head>
         <title>Launch • Openfork</title>
       </Head>
-      <div className="w-[40%] px-10 border-r pt-10 h-[calc(100vh-5rem)]">
+      <div className="w-[35%] px-10 border-r pt-10 h-[calc(100vh-5rem)]">
         <h1 className="text-3xl font-semibold">Launch</h1>
         <p>Let's get you started.</p>
         <div className="mt-10">
@@ -62,10 +63,15 @@ function Launch() {
           </ul>
         </div>
       </div>
-      <div className="w-[60%] p-10">
+      <div className="w-[65%] p-10">
         <div className="">
           <h1 className="font-semibold text-2xl">Repository</h1>
-          <input type="text" />
+          <SelectRepository
+            onSelectRepository={(repository) =>
+              setProject({ ...project, repository })
+            }
+            repositories={["https://github.com/openfork/openfork"]}
+          />
         </div>
       </div>
     </div>
