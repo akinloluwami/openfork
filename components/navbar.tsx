@@ -30,7 +30,7 @@ export default function Navbar() {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src={""} />
+              <AvatarImage src={image} />
               <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
