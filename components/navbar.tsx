@@ -16,7 +16,7 @@ import { HiLightningBolt } from "react-icons/hi";
 export default function Navbar() {
   const { id, name, image, username } = useUser();
   return (
-    <div className="flex items-center justify-between py-5 px-10">
+    <div className="flex items-center justify-between h-20 px-10 border-b">
       <div className="flex items-center gap-20">
         <div className="">
           <h1 className="font-semibold text-2xl">Openfork</h1>
