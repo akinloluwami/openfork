@@ -14,24 +14,49 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useUser } from "@/stores/useUser";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface RepositoryProps {
+  id: number;
+  name: string;
+  html_url: string;
+  full_name: string;
+  description: string;
+  homepage: string;
+}
 
 export function SelectRepository({
   onSelectRepository,
-  repositories,
 }: {
-  onSelectRepository: (repository: string) => void;
-  repositories: string[];
+  onSelectRepository: (repository: RepositoryProps) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [selectedRepo, setSelectedRepo] = useState<string | null>();
+  const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
+  const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
+
+  const { username } = useUser();
+  useEffect(() => {
+    async function fetchRepositories() {
+      const { data } = await axios(
+        `https://api.github.com/users/${username}/repos`
+      );
+      setRepositories(data);
+    }
+    fetchRepositories();
+  }, []);
 
   return (
     <div className="flex items-center space-x-4 mt-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline">
-            {selectedRepo ? <>{selectedRepo}</> : <>+ Select repository</>}
+            {selectedRepo ? (
+              <>{selectedRepo.full_name}</>
+            ) : (
+              <>+ Select repository</>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
@@ -42,14 +67,14 @@ export function SelectRepository({
               <CommandGroup>
                 {repositories.map((repository) => (
                   <CommandItem
-                    key={repository}
+                    key={repository.id}
                     onSelect={() => {
                       onSelectRepository(repository);
                       setSelectedRepo(repository);
                       setOpen(false);
                     }}
                   >
-                    {repository}
+                    {repository.full_name}
                   </CommandItem>
                 ))}
               </CommandGroup>
