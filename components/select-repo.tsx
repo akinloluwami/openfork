@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { axios } from "@/lib/axios";
 import { SiGithub } from "react-icons/si";
+import { CgSpinner } from "react-icons/cg";
 
 interface RepositoryProps {
   id: number;
@@ -41,7 +42,8 @@ export function SelectRepository({
 }) {
   const [open, setOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
-  const [selectedOrg, setSelectedOrg] = useState<string | null>("shadcn");
+  const [selectedOrg, setSelectedOrg] = useState<string | null>();
+  const [fetching, setFetching] = useState(true);
 
   const [repos, setRepos] = useState<
     {
@@ -50,12 +52,12 @@ export function SelectRepository({
     }[]
   >([]);
 
-  const username = "shadcn";
   useEffect(() => {
     async function fetchRepositories() {
       const { data } = await axios("/user/repos");
       setRepos(data);
       setSelectedOrg(data[0]?.org);
+      setFetching(false);
     }
     fetchRepositories();
   }, []);
@@ -64,13 +66,22 @@ export function SelectRepository({
     <div className="flex items-center space-x-4 mt-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" disabled={fetching}>
             {selectedRepo ? (
               <>
                 <SiGithub className="mr-2" /> {selectedRepo.full_name}
               </>
             ) : (
-              <>+ Select repository</>
+              <>
+                {fetching ? (
+                  <>
+                    <CgSpinner className="animate-spin mr-1" /> Fetching
+                    repositories...
+                  </>
+                ) : (
+                  <>+ Select repository</>
+                )}
+              </>
             )}
           </Button>
         </PopoverTrigger>
