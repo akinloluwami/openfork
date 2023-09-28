@@ -14,8 +14,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useUser } from "@/stores/useUser";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import {
   Select,
@@ -24,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { axios } from "@/lib/axios";
 
 interface RepositoryProps {
   id: number;
@@ -41,65 +40,21 @@ export function SelectRepository({
 }) {
   const [open, setOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
-  const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
+  const [selectedOrg, setSelectedOrg] = useState<string | null>("shadcn");
 
   const [repos, setRepos] = useState<
     {
       org: string;
       repos: RepositoryProps[];
     }[]
-  >([
-    {
-      org: "shadcn",
-      repos: [
-        {
-          id: 1,
-          name: "shadcn/shadcn.github.io",
-          html_url: "https://github.com/shadcn/shadcn.github.io",
-          full_name: "shadcn/shadcn.github.io",
-          description: "shadcn's blog",
-          homepage: "https://shadcn.github.io",
-        },
-        {
-          id: 2,
-          name: "shadcn/shadcn.github.io-blog",
-          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
-          full_name: "shadcn/shadcn.github.io-blog",
-          description: "shadcn's blog",
-          homepage: "https://shadcn.github.io/blog",
-        },
-      ],
-    },
-    {
-      org: "something",
-      repos: [
-        {
-          id: 3,
-          name: "shadcn/shadcn.github.io-blog",
-          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
-          full_name: "shadcn/shadcn.github.io-blog",
-          description: "shadcn's blog",
-          homepage: "https://shadcn.github.io/blog",
-        },
-        {
-          id: 3,
-          name: "shadcn/something.io-blog",
-          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
-          full_name: "shadcn/shadcn.github.io-blog",
-          description: "shadcn's blog",
-          homepage: "https://shadcn.github.io/blog",
-        },
-      ],
-    },
-  ]);
+  >([]);
 
   const username = "shadcn";
   useEffect(() => {
     async function fetchRepositories() {
-      const { data } = await axios(
-        `https://api.github.com/users/${username}/repos`
-      );
-      setRepositories(data);
+      const { data } = await axios("/user/repos");
+      setRepos(data);
+      setSelectedOrg(data[0]?.org);
     }
     fetchRepositories();
   }, []);
@@ -116,15 +71,25 @@ export function SelectRepository({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0" side="right" align="start">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Theme" />
+        <PopoverContent
+          className="p-1 flex w-[500px] gap-2"
+          side="right"
+          align="start"
+        >
+          <Select
+            onValueChange={(org) => {
+              setSelectedOrg(org);
+            }}
+          >
+            <SelectTrigger className="w-[250px] mt-1">
+              <SelectValue placeholder={repos[0]?.org} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              {repos.map((repo) => (
+                <SelectItem key={repo.org} value={repo.org}>
+                  {repo.org}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 
@@ -133,18 +98,20 @@ export function SelectRepository({
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {repositories.map((repository) => (
-                  <CommandItem
-                    key={repository.id}
-                    onSelect={() => {
-                      onSelectRepository(repository);
-                      setSelectedRepo(repository);
-                      setOpen(false);
-                    }}
-                  >
-                    {repository.full_name}
-                  </CommandItem>
-                ))}
+                {repos
+                  .find((repo) => repo.org === selectedOrg)
+                  ?.repos.map((repository) => (
+                    <CommandItem
+                      key={repository.id}
+                      onSelect={() => {
+                        onSelectRepository(repository);
+                        setSelectedRepo(repository);
+                        setOpen(false);
+                      }}
+                    >
+                      {repository.full_name}
+                    </CommandItem>
+                  ))}
               </CommandGroup>
             </CommandList>
           </Command>
