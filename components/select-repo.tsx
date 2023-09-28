@@ -36,7 +36,7 @@ export function SelectRepository({
   const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
   const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
 
-  const { username } = useUser();
+  const username = "shadcn";
   useEffect(() => {
     async function fetchRepositories() {
       const { data } = await axios(
