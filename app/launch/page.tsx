@@ -72,6 +72,9 @@ function Launch() {
             }
           />
         </div>
+        <div className="">
+          <h1 className="font-semibold text-2xl">Project info</h1>
+        </div>
       </div>
     </div>
   );
