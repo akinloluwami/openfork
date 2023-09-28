@@ -44,7 +44,7 @@ function Launch() {
       <Head>
         <title>Launch • Openfork</title>
       </Head>
-      <div className="w-[35%] px-10 border-r pt-10 h-[calc(100vh-5rem)]">
+      <div className="w-[35%] px-10 border-r pt-10 h-[calc(100vh-5rem)] fixed">
         <h1 className="text-3xl font-semibold">Launch</h1>
         <p>Let's get you started.</p>
         <div className="mt-10">
@@ -65,7 +65,7 @@ function Launch() {
           </ul>
         </div>
       </div>
-      <div className="w-[65%] p-10 flex flex-col gap-8">
+      <div className="w-[65%] p-10 flex flex-col gap-8 ml-[35%]">
         <div className="">
           <h1 className="font-semibold text-2xl">Repository</h1>
           <SelectRepository
@@ -80,16 +80,28 @@ function Launch() {
             }
           />
         </div>
-        <div className="">
+        <div className="max-w-[450px]">
           <h1 className="font-semibold text-2xl">Project info</h1>
-          <div className="flex flex-col gap-3 mt-3">
-            <Input placeholder="Project name" value={project.name} />
-            <Textarea
-              placeholder="Project description"
-              value={project.description}
-            />
-            <Input placeholder="Project website" value={project.website} />
+          <div className="flex flex-col gap-5 mt-3">
+            <div className="">
+              <p>Project name</p>
+              <Input placeholder="Project name" value={project.name} />
+            </div>
+            <div className="">
+              <p>Description</p>
+              <Textarea
+                placeholder="Project description"
+                value={project.description}
+              />
+            </div>
+            <div className="">
+              <p>Website</p>
+              <Input placeholder="Project website" value={project.website} />
+            </div>
           </div>
+        </div>
+        <div className="">
+          <h1 className="font-semibold text-2xl">Tech stack</h1>
         </div>
       </div>
     </div>
