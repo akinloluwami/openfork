@@ -38,6 +38,7 @@ export async function GET(request: Request) {
         html_url: repo.html_url,
         full_name: repo.full_name,
         description: repo.description,
+        hompage: repo.homepage,
       })),
     },
   ];
@@ -52,6 +53,7 @@ export async function GET(request: Request) {
         html_url: repo.html_url,
         full_name: repo.full_name,
         description: repo.description,
+        hompage: repo.homepage,
       }));
 
       userOrgsRepos.push({
