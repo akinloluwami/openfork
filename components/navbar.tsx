@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HiLightningBolt } from "react-icons/hi";
+import Logout from "./logout";
 
 export default function Navbar() {
   const { id, name, image, username } = useUser();
@@ -50,7 +51,7 @@ export default function Navbar() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <Logout />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
