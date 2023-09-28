@@ -17,7 +17,7 @@ model User {
   updatedAt    DateTime      @updatedAt
   githubUrl    String?
   refreshToken RefreshToken?
-  image   String?
+  image        String?
   isVerified   Boolean       @default(false)
   github       Github?
   projects     Project[]
@@ -25,11 +25,12 @@ model User {
 }
 
 model Github {
-  id        String   @id @default(cuid())
-  githubId  Int      @unique
-  createdAt DateTime @default(now())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
+  id          String   @id @default(cuid())
+  githubId    Int      @unique
+  createdAt   DateTime @default(now())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  accessToken String @unique
 }
 
 model RefreshToken {
