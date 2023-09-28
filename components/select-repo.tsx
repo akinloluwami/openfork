@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { axios } from "@/lib/axios";
+import { SiGithub } from "react-icons/si";
 
 interface RepositoryProps {
   id: number;
@@ -65,7 +66,9 @@ export function SelectRepository({
         <PopoverTrigger asChild>
           <Button variant="outline">
             {selectedRepo ? (
-              <>{selectedRepo.full_name}</>
+              <>
+                <SiGithub className="mr-2" /> {selectedRepo.full_name}
+              </>
             ) : (
               <>+ Select repository</>
             )}
