@@ -1,6 +1,7 @@
 "use client";
 
 import { SelectRepository } from "@/components/select-repo";
+import { Input } from "@/components/ui/input";
 import Head from "next/head";
 import { useState } from "react";
 import { BiSolidCheckSquare } from "react-icons/bi";
@@ -68,12 +69,19 @@ function Launch() {
           <h1 className="font-semibold text-2xl">Repository</h1>
           <SelectRepository
             onSelectRepository={(repository) =>
-              setProject({ ...project, repository: repository.html_url })
+              setProject({
+                ...project,
+                repository: repository.html_url,
+                name: repository.name,
+                description: repository.description,
+                website: repository.homepage,
+              })
             }
           />
         </div>
         <div className="">
           <h1 className="font-semibold text-2xl">Project info</h1>
+          <Input placeholder="Project name" value={project.name} />
         </div>
       </div>
     </div>
