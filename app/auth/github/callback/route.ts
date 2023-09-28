@@ -73,6 +73,7 @@ export async function GET(request: Request) {
       data: {
         githubId: user.id,
         userId: newUser.id,
+        accessToken,
       },
     });
 
