@@ -2,6 +2,7 @@
 
 import { SelectRepository } from "@/components/select-repo";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Head from "next/head";
 import { useState } from "react";
 import { BiSolidCheckSquare } from "react-icons/bi";
@@ -64,7 +65,7 @@ function Launch() {
           </ul>
         </div>
       </div>
-      <div className="w-[65%] p-10">
+      <div className="w-[65%] p-10 flex flex-col gap-8">
         <div className="">
           <h1 className="font-semibold text-2xl">Repository</h1>
           <SelectRepository
@@ -81,7 +82,14 @@ function Launch() {
         </div>
         <div className="">
           <h1 className="font-semibold text-2xl">Project info</h1>
-          <Input placeholder="Project name" value={project.name} />
+          <div className="flex flex-col gap-3 mt-3">
+            <Input placeholder="Project name" value={project.name} />
+            <Textarea
+              placeholder="Project description"
+              value={project.description}
+            />
+            <Input placeholder="Project website" value={project.website} />
+          </div>
         </div>
       </div>
     </div>
