@@ -17,6 +17,13 @@ import {
 import { useUser } from "@/stores/useUser";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface RepositoryProps {
   id: number;
@@ -35,6 +42,56 @@ export function SelectRepository({
   const [open, setOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
   const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
+
+  const [repos, setRepos] = useState<
+    {
+      org: string;
+      repos: RepositoryProps[];
+    }[]
+  >([
+    {
+      org: "shadcn",
+      repos: [
+        {
+          id: 1,
+          name: "shadcn/shadcn.github.io",
+          html_url: "https://github.com/shadcn/shadcn.github.io",
+          full_name: "shadcn/shadcn.github.io",
+          description: "shadcn's blog",
+          homepage: "https://shadcn.github.io",
+        },
+        {
+          id: 2,
+          name: "shadcn/shadcn.github.io-blog",
+          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
+          full_name: "shadcn/shadcn.github.io-blog",
+          description: "shadcn's blog",
+          homepage: "https://shadcn.github.io/blog",
+        },
+      ],
+    },
+    {
+      org: "something",
+      repos: [
+        {
+          id: 3,
+          name: "shadcn/shadcn.github.io-blog",
+          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
+          full_name: "shadcn/shadcn.github.io-blog",
+          description: "shadcn's blog",
+          homepage: "https://shadcn.github.io/blog",
+        },
+        {
+          id: 3,
+          name: "shadcn/something.io-blog",
+          html_url: "https://github.com/shadcn/shadcn.github.io-blog",
+          full_name: "shadcn/shadcn.github.io-blog",
+          description: "shadcn's blog",
+          homepage: "https://shadcn.github.io/blog",
+        },
+      ],
+    },
+  ]);
 
   const username = "shadcn";
   useEffect(() => {
@@ -60,6 +117,17 @@ export function SelectRepository({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
+
           <Command>
             <CommandInput placeholder="Search repos..." />
             <CommandList>
