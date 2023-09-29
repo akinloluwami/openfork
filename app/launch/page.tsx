@@ -1,11 +1,14 @@
 "use client";
 
 import { SelectRepository } from "@/components/select-repo";
+import SelectTechStack from "@/components/select-tech-stack";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Head from "next/head";
 import { useState } from "react";
 import { BiSolidCheckSquare } from "react-icons/bi";
+import { HiLightningBolt } from "react-icons/hi";
 
 interface NewProjectProps {
   name: string;
@@ -65,7 +68,7 @@ function Launch() {
           </ul>
         </div>
       </div>
-      <div className="w-[65%] p-10 flex flex-col gap-8 ml-[35%]">
+      <div className="w-[65%] p-10 flex flex-col gap-8 ml-[35%] max-w-[550px]">
         <div className="">
           <h1 className="font-semibold text-2xl">Repository</h1>
           <SelectRepository
@@ -80,29 +83,60 @@ function Launch() {
             }
           />
         </div>
-        <div className="max-w-[450px]">
+        <div className="">
           <h1 className="font-semibold text-2xl">Project info</h1>
           <div className="flex flex-col gap-5 mt-3">
             <div className="">
               <p>Project name</p>
-              <Input placeholder="Project name" value={project.name} />
+              <Input
+                placeholder="Project name"
+                value={project.name}
+                onChange={(e) =>
+                  setProject({ ...project, name: e.target.value })
+                }
+              />
             </div>
             <div className="">
               <p>Description</p>
               <Textarea
                 placeholder="Project description"
                 value={project.description}
+                onChange={(e) =>
+                  setProject({ ...project, description: e.target.value })
+                }
               />
             </div>
             <div className="">
               <p>Website</p>
-              <Input placeholder="Project website" value={project.website} />
+              <Input
+                placeholder="Project website"
+                value={project.website}
+                onChange={(e) =>
+                  setProject({ ...project, website: e.target.value })
+                }
+              />
             </div>
           </div>
         </div>
         <div className="">
           <h1 className="font-semibold text-2xl">Tech stack</h1>
+          <div className="flex items-center gap-2 mt-4 flex-wrap">
+            {project.techStack.map((stack) => (
+              <Button variant="outline">{stack}</Button>
+            ))}
+            <SelectTechStack
+              onSelectStack={(techStack) =>
+                setProject({
+                  ...project,
+                  techStack: [...project.techStack, techStack],
+                })
+              }
+            />
+          </div>
         </div>
+        <Button className="!bg-orange-600">
+          <HiLightningBolt /> Launch
+        </Button>
       </div>
     </div>
   );
