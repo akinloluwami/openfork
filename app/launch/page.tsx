@@ -129,8 +129,10 @@ function Launch() {
         <div className="">
           <h1 className="font-semibold text-2xl">Tech stack</h1>
           <div className="flex items-center gap-2 mt-4 flex-wrap">
-            {project.techStack.map((stack) => (
-              <Button variant="outline">{stack}</Button>
+            {project.techStack.map((stack, i) => (
+              <Button variant="outline" key={i}>
+                {stack}
+              </Button>
             ))}
             <SelectTechStack
               onSelectStack={(techStack) =>
