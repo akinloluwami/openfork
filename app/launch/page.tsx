@@ -4,6 +4,7 @@ import { SelectRepository } from "@/components/select-repo";
 import SelectTechStack from "@/components/select-tech-stack";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import Head from "next/head";
 import { useState } from "react";
@@ -42,6 +43,11 @@ function Launch() {
     },
   ];
 
+  const percentageDone =
+    (checkLists.reduce((acc, item) => (item.isDone ? acc + 1 : acc), 0) /
+      checkLists.length) *
+    100;
+
   return (
     <div className="flex">
       <Head>
@@ -50,7 +56,9 @@ function Launch() {
       <div className="w-[35%] px-10 border-r pt-10 h-[calc(100vh-5rem)] fixed">
         <h1 className="text-3xl font-semibold">Launch</h1>
         <p>Let's get you started.</p>
+
         <div className="mt-10">
+          <Progress value={percentageDone} />
           <ul>
             {checkLists.map((item, index) => (
               <li key={index} className="flex items-center my-5">
