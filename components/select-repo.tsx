@@ -99,8 +99,8 @@ export function SelectRepository({
               <SelectValue placeholder={repos[0]?.org} />
             </SelectTrigger>
             <SelectContent>
-              {repos.map((repo) => (
-                <SelectItem key={repo.org} value={repo.org}>
+              {repos.map((repo, i) => (
+                <SelectItem key={i} value={repo.org}>
                   {repo.org}
                 </SelectItem>
               ))}
