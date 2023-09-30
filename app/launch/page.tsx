@@ -9,7 +9,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -25,7 +24,7 @@ function Launch() {
   const [project, setProject] = useState<NewProjectProps>({
     name: "",
     description: "",
-    website: "",
+    website: "animal",
     repository: "",
     techStack: [],
   });
@@ -54,9 +53,11 @@ function Launch() {
 
   const handleLaunchProject = async () => {
     try {
-      await axios.post("/projects", project);
+      await axios.post("/project", project);
       setIsDialogOpen(true);
-    } catch (error) {}
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
   };
 
   return (
@@ -155,15 +156,18 @@ function Launch() {
             />
           </div>
         </div>
+
         <Button
           className="!bg-orange-600"
           disabled={checkLists.reduce(
             (acc, item) => (item.isDone ? !acc : acc),
             true
           )}
+          onClick={handleLaunchProject}
         >
           <HiLightningBolt /> Launch
         </Button>
+
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent>
             <DialogHeader>
