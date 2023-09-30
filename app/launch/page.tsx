@@ -3,9 +3,18 @@
 import { SelectRepository } from "@/components/select-repo";
 import SelectTechStack from "@/components/select-tech-stack";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
+import { axios } from "@/lib/axios";
 import { NewProjectProps } from "@/types";
 import Head from "next/head";
 import { useState } from "react";
@@ -40,6 +49,15 @@ function Launch() {
     (checkLists.reduce((acc, item) => (item.isDone ? acc + 1 : acc), 0) /
       checkLists.length) *
     100;
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleLaunchProject = async () => {
+    try {
+      await axios.post("/projects", project);
+      setIsDialogOpen(true);
+    } catch (error) {}
+  };
 
   return (
     <div className="flex">
@@ -137,9 +155,26 @@ function Launch() {
             />
           </div>
         </div>
-        <Button className="!bg-orange-600">
+        <Button
+          className="!bg-orange-600"
+          disabled={checkLists.reduce(
+            (acc, item) => (item.isDone ? !acc : acc),
+            true
+          )}
+        >
           <HiLightningBolt /> Launch
         </Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
