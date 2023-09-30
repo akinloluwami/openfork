@@ -55,6 +55,7 @@ import {
   SiMocha,
   SiMongodb,
   SiMui,
+  SiMysql,
   SiNextdotjs,
   SiNodedotjs,
   SiNpm,
@@ -445,6 +446,10 @@ const ts: techStack[] = [
   {
     name: "Vercel",
     logo: SiVercel,
+  },
+  {
+    name: "MySQL",
+    logo: SiMysql,
   },
 ];
 
