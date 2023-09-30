@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BiSolidCheckSquare } from "react-icons/bi";
+import { CgSpinner } from "react-icons/cg";
 import { HiLightningBolt } from "react-icons/hi";
 import { SiFacebook, SiLinkedin, SiTwitter, SiX } from "react-icons/si";
 
@@ -30,6 +31,7 @@ function Launch() {
     website: "",
     repository: "",
     techStack: [],
+    fullName: "",
   });
 
   const checkLists = [
@@ -55,8 +57,10 @@ function Launch() {
     100;
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [launching, setLaunching] = useState(false);
 
   const handleLaunchProject = async () => {
+    setLaunching(true);
     try {
       const { data } = await axios.post("/project", project);
       setIsDialogOpen(true);
@@ -67,9 +71,12 @@ function Launch() {
         website: "",
         repository: "",
         techStack: [],
+        fullName: "",
       });
     } catch (error: any) {
       toast.error(error.response.data.error);
+    } finally {
+      setLaunching(false);
     }
   };
 
@@ -131,8 +138,10 @@ function Launch() {
                 name: repository.name,
                 description: repository.description,
                 website: repository.homepage,
+                fullName: repository.full_name,
               })
             }
+            selectedRepoFullName={project.fullName}
           />
         </div>
         <div className="">
@@ -192,13 +201,23 @@ function Launch() {
 
         <Button
           className="!bg-orange-600"
-          disabled={checkLists.reduce(
-            (acc, item) => (item.isDone ? !acc : acc),
-            true
-          )}
+          disabled={
+            checkLists.reduce(
+              (acc, item) => (item.isDone ? !acc : acc),
+              true
+            ) || launching
+          }
           onClick={handleLaunchProject}
         >
-          <HiLightningBolt /> Launch
+          <span className="mr-2">
+            {launching ? (
+              <CgSpinner className="animate-spin" />
+            ) : (
+              <HiLightningBolt />
+            )}{" "}
+          </span>
+          Launch
+          {launching ? "ing..." : ""}
         </Button>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
