@@ -1,4 +1,4 @@
-export interface NewProjectProps {
+export interface ProjectProps {
   name: string;
   description: string;
   website: string;
