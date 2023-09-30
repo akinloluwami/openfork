@@ -37,11 +37,12 @@ interface RepositoryProps {
 
 export function SelectRepository({
   onSelectRepository,
+  selectedRepoFullName,
 }: {
   onSelectRepository: (repository: RepositoryProps) => void;
+  selectedRepoFullName: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [selectedRepo, setSelectedRepo] = useState<RepositoryProps | null>();
   const [selectedOrg, setSelectedOrg] = useState<string | null>();
   const [fetching, setFetching] = useState(true);
 
@@ -67,9 +68,9 @@ export function SelectRepository({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" disabled={fetching}>
-            {selectedRepo ? (
+            {selectedRepoFullName ? (
               <>
-                <SiGithub className="mr-2" /> {selectedRepo.full_name}
+                <SiGithub className="mr-2" /> {selectedRepoFullName}
               </>
             ) : (
               <>
@@ -119,7 +120,7 @@ export function SelectRepository({
                       key={i}
                       onSelect={() => {
                         onSelectRepository(repository);
-                        setSelectedRepo(repository);
+
                         setOpen(false);
                       }}
                     >
