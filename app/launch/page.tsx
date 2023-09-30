@@ -17,6 +17,7 @@ import { axios } from "@/lib/axios";
 import { NewProjectProps } from "@/types";
 import Head from "next/head";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { BiSolidCheckSquare } from "react-icons/bi";
 import { HiLightningBolt } from "react-icons/hi";
 
@@ -56,12 +57,13 @@ function Launch() {
       await axios.post("/project", project);
       setIsDialogOpen(true);
     } catch (error: any) {
-      console.log(error.response.data);
+      toast.error(error.response.data.error);
     }
   };
 
   return (
     <div className="flex">
+      <Toaster />
       <Head>
         <title>Launch • Openfork</title>
       </Head>
