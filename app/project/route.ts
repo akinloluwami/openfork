@@ -1,4 +1,4 @@
-import { NewProjectProps } from "@/types";
+import { ProjectProps } from "@/types";
 import { getUserId } from "@/utils/getUserIdFromToken";
 import validator from "validator";
 import prisma from "@/lib/prisma";
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No user id" }, { status: 401 });
 
     const { name, description, website, repository, techStack } =
-      (await request.json()) as NewProjectProps;
+      (await request.json()) as ProjectProps;
 
     if (!name)
       return NextResponse.json(
