@@ -4,4 +4,5 @@ export interface NewProjectProps {
   website: string;
   repository: string;
   techStack: string[];
+  fullName: string;
 }
