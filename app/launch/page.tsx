@@ -25,7 +25,7 @@ function Launch() {
   const [project, setProject] = useState<NewProjectProps>({
     name: "",
     description: "",
-    website: "animal",
+    website: "",
     repository: "",
     techStack: [],
   });
@@ -123,6 +123,7 @@ function Launch() {
               <Textarea
                 placeholder="Project description"
                 value={project.description}
+                className="h-44"
                 onChange={(e) =>
                   setProject({ ...project, description: e.target.value })
                 }
