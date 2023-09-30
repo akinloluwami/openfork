@@ -45,6 +45,7 @@ model RefreshToken {
 model Project {
   id          String   @id @default(cuid())
   name        String
+  slug        String   @unique
   description String
   repository  String @unique
   logoUrl     String?
