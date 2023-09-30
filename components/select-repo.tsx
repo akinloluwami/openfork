@@ -114,9 +114,9 @@ export function SelectRepository({
               <CommandGroup>
                 {repos
                   .find((repo) => repo.org === selectedOrg)
-                  ?.repos.map((repository) => (
+                  ?.repos.map((repository, i) => (
                     <CommandItem
-                      key={repository.id}
+                      key={i}
                       onSelect={() => {
                         onSelectRepository(repository);
                         setSelectedRepo(repository);
