@@ -46,7 +46,7 @@ model Project {
   id          String   @id @default(cuid())
   name        String
   description String
-  repository  String
+  repository  String @unique
   logoUrl     String?
   website     String?
   techStack   String[]
