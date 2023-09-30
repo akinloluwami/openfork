@@ -232,9 +232,8 @@ function Launch() {
             </DialogHeader>
             <div className="flex gap-3">
               {shareToSocials.map((item, i) => (
-                <Button variant="ghost">
+                <Button variant="ghost" key={i}>
                   <Link
-                    key={i}
                     href={item.url}
                     target="_blank"
                     rel="noreferrer"
