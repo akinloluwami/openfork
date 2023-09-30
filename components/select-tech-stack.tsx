@@ -23,7 +23,7 @@ function SelectTechStack({
   return (
     <div className="">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button variant="outline">+ Select stack</Button>
         </PopoverTrigger>
         <PopoverContent>
