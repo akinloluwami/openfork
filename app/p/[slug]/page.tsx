@@ -1,4 +1,5 @@
 import { getProject } from "@/lib/api/getProject";
+import { DOMAIN } from "@/lib/constants";
 import { ProjectProps } from "@/types";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -13,6 +14,16 @@ export async function generateMetadata({
   return {
     title: `${project.name} • Openfork`,
     description: project.description,
+    openGraph: {
+      url: `${DOMAIN}/p/${project.slug}`,
+      title: `${project.name} • Openfork`,
+      description: project.description,
+      // images: [
+      //   {
+      //     url: `https://openfork.dev${project.repository}/banner.png`,
+      //   },
+      // ],
+    },
   } as Metadata;
 }
 

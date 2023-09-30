@@ -5,4 +5,5 @@ export interface ProjectProps {
   repository: string;
   techStack: string[];
   fullName: string;
+  slug?: string;
 }
