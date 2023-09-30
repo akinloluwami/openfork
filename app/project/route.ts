@@ -60,9 +60,20 @@ export async function POST(request: Request) {
         { status: 409 }
       );
 
+    let slug = name.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+
+    const slugExists = await prisma.project.findUnique({
+      where: { slug },
+    });
+
+    if (slugExists) {
+      slug = `${slug}-${Math.floor(Math.random() * 1000)}`;
+    }
+
     const newProject = await prisma.project.create({
       data: {
         name,
+        slug,
         description,
         website,
         repository,
@@ -71,9 +82,12 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true, newProject });
+    return NextResponse.json(newProject, { status: 201 });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
