@@ -6,18 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
+import { NewProjectProps } from "@/types";
 import Head from "next/head";
 import { useState } from "react";
 import { BiSolidCheckSquare } from "react-icons/bi";
 import { HiLightningBolt } from "react-icons/hi";
-
-interface NewProjectProps {
-  name: string;
-  description: string;
-  website: string;
-  repository: string;
-  techStack: string[];
-}
 
 function Launch() {
   const [project, setProject] = useState<NewProjectProps>({
