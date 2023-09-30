@@ -16,10 +16,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { axios } from "@/lib/axios";
 import { NewProjectProps } from "@/types";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BiSolidCheckSquare } from "react-icons/bi";
 import { HiLightningBolt } from "react-icons/hi";
+import { SiFacebook, SiLinkedin, SiTwitter, SiX } from "react-icons/si";
 
 function Launch() {
   const [project, setProject] = useState<NewProjectProps>({
@@ -45,6 +47,8 @@ function Launch() {
     },
   ];
 
+  const [projectResponse, setProjectResponse] = useState<any>();
+
   const percentageDone =
     (checkLists.reduce((acc, item) => (item.isDone ? acc + 1 : acc), 0) /
       checkLists.length) *
@@ -54,12 +58,38 @@ function Launch() {
 
   const handleLaunchProject = async () => {
     try {
-      await axios.post("/project", project);
+      const { data } = await axios.post("/project", project);
       setIsDialogOpen(true);
+      setProjectResponse(data);
+      setProject({
+        name: "",
+        description: "",
+        website: "",
+        repository: "",
+        techStack: [],
+      });
     } catch (error: any) {
       toast.error(error.response.data.error);
     }
   };
+
+  const shareToSocials = [
+    {
+      name: "X",
+      url: "https://twitter.com/intent/tweet?url=https://launch.openfork.com&text=https://launch.openfork.com",
+      icon: <SiX />,
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/sharing/share-offsite/?url=https://launch.openfork.com",
+      icon: <SiLinkedin />,
+    },
+    {
+      name: "Facebook",
+      url: "https://www.facebook.com/sharer/sharer.php?u=https://launch.openfork.com",
+      icon: <SiFacebook />,
+    },
+  ];
 
   return (
     <div className="flex">
@@ -174,12 +204,28 @@ function Launch() {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+              <DialogTitle>Your project has been lauchced! 🎉</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                Share your project on your socials, let the world know what you
+                are building.
               </DialogDescription>
             </DialogHeader>
+            <div className="flex gap-3">
+              {shareToSocials.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-orange-500 transition-colors duration-200"
+                >
+                  {item.icon}
+                </Link>
+              ))}
+            </div>
+            <Link href={`/p/${projectResponse?.slug}`}>
+              <Button variant="outline">View project page</Button>
+            </Link>
           </DialogContent>
         </Dialog>
       </div>
