@@ -50,6 +50,16 @@ export async function POST(request: Request) {
         { status: 400 }
       );
 
+    const projectExists = await prisma.project.findUnique({
+      where: { repository },
+    });
+
+    if (projectExists)
+      return NextResponse.json(
+        { error: "Project already exists" },
+        { status: 409 }
+      );
+
     const newProject = await prisma.project.create({
       data: {
         name,
