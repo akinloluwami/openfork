@@ -22,7 +22,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { BiSolidCheckSquare } from "react-icons/bi";
 import { CgSpinner } from "react-icons/cg";
 import { HiLightningBolt } from "react-icons/hi";
-import { SiFacebook, SiLinkedin, SiTwitter, SiX } from "react-icons/si";
+import { SiFacebook, SiLinkedin, SiX } from "react-icons/si";
+import { LuCopy } from "react-icons/lu";
 
 function Launch() {
   const [project, setProject] = useState<ProjectProps>({
@@ -83,17 +84,17 @@ function Launch() {
   const shareToSocials = [
     {
       name: "X",
-      url: "https://twitter.com/intent/tweet?url=https://launch.openfork.com&text=https://launch.openfork.com",
+      url: "#",
       icon: <SiX />,
     },
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/sharing/share-offsite/?url=https://launch.openfork.com",
+      url: "#",
       icon: <SiLinkedin />,
     },
     {
       name: "Facebook",
-      url: "https://www.facebook.com/sharer/sharer.php?u=https://launch.openfork.com",
+      url: "#",
       icon: <SiFacebook />,
     },
   ];
@@ -231,16 +232,21 @@ function Launch() {
             </DialogHeader>
             <div className="flex gap-3">
               {shareToSocials.map((item, i) => (
-                <Link
-                  key={i}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-orange-500 transition-colors duration-200"
-                >
-                  {item.icon}
-                </Link>
+                <Button variant="ghost">
+                  <Link
+                    key={i}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-orange-500 transition-colors duration-200"
+                  >
+                    {item.icon}
+                  </Link>
+                </Button>
               ))}
+              <Button variant="ghost">
+                <LuCopy />
+              </Button>
             </div>
             <Link href={`/p/${projectResponse?.slug}`}>
               <Button variant="outline">View project page</Button>
