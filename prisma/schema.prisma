@@ -30,7 +30,7 @@ model Github {
   createdAt   DateTime @default(now())
   userId      String   @unique
   user        User     @relation(fields: [userId], references: [id])
-  accessToken String @unique
+  accessToken String   @unique
 }
 
 model RefreshToken {
@@ -46,8 +46,10 @@ model Project {
   id          String   @id @default(cuid())
   name        String
   description String
-  githubUrl   String
-  logoUrl     String
+  repository  String
+  logoUrl     String?
+  website     String?
+  techStack   String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String
