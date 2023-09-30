@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { axios } from "@/lib/axios";
-import { NewProjectProps } from "@/types";
+import { ProjectProps } from "@/types";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
@@ -25,7 +25,7 @@ import { HiLightningBolt } from "react-icons/hi";
 import { SiFacebook, SiLinkedin, SiTwitter, SiX } from "react-icons/si";
 
 function Launch() {
-  const [project, setProject] = useState<NewProjectProps>({
+  const [project, setProject] = useState<ProjectProps>({
     name: "",
     description: "",
     website: "",
