@@ -44,9 +44,11 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
+    "validator": "^13.11.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.4"
+    "@types/js-cookie": "^3.0.4",
+    "@types/validator": "^13.11.2"
   }
 }
