@@ -23,7 +23,7 @@ export default function Navbar() {
           <h1 className="font-semibold text-2xl">Openfork</h1>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 text-sm">
           <Link href="/">Projects</Link>
           <Link href="/people">People</Link>
         </div>
