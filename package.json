@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.4",
+    "@types/jsonwebtoken": "^9.0.4",
     "@types/validator": "^13.11.2"
   }
 }
