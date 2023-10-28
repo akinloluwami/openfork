@@ -39,13 +39,19 @@ export default async function Project({
       <div className="max-w-[800px] mx-auto mt-10">
         <div className="flex flex-col gap-2">
           <div className="h-20 w-20 bg-orange-500 rounded-lg"></div>
-          <h1 className="text-4xl font-semibold">{project.name}</h1>
+          <h1 className="text-4xl font-semibold mt-3">{project.name}</h1>
           <p className="text-gray-500 text-lg">{project.description}</p>
+          <div className="flex gap-3 my-2">
+            <p className="font-semibold">Built with:</p>
+            {project.techStack.map((stack, i) => (
+              <p key={i}>{stack}</p>
+            ))}
+          </div>
 
           <Link
             href={project.repository}
             target="_blank"
-            className="inline-flex gap-1 items-center hover:underline"
+            className="inline-flex gap-1 items-center hover:underline w-fit"
           >
             <SiGithub /> Visit GitHub Repository
           </Link>
