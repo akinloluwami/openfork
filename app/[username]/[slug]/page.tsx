@@ -6,11 +6,14 @@ import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 
 export async function generateMetadata({
-  params: { slug },
+  params: { username, slug },
 }: {
-  params: { slug: string };
+  params: { username: string; slug: string };
 }) {
-  const project: ProjectProps = await getProject(slug);
+  const project: ProjectProps = await getProject({
+    slug,
+    username,
+  });
   return {
     title: `${project.name} • Openfork`,
     description: project.description,
@@ -32,7 +35,10 @@ export default async function Project({
 }: {
   params: { username: string; slug: string };
 }) {
-  const project: ProjectProps = await getProject(slug);
+  const project: ProjectProps = await getProject({
+    slug,
+    username,
+  });
 
   return (
     <div>
