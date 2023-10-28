@@ -28,9 +28,9 @@ export async function generateMetadata({
 }
 
 export default async function Project({
-  params: { slug },
+  params: { username, slug },
 }: {
-  params: { slug: string };
+  params: { username: string; slug: string };
 }) {
   const project: ProjectProps = await getProject(slug);
 
