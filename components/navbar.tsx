@@ -56,7 +56,7 @@ export default function Navbar() {
           </DropdownMenu>
         </div>
       ) : (
-        <Link href={"/auth/github"}>
+        <Link href={"/api/auth/github"}>
           <Button>
             <SiGithub className="mr-2" />
             Connect with GitHub
