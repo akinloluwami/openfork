@@ -1,7 +1,7 @@
 "use client";
 
+import { axios } from "@/lib/axios";
 import { DropdownMenuItem } from "./ui/dropdown-menu";
-import axios from "axios";
 
 function Logout() {
   const handleLogout = async () => {
