@@ -25,7 +25,7 @@ export async function GET(
     if (!project)
       return NextResponse.json(
         {
-          error: "No project found witht the provided slug.",
+          error: "Project not found.",
         },
         {
           status: 404,
