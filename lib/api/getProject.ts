@@ -8,7 +8,7 @@ export async function getProject({
   username: string;
   slug: string;
 }) {
-  const res = await fetch(`${DOMAIN}/${username}/${slug}`);
+  const res = await fetch(`${DOMAIN}/api/${username}/${slug}`);
 
   if (!res.ok) redirect("/404");
 
