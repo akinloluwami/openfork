@@ -63,7 +63,7 @@ export default async function Project({
           >
             <SiGithub /> Visit GitHub Repository
           </Link>
-          <Upvotebutton id={project.id} />
+          <Upvotebutton projectId={project.id} />
         </div>
       </div>
     </div>
