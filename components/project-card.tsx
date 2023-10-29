@@ -15,7 +15,7 @@ const ProjectCard = ({
   const { name, description, slug, upvotes, user } = project;
   const { username, isVerified } = user;
 
-  return <div>ProjectCard</div>;
+  return <div>{name}</div>;
 };
 
 export default ProjectCard;
