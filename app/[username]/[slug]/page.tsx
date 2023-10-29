@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Upvotebutton from "@/components/upvote-button";
 import { getProject } from "@/lib/api/getProject";
 import { DOMAIN } from "@/lib/constants";
