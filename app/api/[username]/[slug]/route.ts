@@ -6,14 +6,20 @@ export async function GET(
   {
     params,
   }: {
-    params: { slug: string };
+    params: { slug: string; username: string };
   }
 ) {
   try {
     const slug = params.slug;
+    const username = params.username;
 
     const project = await prisma.project.findUnique({
-      where: { slug },
+      where: {
+        slug,
+        user: {
+          username,
+        },
+      },
     });
 
     if (!project)
