@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { axios } from "@/lib/axios";
 
 const Upvotebutton = ({ projectId: projectId }: { projectId: string }) => {
   const [hasUpvoted, setHasUpvoted] = useState(false);
 
-  const upvote = async () => {
+  const upvote = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setHasUpvoted(!hasUpvoted);
     try {
       await axios.post(`/project/${projectId}/upvote`);
