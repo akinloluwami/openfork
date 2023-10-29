@@ -23,7 +23,14 @@ const Upvotebutton = ({ id }: { id: string }) => {
   }, []);
 
   return (
-    <Button className="w-[250px] py-6" onClick={upvote}>
+    <Button
+      className={`w-[250px] py-6 mt-5 font-bold ${
+        hasUpvoted
+          ? "border-2 text-black border-black shadow-none bg-transparent hover:text-white hover:bg-black/80"
+          : "border-transparent border-2"
+      }`}
+      onClick={upvote}
+    >
       Upvote{hasUpvoted ? "d" : ""}
     </Button>
   );
