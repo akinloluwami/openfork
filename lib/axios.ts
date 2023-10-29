@@ -4,7 +4,7 @@ let isRefreshing = false;
 let refreshSubscribers: any = [];
 
 const axiosReq = axios.create({
-  baseURL: "",
+  baseURL: "/api",
   withCredentials: true,
 });
 
