@@ -15,9 +15,8 @@ interface ProjectProps {
 
 const Projects = async () => {
   const projects: ProjectProps[] = await getProjects();
-
   return (
-    <div>
+    <div className="flex flex-wrap gap-10 items-center justify-center py-10">
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
