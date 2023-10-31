@@ -34,7 +34,7 @@
     "eslint-config-next": "13.5.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
-    "next": "13.5.2",
+    "next": "14.0.1",
     "octokit": "^3.1.0",
     "postcss": "8.4.30",
     "prisma": "^5.3.1",
