@@ -14,7 +14,7 @@ export async function POST(
     const userId = await getUserId();
 
     if (!userId)
-      return NextResponse.json({ error: "No user id" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const project = await prisma.project.findUnique({
       where: {
