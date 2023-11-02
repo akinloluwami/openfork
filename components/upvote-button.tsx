@@ -14,6 +14,7 @@ const Upvotebutton = ({ projectId: projectId }: { projectId: string }) => {
       await axios.post(`/project/${projectId}/upvote`);
     } catch (error) {
       setHasUpvoted(false);
+      console.log(error);
     }
   };
 
